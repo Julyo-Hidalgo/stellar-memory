@@ -1,0 +1,53 @@
+body 
+{
+    background-color: #161414;
+    color: #f8f2f2;
+}
+
+header 
+{
+    text-align: center; /*centralizando o que tem dentro do cabeçalho/header*/
+    padding: 4px 0; /*adiciona um espaçamento na parte superior e inferior*/
+    background-color:#000
+}
+
+h1 
+{
+    font-family: 'Jersey 25', sans-serif; /*muda a fonte */
+    font-size: 5em; /*aumenta o tamanho da fonte */
+    color: #f3ea88; /*muda a cor do texto (um tom de roxo, por exemplo) */
+    text-align: center;
+}
+
+/* caso a gnt queria outra fonte tipo a nova square
+h1 
+{
+    font-family: 'Nova Square', sans-serif; /*muda a fonte *//*
+    font-size: 4em; /*aumenta o tamanho da fonte *//*
+    color: #f3ea88; /*muda a cor do texto (um tom de roxo, por exemplo) *//*
+    text-align: center;*//*
+}*/
+
+.informacoes_partida ul
+{
+    list-style-type: none; /* tira os marcadores de lista (as bolinhas) */
+    padding: 0; /* tira o espaçamento padrão que o navegador coloca */
+    margin: 0; /* tira a margem padrão */
+}
+
+#tempo-restante-container 
+{
+    display: none;/*significa q só vai aparecer quando o usuario clicar na modalidade contra o tempo (porem isso só ira acontecer na implementação Java Script)*/
+}
+
+.botoes_trapaca button
+{
+    margin-right: 160px;
+    margin-left: 100px;
+}
+
+.links-navegacao a 
+{
+    margin: 80px;
+    color: #f3ea88;
+}
