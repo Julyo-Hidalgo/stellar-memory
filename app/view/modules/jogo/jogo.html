@@ -1,66 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stellar Memory</title>
-    
-    <!--conectando as fontes/tipografia-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Jersey+25&family=Nova+Square&family=Press+Start+2P&display=swap" rel="stylesheet">
-   
-    <!--conectando o hmtl do jgo com o css ta tela do jogo-->
-    <link rel="stylesheet" href="../../css/jogo.css">
 
-</head>
-<body>
+    <!--conectando as fontes/tipografia-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Jersey+25&family=Nova+Square&family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--conectando o hmtl do jgo com o css ta tela do jogo-->
+    <link rel="stylesheet" href="../../css/jogo.css" />
+  </head>
+  <body>
     <header>
-        <h1>Stellar Memory</h1>
+      <h1>Stellar Memory</h1>
     </header>
 
     <section class="informacoes_partida">
-        <h2>Informações da Partida</h2>
-        <ul>
-            <li>Tempo da Partida: <span id="tempo-partida">00:00</span></li>
-            <li>Número de Jogadas: <span id="numero-jogadas">0</span></li>
-            <li>Configuração do Tabuleiro:
-                <select id="configuracao-tabuleiro">
-                    <option value="selecione"></option>
-                    <option value="2x2">2x2</option>
-                    <option value="4x4">4x4</option>
-                    <option value="3x3">3x3</option>
-                    <option value="5x5">5x5</option>
-                    <option value="6x6">6x6</option>
-                    <option value="7x7">7x7</option>
-                    <option value="8x8">8x8</option>
-                </select>
-            </li>
-            <li>Modalidade: 
-                <select id="modalidade">
-                    <option value="selecione"></option>
-                    <option value="classico">Clássico</option>
-                    <option value="contra_tempo">Contra o Tempo</option>
-                </select>
-            </li>
-            <li id="tempo-restante-container"> 
-                Tempo Restante: <span id="tempo-restante">00:00</span></li>
-        </ul>
+      <h2>Informações da Partida</h2>
+      <ul>
+        <li>Tempo da Partida: <span id="tempo-partida">00:00</span></li>
+        <li>Número de Jogadas: <span id="numero-jogadas">0</span></li>
+        <li>
+          Configuração do Tabuleiro:
+          <select id="configuracao-tabuleiro">
+            <option value="selecione"></option>
+            <option value="2x2">2x2</option>
+            <option value="4x4">4x4</option>
+            <option value="3x3">3x3</option>
+            <option value="5x5">5x5</option>
+            <option value="6x6">6x6</option>
+            <option value="7x7">7x7</option>
+            <option value="8x8">8x8</option>
+          </select>
+        </li>
+        <li>
+          Modalidade:
+          <select id="modalidade">
+            <option value="selecione"></option>
+            <option value="classico">Clássico</option>
+            <option value="contra_tempo">Contra o Tempo</option>
+          </select>
+        </li>
+        <li id="tempo-restante-container">
+          Tempo Restante: <span id="tempo-restante">00:00</span>
+        </li>
+      </ul>
     </section>
-    
-    <br>
+    <section class="tabuleiro-jogo">
+      <div class="tabuleiro">
+        <div id="cartas-container"></div>
+      </div>
+    </section>
+    <br />
     <section class="controles-jogo">
-        <div class="botoes_trapaca">
-            <button id="botao_ativar_trapaca">Ativar Trapaça</button>
-            <button id="botao_desativar_trapaca">Desativar Trapaça</button>  
-        </div>
+      <div class="botoes_trapaca">
+        <button id="botao_ativar_trapaca">Ativar Trapaça</button>
+        <button id="botao_desativar_trapaca">Desativar Trapaça</button>
+      </div>
     </section>
-        <br><br>
+    <br /><br />
     <nav class="links-navegacao">
-        <a href="../ranking/ranking.html">Ranking</a>
-        <a href="../edicao_perfil/edicao_perfil.html">Editar Perfil</a>
-        <a href="../login/login.html">Desconectar</a>
+      <a href="../ranking/ranking.html">Ranking</a>
+      <a href="../edicao_perfil/edicao_perfil.html">Editar Perfil</a>
+      <a href="../login/login.html">Desconectar</a>
     </nav>
-</body>
-
+  </body>
 </html>
+
+<!--adicionando um script js para fazer a repetição das cartas-->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const cartasContainer = document.getElementById("cartas-container");
+
+    const verso = "../../img/1.png";
+
+    const quantidadeCartas = 16;
+
+    for (let i = 0; i < quantidadeCartas; i++) {
+      const carta = document.createElement("div");
+      carta.classList.add("carta");
+
+      const img = document.createElement("img");
+      img.src = verso;
+      img.alt = "Verso da Carta";
+
+      carta.appendChild(img);
+      cartasContainer.appendChild(carta);
+    }
+  });
+</script>
