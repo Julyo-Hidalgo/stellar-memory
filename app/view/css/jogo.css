@@ -1,53 +1,106 @@
-body 
-{
-    background-color: #161414;
-    color: #f8f2f2;
+body {
+  background-image: url("../img/ceu-estrelado.jpg"); /*adiciona uma imagem de fundo*/
+  color: #f8f2f2;
 }
 
-header 
-{
-    text-align: center; /*centralizando o que tem dentro do cabeçalho/header*/
-    padding: 4px 0; /*adiciona um espaçamento na parte superior e inferior*/
-    background-color:#000
+header {
+  text-align: center; /*centralizando o que tem dentro do cabeçalho/header*/
+  padding: 4px 0; /*adiciona um espaçamento na parte superior e inferior*/
+  background-color: rgba(53, 53, 53, 0.8);
 }
 
-h1 
-{
-    font-family: 'Jersey 25', sans-serif; /*muda a fonte */
-    font-size: 5em; /*aumenta o tamanho da fonte */
-    color: #f3ea88; /*muda a cor do texto (um tom de roxo, por exemplo) */
-    text-align: center;
+h1 {
+  font-family: "Jersey 25", sans-serif; /*muda a fonte */
+  font-size: 5em; /*aumenta o tamanho da fonte */
+  color: #f3ea88; /*muda a cor do texto (um tom de roxo, por exemplo) */
+  text-align: center;
 }
 
 /* caso a gnt queria outra fonte tipo a nova square
 h1 
 {
-    font-family: 'Nova Square', sans-serif; /*muda a fonte *//*
-    font-size: 4em; /*aumenta o tamanho da fonte *//*
-    color: #f3ea88; /*muda a cor do texto (um tom de roxo, por exemplo) *//*
-    text-align: center;*//*
+    font-family: 'Nova Square', sans-serif; /*muda a fonte */ /*
+    font-size: 4em; /*aumenta o tamanho da fonte */ /*
+    color: #f3ea88; /*muda a cor do texto (um tom de roxo, por exemplo) */ /*
+    text-align: center;*/ /*
 }*/
 
-.informacoes_partida ul
-{
-    list-style-type: none; /* tira os marcadores de lista (as bolinhas) */
-    padding: 0; /* tira o espaçamento padrão que o navegador coloca */
-    margin: 0; /* tira a margem padrão */
+.informacoes_partida {
+  display: flex; /* usa flexbox para alinhar os itens */
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
-#tempo-restante-container 
-{
-    display: none;/*significa q só vai aparecer quando o usuario clicar na modalidade contra o tempo (porem isso só ira acontecer na implementação Java Script)*/
+.informacoes_partida ul {
+  list-style-type: none; /* tira os marcadores de lista (as bolinhas) */
+  padding: 0; /* tira o espaçamento padrão que o navegador coloca */
+  margin: 0; /* tira a margem padrão */
+  display: flex;
+}
+.informacoes_partida li {
+  margin: 0 15px; /* adiciona espaçamento entre os itens da lista */
 }
 
-.botoes_trapaca button
-{
-    margin-right: 160px;
-    margin-left: 100px;
+#tempo-restante-container {
+  display: none; /*significa q só vai aparecer quando o usuario clicar na modalidade contra o tempo (porem isso só ira acontecer na implementação Java Script)*/
 }
 
-.links-navegacao a 
-{
-    margin: 80px;
-    color: #f3ea88;
+.botoes_trapaca button {
+  margin-right: 160px;
+  margin-left: 100px;
+}
+
+.links-navegacao a {
+  margin: 80px;
+  color: #f3ea88;
+}
+
+.tabuleiro-jogo {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+}
+.tabuleiro {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  width: 80%;
+  height: 500px;
+  background-color: rgba(53, 53, 53, 0.8);
+  border-radius: 10px;
+}
+
+#cartas-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 colunas */
+  grid-template-rows: repeat(4, 1fr); /* 4 linhas */
+  gap: 10px; /* Espaçamento entre as cartas */
+  width: 60%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box; /* Inclui o padding na largura e altura totais */
+}
+
+.carta {
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.carta img {
+  width: 60%;
+  height: 80%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.controles-jogo {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
