@@ -6,12 +6,9 @@
     <title>Stellar Memory</title>
 
     <!--conectando as fontes/tipografia-->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Jersey+25&family=Nova+Square&family=Press+Start+2P&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Jersey+25&family=Nova+Square&family=Press+Start+2P&display=swap" rel="stylesheet">
 
     <!--conectando o hmtl do jgo com o css ta tela do jogo-->
     <link rel="stylesheet" href="../../css/jogo.css" />
@@ -21,6 +18,8 @@
       <h1>Stellar Memory</h1>
     </header>
 
+    <iframe src="../ceu/ceu.html" class="ceu-fundo"></iframe>
+    
     <section class="informacoes_partida">
       <h2>Informações da Partida</h2>
       <ul>
@@ -70,28 +69,10 @@
       <a href="../edicao_perfil/edicao_perfil.html">Editar Perfil</a>
       <a href="../login/login.html">Desconectar</a>
     </nav>
+    
+    <script src="../../js/jogo.js"></script>
+
   </body>
 </html>
 
-<!--adicionando um script js para fazer a repetição das cartas-->
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const cartasContainer = document.getElementById("cartas-container");
 
-    const verso = "../../img/1.png";
-
-    const quantidadeCartas = 16;
-
-    for (let i = 0; i < quantidadeCartas; i++) {
-      const carta = document.createElement("div");
-      carta.classList.add("carta");
-
-      const img = document.createElement("img");
-      img.src = verso;
-      img.alt = "Verso da Carta";
-
-      carta.appendChild(img);
-      cartasContainer.appendChild(carta);
-    }
-  });
-</script>
