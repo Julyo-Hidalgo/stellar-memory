@@ -1,61 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stellar Memory</title>
 
-    <!--conectando as fontes/tipografia-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Jersey+25&family=Nova+Square&family=Press+Start+2P&display=swap" rel="stylesheet">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stellar Memory</title>
 
-    <!--conectando o hmtl do jgo com o css ta tela do jogo-->
-    <link rel="stylesheet" href="../../css/jogo.css" />
-  </head>
-  <body>
-    <header>
-      <h1>Stellar Memory</h1>
-    </header>
+  <!--conectando as fontes/tipografia-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Nova+Square&family=Press+Start+2P&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+    rel="stylesheet">
 
-    <iframe src="../ceu/ceu.html" class="ceu-fundo"></iframe>
-    
-    <section class="informacoes_partida">
-      <h2>Informações da Partida</h2>
-      <ul>
-        <li>Tempo da Partida: <span id="tempo-partida">00:00</span></li>
-        <li>Número de Jogadas: <span id="numero-jogadas">0</span></li>
-        <li>
-          Configuração do Tabuleiro:
-          <select id="configuracao-tabuleiro">
-            <option value="selecione"></option>
-            <option value="2x2">2x2</option>
-            <option value="4x4">4x4</option>
-            <option value="3x3">3x3</option>
-            <option value="5x5">5x5</option>
-            <option value="6x6">6x6</option>
-            <option value="7x7">7x7</option>
-            <option value="8x8">8x8</option>
-          </select>
-        </li>
-        <li>
-          Modalidade:
-          <select id="modalidade">
-            <option value="selecione"></option>
-            <option value="classico">Clássico</option>
-            <option value="contra_tempo">Contra o Tempo</option>
-          </select>
-        </li>
-        <li id="tempo-restante-container">
-          Tempo Restante: <span id="tempo-restante">00:00</span>
-        </li>
-      </ul>
-    </section>
-    <section class="tabuleiro-jogo">
-      <div class="tabuleiro">
-        <div id="cartas-container"></div>
-      </div>
-    </section>
+  <!--conectando o hmtl do jgo com o css ta tela do jogo-->
+  <link rel="stylesheet" href="../../css/jogo.css" />
+</head>
+
+<body>
+  <header>
+    <h1>Stellar Memory</h1>
+  </header>
+
+  <button class="menu_button" id="menu-toggle-btn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <nav class="side_menu" id="side_menu">
+    <a href="../ranking/ranking.html">Ranking</a>
+    <a href="../edicao_perfil/edicao_perfil.html">Editar Perfil</a>
+    <a href="../login/login.html">Desconectar</a>
+  </nav>
+
+
+  <iframe src="../ceu/ceu.html" class="ceu-fundo"></iframe>
+
+  <section class="informacoes_partida">
+    <h2>Informações da Partida</h2>
+    <ul>
+      <li>Tempo da Partida: <span id="tempo-partida">00:00</span></li>
+      <li>Número de Jogadas: <span id="numero-jogadas">0</span></li>
+      <li>
+        Configuração do Tabuleiro:
+        <select id="configuracao-tabuleiro">
+          <option value="selecione"></option>
+          <option value="2x2">2x2</option>
+          <option value="4x4">4x4</option>
+          <option value="3x3">3x3</option>
+          <option value="5x5">5x5</option>
+          <option value="6x6">6x6</option>
+          <option value="7x7">7x7</option>
+          <option value="8x8">8x8</option>
+        </select>
+      </li>
+      <li>
+        Modalidade:
+        <select id="modalidade">
+          <option value="selecione"></option>
+          <option value="classico">Clássico</option>
+          <option value="contra_tempo">Contra o Tempo</option>
+        </select>
+      </li>
+      <li id="tempo-restante-container">
+        Tempo Restante: <span id="tempo-restante">00:00</span>
+      </li>
+    </ul>
+
+    <br><br><br>
+
     <section class="controles-jogo">
       <div class="botoes_trapaca">
         <button id="botao_ativar_trapaca">Ativar Trapaça</button>
@@ -63,65 +77,78 @@
       </div>
     </section>
 
+    <br><br>
+    <!-- vou tirar por enquanto por causa da adição do menu
     <nav class="links-navegacao">
       <a href="../ranking/ranking.html">Ranking</a>
       <a href="../edicao_perfil/edicao_perfil.html">Editar Perfil</a>
       <a href="../login/login.html">Desconectar</a>
     </nav>
-    
-    <script src="../../js/jogo.js"></script>
+    -->
 
-	
-	<section id="historico" class="historico">
-	  <table>
-		<caption>Histórico de Partidas</caption>
-		<thead>
-		  <tr>
-		    <th>Nome do Jogador</th>
-		    <th>Dimensões do Tabuleiro</th>
-		    <th>Modalidade</th>
-		    <th>Tempo até o Resultado</th>
-		    <th>Nº de Jogadas</th>
-		    <th>Resultado</th>
-		    <th>Data</th>
-		    <th>Hora</th>
-		  </tr>
-		</thead>
-		<tbody>
-		  <tr>
-		    <td>Ana Souza</td>
-		    <td>2 × 2</td>
-		    <td>Clássico</td>
-		    <td><time datetime="PT45S">45s</time></td>
-		    <td>6</td>
-		    <td>Vitória</td>
-		    <td><time datetime="2025-08-20">20/08/2025</time></td>
-		    <td><time datetime="19:24">19:24</time></td>
-		  </tr>
-		  <tr>
-		    <td>Pedro Lima</td>
-		    <td>4 × 4</td>
-		    <td>Contra o tempo</td>
-		    <td><time datetime="PT01M15S">1m 15s</time></td>
-		    <td>10</td>
-		    <td>Derrota</td>
-		    <td><time datetime="2025-08-21">21/08/2025</time></td>
-		    <td><time datetime="21:10">21:10</time></td>
-		  </tr>
-		  <tr>
-		    <td>Ana Souza</td>
-		    <td>8 × 3</td>
-		    <td>Clássico</td>
-		    <td><time datetime="PT05M42S">5m 42s</time></td>
-		    <td>22</td>
-		    <td>Vitória</td>
-		    <td><time datetime="2025-08-22">22/08/2025</time></td>
-		    <td><time datetime="14:03">14:03</time></td>
-		  </tr>
-		</tbody>
-	  </table>
-	</section>
-  </body>
+
+
+  </section>
+  <section class="tabuleiro-jogo">
+    <div class="tabuleiro">
+      <div id="cartas-container"></div>
+    </div>
+  </section>
+
+  <script src="../../js/jogo.js"></script>
+
+  <br><br><br><br><br>
+
+  <br><br><br><br>
+  <section id="historico" class="historico">
+    <table>
+      <caption>Histórico de Partidas</caption>
+      <thead>
+        <tr>
+          <th>Nome do Jogador</th>
+          <th>Dimensões do Tabuleiro</th>
+          <th>Modalidade</th>
+          <th>Tempo até o Resultado</th>
+          <th>Nº de Jogadas</th>
+          <th>Resultado</th>
+          <th>Data</th>
+          <th>Hora</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ana Souza</td>
+          <td>2 × 2</td>
+          <td>Clássico</td>
+          <td><time datetime="PT45S">45s</time></td>
+          <td>6</td>
+          <td>Vitória</td>
+          <td><time datetime="2025-08-20">20/08/2025</time></td>
+          <td><time datetime="19:24">19:24</time></td>
+        </tr>
+        <tr>
+          <td>Pedro Lima</td>
+          <td>4 × 4</td>
+          <td>Contra o tempo</td>
+          <td><time datetime="PT01M15S">1m 15s</time></td>
+          <td>10</td>
+          <td>Derrota</td>
+          <td><time datetime="2025-08-21">21/08/2025</time></td>
+          <td><time datetime="21:10">21:10</time></td>
+        </tr>
+        <tr>
+          <td>Ana Souza</td>
+          <td>8 × 3</td>
+          <td>Clássico</td>
+          <td><time datetime="PT05M42S">5m 42s</time></td>
+          <td>22</td>
+          <td>Vitória</td>
+          <td><time datetime="2025-08-22">22/08/2025</time></td>
+          <td><time datetime="14:03">14:03</time></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</body>
+
 </html>
-
-
