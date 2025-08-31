@@ -1,11 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Stellar Memory - Editar Perfil</title>
+    <link rel="stylesheet" href="../../css/global.css" />
 </head>
 <body>
-   <h2>Editar Perfil</h2><!--coloquei só para ver se o link da tela do jogo para edicao d perfil tava funcionando, pode tirar mudar dps--> 
+    <header>
+        <h1>Stellar Memory</h1>
+        <a href="!!!ALTERAR" class="back-link">Voltar ao Jogo</a>
+    </header>
+    
+    <main>
+        <h2>EDITAR PERFIL</h2>
+        
+        <form id="profile-form">
+            <div class="form-group">
+                <label for="name">Nome completo</label>
+                <input type="text" id="name" value="Jose Da Silva">
+            </div>
+            
+            <div class="form-group">
+                <label for="birthdate">Data de nascimento</label>
+                <input type="date" id="birthdate" value="1999-01-12">
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" value="user123">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <div class="password-container">
+                    <input type="password" id="password" value="OLOCOMEO">
+                    <button type="button" class="toggle-password" aria-label="Mostrar senha">👁️</button>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" value="exemplo@gmail.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Telefone</label>
+                <input type="tel" id="phone" value="(11) 12345-6789">
+            </div>
+            
+            <div class="form-group">
+                <label for="cpf">CPF</label>
+                <input type="text" id="cpf" value="123.345.678-90">
+            </div>
+            
+            <button type="submit" class="save-button">Salvar alterações</button>
+        </form>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const togglePasswordButton = document.querySelector('.toggle-password');
+            const passwordInput = document.getElementById('password');
+            
+            togglePasswordButton.addEventListener('click', function() {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    togglePasswordButton.textContent = '🔒';
+                } else {
+                    passwordInput.type = 'password';
+                    togglePasswordButton.textContent = '👁️';
+                }
+            });
+            
+            document.getElementById('profile-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Alterações salvas com sucesso!');
+            });
+        });
+    </script>
 </body>
 </html>

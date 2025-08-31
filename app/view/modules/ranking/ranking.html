@@ -1,11 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Stellar Memory - Ranking Global</title>
+	<link rel="stylesheet" href="../../css/global.css" />
+   
 </head>
 <body>
-    <h2>RANKING</h2> <!--coloquei isso só para saber se o link da tela do jogo para ranking tava funcionando-->
+    
+    <div class="container">
+        <header>
+            <h1>Stellar Memory</h1>
+            <a href="../../modules/jogo/jogo.html" class="back-link">Voltar ao Jogo</a>
+        </header>
+        
+        <h2>RANKING GLOBAL</h2>
+        
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-size="2x2">2x2</button>
+            <button class="filter-btn" data-size="4x4">4x4</button>
+            <button class="filter-btn" data-size="6x6">6x6</button>
+            <button class="filter-btn" data-size="8x8">8x8</button>
+        </div>
+        
+        <table class="ranking-table">
+            <thead>
+                <tr>
+                    <th class="position">Posição</th>
+                    <th class="name">Nome do Jogador</th>
+                    <th class="score">Pontuação</th>
+                </tr>
+            </thead>
+            <tbody id="ranking-body">
+                <!-- Os dados do ranking serão inseridos aqui via JavaScript -->
+            </tbody>
+        </table>
+    </div>
+   
 </body>
 </html>
