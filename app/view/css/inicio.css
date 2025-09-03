@@ -1,0 +1,31 @@
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #3b82f6, #9333ea);
+      font-family: Arial, sans-serif;
+      color: #fff;
+    }
+    .container {
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;www.linkedin.com/in/ana-cardoso-699a72343
+      margin-bottom: 20px;
+    }
+    button {
+      background: #fff;
+      color: #3b82f6;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #f0f0f0;
+    }
