@@ -1,0 +1,34 @@
+h1{
+	
+}
+
+.information-container{
+	margin: 2vh auto;
+	padding: 20px;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 10px;
+    color: white;
+    box-shadow: 0 0 10px rgba(249, 239, 47, 0.2);
+    backdrop-filter: blur(120px);
+    text-align: center;
+	width: 90%;
+}
+
+
+.information-container table{
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+    text-align: left;
+}
+
+.information-container caption{
+	font-size: 1.5em;
+	margin-bottom: 10px;
+}
+
+.information-container th, td{
+	padding: 10px;
+	border-bottom: 1px solid rgba(255, 255, 255, .2);
+}
