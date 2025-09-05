@@ -1,0 +1,216 @@
+/* fundo gradiente*/
+.sky 
+{
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 50% 120%,
+        #111d27 0%,
+        #0e1926 20%,
+        #091225 40%,
+        #060a18 60%,
+        #03050b 80%,
+        #020305 100%);
+    display: grid;
+    place-items: center;
+    color: #cde3ff;
+}
+
+/* Camadas de estrelas */
+.stars-container 
+{
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+/* Estrelas pequenas (camada 1) */
+.star.star1
+{
+    width: 1px;
+    height: 1px;
+    animation: drift1 120s linear infinite, twinkle1 8s ease-in-out infinite;
+    opacity: 0.7;
+    filter: drop-shadow(0 0 2px #fff);
+}
+
+/* Estrelas médias (camada 2) */
+.star.star2 
+{
+    width: 1.5px;
+    height: 1.5px;
+    animation: drift2 90s linear infinite, twinkle2 7s ease-in-out infinite;
+    opacity: 1;
+    filter: drop-shadow(0 0 3px #fff);
+}
+
+/* Estrelas grandes (camada 3) */
+.star.star3 
+{
+    width: 2px;
+    height: 2px;
+    animation: drift3 60s linear infinite, twinkle3 6s ease-in-out infinite;
+    opacity: 2;
+    filter: drop-shadow(0 0 4px #fff);
+}
+
+
+
+/* queda usar 700 estrelas*/
+/*
+@keyframes drift1 
+{
+    0% { transform: translateY(-100vh); }
+    100% { transform: translateY(100vh); }
+}
+
+@keyframes drift2 
+{
+    0% { transform: translateY(-100vh); }
+    100% { transform: translateY(100vh); }
+}
+
+@keyframes drift3 
+{
+    0% { transform: translateY(-100vh); }
+    100% { transform: translateY(100vh); }
+}
+*/
+
+
+
+
+/* rodar -musar de 900 a 1000 estrelas*/
+
+@keyframes blackHole1 
+{
+  0% 
+  { 
+    transform: 
+      rotate(0deg) 
+      translateX(calc(40vw - 50%)) 
+      rotate(0deg); 
+  }
+  100% 
+  { 
+    transform: 
+      rotate(360deg) 
+      translateX(calc(40vw - 50%)) 
+      rotate(-360deg); 
+  }
+}
+
+@keyframes blackHole2 
+{
+  0% 
+  { 
+    transform: 
+      rotate(90deg) 
+      translateX(calc(30vw - 50%)) 
+      rotate(-90deg); 
+  }
+  100% 
+  { 
+    transform: 
+      rotate(450deg) 
+      translateX(calc(30vw - 50%)) 
+      rotate(-450deg); 
+  }
+}
+
+@keyframes blackHole3 
+{
+  0% 
+  { 
+    transform: 
+      rotate(180deg) 
+      translateX(calc(20vw - 50%)) 
+      rotate(-180deg); 
+  }
+  100% 
+  { 
+    transform: 
+      rotate(540deg) 
+      translateX(calc(20vw - 50%)) 
+      rotate(-540deg); 
+  }
+}
+.star.star1 { animation: blackHole1 900s linear infinite, twinkle1 30s ease-in-out infinite; }
+.star.star2 { animation: blackHole2 350s linear infinite, twinkle2 20s ease-in-out infinite; }
+.star.star3 { animation: blackHole3 150s linear infinite, twinkle3 10s ease-in-out infinite; }
+
+
+
+
+
+/*espiral - ta no javascript tbm*//*
+@keyframes spiralGalaxy 
+{
+  0% 
+  {
+    transform: 
+      rotate(0deg) 
+      translateX(calc(20vw * var(--distance))) 
+      rotate(0deg)
+      scale(calc(1 - var(--distance) * 0.3));
+    opacity: calc(0.3 + var(--distance) * 0.7);
+  }
+  100% 
+  {
+    transform: 
+      rotate(360deg) 
+      translateX(calc(20vw * var(--distance))) 
+      rotate(-360deg)
+      scale(calc(1 - var(--distance) * 0.3));
+    opacity: calc(0.3 + var(--distance) * 0.7);
+  }
+}
+
+
+
+
+/*piscar estrelas*/
+@keyframes twinkle1 
+{
+    0%, 20%, 40%, 60%, 80%, 100% { opacity: 0.3; }
+    10%, 30%, 50%, 70%, 90% { opacity: 0.9; }
+}
+
+@keyframes twinkle2 
+{
+    0%, 25%, 50%, 75%, 100% { opacity: 0.4; }
+    12%, 37%, 62%, 87% { opacity: 0.95; }
+}
+
+@keyframes twinkle3 
+{
+    0%, 15%, 30%, 45%, 60%, 75%, 90%, 100% { opacity: 0.5; }
+    5%, 20%, 35%, 50%, 65%, 80%, 95% { opacity: 1; }
+}
+
+/* Acessibilidade */
+@media (prefers-reduced-motion: reduce) 
+{
+    .star 
+    {
+        animation: none !important;
+    }
+}
+
+.ceu-fundo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  z-index: -1; /* para ficar atrás do conteúdo da página */
+}
