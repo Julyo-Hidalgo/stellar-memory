@@ -20,12 +20,3 @@ document.addEventListener("DOMContentLoaded", () => {
       cartasContainer.appendChild(carta);
     }
   });
-/*botao menu */
-  document.addEventListener('DOMContentLoaded', function() {
-    const menuToggleButton = document.getElementById('menu-toggle-btn');
-    const sideMenu = document.getElementById('side_menu');
-
-    menuToggleButton.addEventListener('click', function() {
-        sideMenu.classList.toggle('show');
-    });
-});

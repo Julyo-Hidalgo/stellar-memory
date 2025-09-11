@@ -28,12 +28,18 @@
                 
                 container.appendChild(star);
 
-                
-                 /*espiral*//*
-                star.style.setProperty('--distance', Math.random() * 0.9 + 0.1);
-                star.style.animation = `spiralGalaxy ${120 + Math.random() * 60}s linear infinite, twinkle${starType} ${5 + Math.random() * 4}s ease-in-out infinite`;
-                */
-
+        
 
             }
         });
+
+        
+/*botao menu */
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuToggleButton = document.getElementById('menu-toggle-btn');
+    const sideMenu = document.getElementById('side_menu');
+
+    menuToggleButton.addEventListener('click', function() {
+        sideMenu.classList.toggle('show');
+    });
+});
