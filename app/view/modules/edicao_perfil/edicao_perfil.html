@@ -1,110 +1,78 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stellar Memory - Editar Perfil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="../../css/global.css" />
-
-    
-  <!--conectando as fontes/tipografia-->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Press+Start+2P&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
-    rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../../css/forms.css">
+    <title>Edição de Dados</title>
 </head>
 
-<body>
-    <header>
-        <h1>Stellar Memory</h1>
-    </header>
+<body class="edicao-page">
+    <iframe src="../ceu/ceu.html" class="ceu-fundo"></iframe>
 
-    <button class="menu_button" id="menu-toggle-btn">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-
-    <nav class="side_menu" id="side_menu">
-        <a href="../login/login.html">Desconectar</a>
-        <a href="../historico/historico.html">Histórico</a>
-        <a href="../ranking/ranking.html">Ranking</a>
-        <a href="../jogo/jogo.html">Tela do Jogo</a>
-    </nav>
-
-    <main>
-        <h2>EDITAR PERFIL</h2>
+        
+  <header>
+    <h1>Stellar Memory</h1>
+  </header>
+  
+    <!-- Caixa de edição -->
+    <main class="container">
+        <h2 class="subtitulo">EDIÇÃO DE DADOS</h2>
 
         <form id="profile-form">
-            <div class="form-group">
-                <label for="name">Nome completo</label>
-                <input type="text" id="name" value="Jose Da Silva">
+            <!-- Coluna esquerda -->
+            <div class="input-box">
+                <input placeholder="Nome Completo" type="text" required>
+                <i class='bx bx-id-card'></i>
             </div>
 
-            <div class="form-group">
-                <label for="birthdate">Data de nascimento</label>
-                <input type="date" id="birthdate" value="1999-01-12">
+            <div class="input-box">
+                <input placeholder="Data de Nascimento" type="date" required>
+                <i class='bx bx-calendar'></i>
             </div>
 
-            <div class="form-group">
-                <label for="username">Usuário</label>
-                <input type="text" id="username" value="user123">
+            <div class="input-box">
+                <input placeholder="CPF" type="text" maxlength="14" required readonly>
+                <i class='bx bx-id-card'></i>
             </div>
 
-            <div class="form-group">
-                <label for="password">Senha</label>
-                <div class="password-container">
-                    <input type="password" id="password" value="OLOCOMEO">
-                    <button type="button" class="toggle-password" aria-label="Mostrar senha">👁️</button>
-                </div>
+            <div class="input-box">
+                <input placeholder="Telefone" type="tel" required>
+                <i class='bx bx-phone'></i>
             </div>
 
-            <div class="form-group">
-                <label for="email">E-mail</label>
-                <input type="email" id="email" value="exemplo@gmail.com">
+            <!-- Coluna direita -->
+            <div class="input-box">
+                <input placeholder="E-mail" type="email" required>
+                <i class='bx bx-envelope'></i>
             </div>
 
-            <div class="form-group">
-                <label for="phone">Telefone</label>
-                <input type="tel" id="phone" value="(11) 12345-6789">
+            <div class="input-box">
+                <input placeholder="Username" type="text" required>
+                <i class='bx bx-user'></i>
             </div>
 
-            <div class="form-group">
-                <label for="cpf">CPF</label>
-                <input type="text" id="cpf" value="123.345.678-90">
+            <div class="input-box">
+                <input id="password" placeholder="Senha" type="password" required>
+                <button type="button" class="toggle-password">
+                <img src="../../../../app/view/img/red-eyes.png">
+                </button>
             </div>
 
-            <button type="submit" class="save-button">Salvar alterações</button>
+            <!-- Botão -->
+            <button type="submit">Salvar Alterações</button>
+
+
         </form>
     </main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const togglePasswordButton = document.querySelector('.toggle-password');
-            const passwordInput = document.getElementById('password');
-
-            togglePasswordButton.addEventListener('click', function () {
-                if (passwordInput.type === 'password') {
-                    passwordInput.type = 'text';
-                    togglePasswordButton.textContent = '🔒';
-                } else {
-                    passwordInput.type = 'password';
-                    togglePasswordButton.textContent = '👁️';
-                }
-            });
-
-            document.getElementById('profile-form').addEventListener('submit', function (e) {
-                e.preventDefault();
-                alert('Alterações salvas com sucesso!');
-            });
-        });
-    </script>
-
-    <script src="../../js/global.js"></script>
-
+    <script src="../../js/forms.js"></script>
 </body>
 
 </html>
