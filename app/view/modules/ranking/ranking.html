@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stellar Memory - Ranking Global</title>
-    <link rel="stylesheet" href="../../css/global.css" />
+    <title>Ranking Global</title>
 
+    <link rel="stylesheet" href="../../css/global.css" />
+    <link rel="stylesheet" href="../../css/ranking.css" />
 
     <!--conectando as fontes/tipografia-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,10 +15,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Press+Start+2P&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
         rel="stylesheet">
-
 </head>
 
 <body>
+    <iframe src="../ceu/ceu.html" class="ceu-fundo"></iframe>
 
     <header>
         <h1>Stellar Memory</h1>
@@ -31,36 +32,102 @@
 
     <nav class="side_menu" id="side_menu">
         <a href="../edicao_perfil/edicao_perfil.html">Editar Perfil</a>
-        <a href="../historico/historico.html">Histórico</a>
+        <a href="../historico/historico.html">Histórico de Partidas</a>
         <a href="../jogo/jogo.html">Tela do Jogo</a>
         <a href="../login/login.html">Desconectar</a>
     </nav>
 
+    <section id="ranking" class="ranking, information-container">
+        <h1>Ranking Global</h1>
 
-        <h2>RANKING GLOBAL</h2>
-
-        <div class="filter-buttons">
-            <button class="filter-btn active" data-size="2x2">2x2</button>
-            <button class="filter-btn" data-size="4x4">4x4</button>
-            <button class="filter-btn" data-size="6x6">6x6</button>
-            <button class="filter-btn" data-size="8x8">8x8</button>
-        </div>
-
-        <table class="ranking-table">
+        <table>
+            <caption>Top 10 Jogadores</caption>
             <thead>
                 <tr>
-                    <th class="position">Posição</th>
-                    <th class="name">Nome do Jogador</th>
-                    <th class="score">Pontuação</th>
+                    <th>Username</th>
+                    <th>Tamanho do Tabuleiro</th>
+                    <th>Nº de Jogadas</th>
+                    <th>Modo de Jogo</th>
+                    <th>Data da Partida</th>
                 </tr>
             </thead>
             <tbody id="ranking-body">
-                <!-- Os dados do ranking serão inseridos aqui via JavaScript -->
+                <tr>
+                    <td>Jogador1</td>
+                    <td>4x4</td>
+                    <td>25</td>
+                    <td>Clássico</td>
+                    <td>20/08/2025</td>
+                </tr>
+                <tr>
+                    <td>Jogador2</td>
+                    <td>6x6</td>
+                    <td>30</td>
+                    <td>Contra o Tempo</td>
+                    <td>21/08/2025</td>
+                </tr>
+                <tr>
+                    <td>Jogador3</td>
+                    <td>2x2</td>
+                    <td>15</td>
+                    <td>Clássico</td>
+                    <td>22/08/2025</td>
+                </tr>
+                <tr>
+                    <td>Jogador4</td>
+                    <td>8x8</td>
+                    <td>40</td>
+                    <td>Contra o Tempo</td>
+                    <td>23/08/2025</td>
+                </tr>
+                <tr>
+                    <td>Jogador5</td>
+                    <td>4x4</td>
+                    <td>20</td>
+                    <td>Clássico</td>
+                    <td>24/08/2025</td>
+                </tr>
+                <tr>
+                    <td>Jogador6</td>
+                    <td>6x6</td>
+                    <td>35</td>
+                    <td>Contra o Tempo</td>
+                    <td>25/08/2025</td>
+                </tr>
+                <tr>
+                    <td>Jogador7</td>
+                    <td>2x2</td>
+                    <td>18</td>
+                    <td>Clássico</td>
+                    <td>26/08/2025</td>
+                </tr>
+                <tr>
+                    <td>Jogador8</td>
+                    <td>8x8</td>
+                    <td>45</td>
+                    <td>Contra o Tempo</td>
+                    <td>27/08/2025</td>
+                </tr>
+                <tr>
+                    <td>Jogador9</td>
+                    <td>4x4</td>
+                    <td>22</td>
+                    <td>Clássico</td>
+                    <td>28/08/2025</td>
+                </tr>
+                <tr>
+                    <td>Jogador10</td>
+                    <td>6x6</td>
+                    <td>32</td>
+                    <td>Contra o Tempo</td>
+                    <td>29/08/2025</td>
+                </tr>
             </tbody>
         </table>
-    </div>
+    </section>
 
     <script src="../../js/global.js"></script>
 </body>
 
 </html>
+
