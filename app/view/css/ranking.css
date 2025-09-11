@@ -1,0 +1,106 @@
+/* Estilos para a página de Ranking */
+@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Jersey+25&family=Press+Start+2P&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+h1 {
+    font-family: "Press Start 2P", sans-serif;
+    font-size: 3em;
+    text-transform: uppercase;
+    color: #f3ea88;
+}
+
+.information-container {
+    margin: 2vh auto;
+    padding: 20px;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 10px;
+    color: white;
+    box-shadow: 0 0 10px rgba(249, 239, 47, 0.2);
+    backdrop-filter: blur(120px);
+    text-align: center;
+    width: 90%;
+    max-width: 1000px;
+    font-family: "Roboto Mono", sans-serif;
+}
+
+.information-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.information-container caption {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #f3ea88;
+}
+
+.information-container th, 
+.information-container td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, .2);
+    color: #ffffff;
+}
+
+.information-container th {
+    background-color: rgba(255, 255, 255, 0.1);
+    font-weight: bold;
+    text-align: center;
+}
+
+.information-container tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.information-container tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transition: background-color 0.3s ease;
+}
+
+.information-container td {
+    text-align: center;
+}
+
+
+/* Estilos especiais para os três primeiros lugares */
+.information-container tbody tr:nth-child(1) {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%) !important;
+    color: #000 !important;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+}
+
+.information-container tbody tr:nth-child(1) td {
+    color: #000 !important;
+}
+
+.information-container tbody tr:nth-child(2) {
+    background: linear-gradient(135deg, #C0C0C0 0%, #A8A8A8 100%) !important;
+    color: #000 !important;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(192, 192, 192, 0.3);
+}
+
+.information-container tbody tr:nth-child(2) td {
+    color: #000 !important;
+}
+
+.information-container tbody tr:nth-child(3) {
+    background: linear-gradient(135deg, #CD7F32 0%, #B8860B 100%) !important;
+    color: #fff !important;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(205, 127, 50, 0.3);
+}
+
+.information-container tbody tr:nth-child(3) td {
+    color: #fff !important;
+}
+
+/* Garantir que o hover não interfira nos três primeiros */
+.information-container tbody tr:nth-child(1):hover,
+.information-container tbody tr:nth-child(2):hover,
+.information-container tbody tr:nth-child(3):hover {
+    background: inherit !important;
+}
+
