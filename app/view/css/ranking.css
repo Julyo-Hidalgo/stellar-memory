@@ -8,6 +8,13 @@ h1 {
     color: #f3ea88;
 }
 
+h2 {
+    font-family: sans-serif;
+    font-size: 3em;
+    text-transform: uppercase;
+    color: #f3ea88;
+}
+
 .information-container {
     margin: 2vh auto;
     padding: 20px;
@@ -103,4 +110,5 @@ h1 {
 .information-container tbody tr:nth-child(3):hover {
     background: inherit !important;
 }
+
 
