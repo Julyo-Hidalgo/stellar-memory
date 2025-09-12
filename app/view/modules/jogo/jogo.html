@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8" />
@@ -44,26 +44,28 @@
     <ul>
       <li>Tempo da Partida: <span id="tempo-partida">00:00</span></li>
       <li>Número de Jogadas: <span id="numero-jogadas">0</span></li>
-      <li>
-        Configuração do Tabuleiro:
-        <select id="configuracao-tabuleiro">
-          <option value="selecione"></option>
-          <option value="2x2">2x2</option>
-          <option value="4x4">4x4</option>
-          <option value="3x3">3x3</option>
-          <option value="5x5">5x5</option>
-          <option value="6x6">6x6</option>
-          <option value="7x7">7x7</option>
-          <option value="8x8">8x8</option>
-        </select>
-      </li>
-      <li>
-        Modalidade:
-        <select id="modalidade">
-          <option value="selecione"></option>
-          <option value="classico">Clássico</option>
-          <option value="contra_tempo">Contra o Tempo</option>
-        </select>
+      <li><li>
+  <label for="configuracao-tabuleiro">Configuração do Tabuleiro:</label>
+  <select id="configuracao-tabuleiro">
+    <option value="" disabled selected>Selecione...</option>
+    <option value="2x2">2x2</option>
+    <option value="3x3">3x3</option>
+    <option value="4x4">4x4</option>
+    <option value="5x5">5x5</option>
+    <option value="6x6">6x6</option>
+    <option value="7x7">7x7</option>
+    <option value="8x8">8x8</option>
+  </select>
+</li>
+<li>
+  <label for="modalidade">Modalidade:</label>
+  <select id="modalidade">
+    <option value="" disabled selected>Selecione...</option>
+    <option value="classico">Clássico</option>
+    <option value="contra_tempo">Contra o Tempo</option>
+  </select>
+</li>
+
       </li>
       <li id="tempo-restante-container">
         Tempo Restante: <span id="tempo-restante">00:00</span>

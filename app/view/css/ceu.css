@@ -149,34 +149,6 @@
 
 
 
-
-
-/*espiral - ta no javascript tbm*//*
-@keyframes spiralGalaxy 
-{
-  0% 
-  {
-    transform: 
-      rotate(0deg) 
-      translateX(calc(20vw * var(--distance))) 
-      rotate(0deg)
-      scale(calc(1 - var(--distance) * 0.3));
-    opacity: calc(0.3 + var(--distance) * 0.7);
-  }
-  100% 
-  {
-    transform: 
-      rotate(360deg) 
-      translateX(calc(20vw * var(--distance))) 
-      rotate(-360deg)
-      scale(calc(1 - var(--distance) * 0.3));
-    opacity: calc(0.3 + var(--distance) * 0.7);
-  }
-}
-
-
-
-
 /*piscar estrelas*/
 @keyframes twinkle1 
 {
