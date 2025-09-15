@@ -1,31 +1,64 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto Mono", monospace;
+  color: #fff; /* letras brancas */
+  background-color: #000; /* caso o iframe não carregue */
+  overflow: hidden;
+}
 
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #3b82f6, #9333ea);
-      font-family: Arial, sans-serif;
-      color: #fff;
-    }
-    .container {
-      text-align: center;
-    }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-    button {
-      background: #fff;
-      color: #3b82f6;
-      border: none;
-      padding: 12px 24px;
-      font-size: 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover {
-      background: #f0f0f0;
-    }
+nav {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+/* Conteúdo Principal */
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center; 
+}
+
+.container {
+  max-width: 900px;
+  padding: 20px;
+}
+
+/* Texto de boas-vindas */
+.welcome-text {
+  font-family: Roboto Mono, monospace;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+
+/* Botões de cadastro e login/entre */
+.btn {
+  font-family: "Press Start 2P", system-ui;
+  font-size: 12px;
+  display: inline-block;
+  text-decoration: none;
+
+  background-color: transparent;
+  color: #f3ea88;
+  border: 2px solid #f3ea88;
+  border-radius: 80px;
+
+  padding: 12px 28px;
+  cursor: pointer;
+
+  transition: all 0.65s ease;
+}
+
+.btn:hover {
+  background-color: #f3ea88;
+  color: #09000f;
+  transform: scale(1.1);
+}

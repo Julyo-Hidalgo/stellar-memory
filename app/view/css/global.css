@@ -1,88 +1,216 @@
-/* Reset básico */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Jersey+25&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
-html, body { height: 100%; }
+/* Reset básico */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
 
 body {
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-    background: #000;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 
-/* fundo gradiente*/
-.sky 
-{
-    position: relative;
-    height: 100vh;
-    overflow: hidden;
-    background:
-        radial-gradient(ellipse at 50% 120%,
-        #111d27 0%,
-        #0e1926 20%,
-        #091225 40%,
-        #060a18 60%,
-        #03050b 80%,
-        #020305 100%);
-    display: grid;
-    place-items: center;
-    color: #cde3ff;
-}
+/*header - estilização do cabeçalho*/
 
-/* Texto central q n tem ainda *//*
-.title {
-    position: relative;
-    z-index: 10;
+header {
     text-align: center;
-    line-height: 1.2;
-    letter-spacing: .08em;
-    font-weight: 700;
+    padding: 45px 0;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+    /*esconde elementos que estao esteja sobre ele*/
+    box-shadow: 0 5px 25px #00000099;
+    width: 100%;
+    border: 2px solid #6A5ACD4D;
+    background: radial-gradient(circle at 50% 50%, #6450FF14 0%, transparent 60%);
+    z-index: 0;
+    /*posicionamento em relação a profundidade, seguindo fluxo normal*/
 }
-.title span:first-child { font-size: clamp(18px, 3vw, 28px); opacity: .8; }
-.title span:last-child  { font-size: clamp(14px, 2vw, 18px); opacity: .65; }
-*/
+
+h1 {
+    font-family: "Press Start 2P", system-ui;
+    font-size: 55px;
+    font-weight: 900;
+    color: #f3ea88;
+    margin: 0;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    /*define ordem de empilhamento/profundidade, esta acima da header*/
+    padding: 15px;
+    letter-spacing: 2px;
+    text-shadow:
+        /*para deixar com efeito d iluminação*/
+        0 0 20px #e1d982,
+        0 0 30px #c3bc6e;
+
+}
+
+
+/*menu*/
+
+/*botao do menu*/
+.menu_button {
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    z-index: 1001;
+    /*garante que o botão fique em cima do menu e outros elementos*/
+    width: 37px;
+    height: 27px;
+    background: transparent;
+    /*fundo transparente do botao*/
+    border: none;
+    cursor: pointer;
+    display: flex;
+    /*alinha elementos*/
+    flex-direction: column;
+    /*fica em forma de coluna/verticalmente*/
+    justify-content: space-between;
+    /*espaço igual entre as linhas*/
+}
+
+/*estilizando as 3linhas do menu*/
+.menu_button span {
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color: #f3ea88;
+    border-radius: 2px;
+    /*cantos meio arredondados*/
+    transition: all 0.3s ease;
+}
+
+/*estilos para o menu lateral*/
+.side_menu {
+    position: fixed;
+    /* Fixa o menu na tela, não importa onde o usuário role */
+    top: 0;
+    /*colado*/
+    left: 0;
+    /*colado*/
+    height: 100%;
+    /*menu ocupa a altura total da tela */
+    width: 190px;
+    background: #010009f7;
+    backdrop-filter: blur(5px);
+    /* efeito para deixar um pouco desfocado*/
+    padding: 80px 20px 20px;
+    box-shadow: 2px 0 10px #F9EF2F33;
+    /*ou #00000080*/
+    display: flex;
+    flex-direction: column;
+    /*fica em forma de coluna/verticalmente*/
+    align-items: flex-start;
+    /*alinha os links à esquerda */
+    transition: all 0.3s ease;
+    /* transição suave para efeitos de abrir/fechar */
+    z-index: 1000;
+    /*deixa o menu fique na frente de outros elementos */
+    transform: translateX(-100%);
+    /*esconde o menu fora da tela à esquerda */
+}
+
+.side_menu a {
+    font-family: "Roboto Mono", monospace;
+    color: #f3ea88;
+    text-decoration: none;
+    /*remove o sublinhado */
+    padding: 15px 0;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    /*transiçao para quando o cursor passar sobre/hover*/
+    border-bottom: 1px solid #F3EA8833;
+    /*linha divisória sutil entre cada elemeno do menu */
+    width: 100%;
+}
+
+/* efeito quando o mouse passa sobre os links do menu */
+.side_menu a:hover {
+    color: #fff;
+    background-color: #F3EA881A;
+    transform: translateX(10px);
+    /*move o link um pouco para a direita ao passar o mouse */
+}
+
+/*para mostrar o menu quando o usuario clica(usa js)*/
+.side_menu.show {
+    transform: translateX(0);
+    /*move o menu de volta para a tela*/
+}
+
+
+/*ceu/fundo*/
+.sky {
+  position: relative;
+  height: 100vh;
+  overflow: hidden; 
+  /*elemntos fora da tela ficam escondidos*/
+  background:
+  /*fundo com efeito gradual em forma de elipse*/
+    radial-gradient(ellipse at 50% 120%,
+      #111d27 0%,
+      #0e1926 20%,
+      #091225 40%,
+      #060a18 60%,
+      #03050b 80%,
+      #020305 100%);
+  display: grid;
+  place-items: center;
+  color: #cde3ff;
+}
 
 /* Camadas de estrelas */
-.stars-container 
-{
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
+.stars-container {
+  position: absolute;
+  /*fica sobre o ceu/fundo*/
+  inset: 0;
+  /*ocupa o espaço total*/
+  pointer-events: none;
+  /*não bloqueia clques*/
+  overflow: hidden;
 }
 
+/*estrelas individuais*/
 .star {
-    position: absolute;
-    background-color: #fff;
-    border-radius: 50%;
+  position: absolute;
+  background-color: #fff;
+  border-radius: 50%;
+  /*formato de circulo*/
 }
 
 /* Estrelas pequenas (camada 1) */
-.star.star1
-{
-    width: 1px;
-    height: 1px;
-    animation: drift1 120s linear infinite, twinkle1 8s ease-in-out infinite;
-    opacity: 0.7;
-    filter: drop-shadow(0 0 2px #fff);
+.star.star1 {
+  width: 1px;
+  height: 1px;
+  opacity: 0.7;
+  filter: drop-shadow(0 0 2px #fff);
+  /*pouco brilho e a sombra segue o formato do elemento*/
 }
 
 /* Estrelas médias (camada 2) */
-.star.star2 
-{
-    width: 1.5px;
-    height: 1.5px;
-    animation: drift2 90s linear infinite, twinkle2 7s ease-in-out infinite;
-    opacity: 1;
-    filter: drop-shadow(0 0 3px #fff);
+.star.star2 {
+  width: 1.5px;
+  height: 1.5px;
+  opacity: 0.8;
+  filter: drop-shadow(0 0 3px #fff);
+  /*brilho medio*/
 }
 
 /* Estrelas grandes (camada 3) */
-.star.star3 
-{
-    width: 2px;
-    height: 2px;
-    animation: drift3 60s linear infinite, twinkle3 6s ease-in-out infinite;
-    opacity: 2;
-    filter: drop-shadow(0 0 4px #fff);
+.star.star3 {
+  width: 2px;
+  height: 2px;
+  opacity: 1;
+  filter: drop-shadow(0 0 4px #fff);
+  /*brilho forte*/
 }
 
 
@@ -111,123 +239,117 @@ body {
 
 
 
-/* rodar -musar de 900 a 1000 estrelas*/
-
-@keyframes blackHole1 
-{
-  0% 
-  { 
-    transform: 
-      rotate(0deg) 
-      translateX(calc(40vw - 50%)) 
-      rotate(0deg); 
-  }
-  100% 
-  { 
-    transform: 
-      rotate(360deg) 
-      translateX(calc(40vw - 50%)) 
-      rotate(-360deg); 
-  }
-}
-
-@keyframes blackHole2 
-{
-  0% 
-  { 
-    transform: 
-      rotate(90deg) 
-      translateX(calc(30vw - 50%)) 
-      rotate(-90deg); 
-  }
-  100% 
-  { 
-    transform: 
-      rotate(450deg) 
-      translateX(calc(30vw - 50%)) 
-      rotate(-450deg); 
-  }
-}
-
-@keyframes blackHole3 
-{
-  0% 
-  { 
-    transform: 
-      rotate(180deg) 
-      translateX(calc(20vw - 50%)) 
-      rotate(-180deg); 
-  }
-  100% 
-  { 
-    transform: 
-      rotate(540deg) 
-      translateX(calc(20vw - 50%)) 
-      rotate(-540deg); 
-  }
-}
-.star.star1 { animation: blackHole1 900s linear infinite, twinkle1 30s ease-in-out infinite; }
-.star.star2 { animation: blackHole2 350s linear infinite, twinkle2 20s ease-in-out infinite; }
-.star.star3 { animation: blackHole3 150s linear infinite, twinkle3 10s ease-in-out infinite; }
-
-
-
-
-
-/*espiral - ta no javascript tbm*//*
-@keyframes spiralGalaxy 
-{
-  0% 
-  {
-    transform: 
-      rotate(0deg) 
-      translateX(calc(20vw * var(--distance))) 
+/* rodar -usar de 900 a 1000 estrelas*/
+@keyframes move1 {
+  0% {
+    transform:
+      /*usada p mover/girar/etc elementos(estrelas)*/
       rotate(0deg)
-      scale(calc(1 - var(--distance) * 0.3));
-    opacity: calc(0.3 + var(--distance) * 0.7);
+      /*inicialmente n gira*/
+      translateX(calc(40vw - 50%))
+      /*move para uma nova posição*/
   }
-  100% 
-  {
-    transform: 
-      rotate(360deg) 
-      translateX(calc(20vw * var(--distance))) 
-      rotate(-360deg)
-      scale(calc(1 - var(--distance) * 0.3));
-    opacity: calc(0.3 + var(--distance) * 0.7);
+  100%
+  /*finalização*/
+    {
+    transform:
+      rotate(360deg)
+      /*gira como um circulo total no sentido horário*/
+      translateX(calc(40vw - 50%))
+      /*move 40% da viewpoint (janela visivel navegador)*/
+      rotate(-360deg);
+    /*gira como um circulo total no sentido antihorário*/
   }
 }
 
+@keyframes move2 {
+  0% {
+    transform:
+      rotate(90deg)
+      /*gira um quarto sentido horário*/
+      translateX(calc(30vw - 50%)) 
+      rotate(-90deg);
+    /*gira metade sentido antihorário*/
+  }
 
+  100%
+    {
+    transform:
+      rotate(450deg)
+      /*gira total + um quarto sentido horário*/
+      translateX(calc(30vw - 50%)) 
+      rotate(-450deg);
+    /*gira total + um quarto sentido antihorário*/
+  }
+}
+
+@keyframes move3 {
+  0% {
+    transform:
+      rotate(180deg)
+      /*gira metade sentido horário*/
+      translateX(calc(20vw - 50%)) 
+      rotate(-180deg);
+    /*gira metade sentido antihorário*/
+  }
+  100%
+    {
+    transform:
+      rotate(540deg)
+      /*gira total + metade sentido horário*/
+      translateX(calc(20vw - 50%)) 
+      rotate(-540deg);
+    /*gira total + metade sentido antihorário*/
+  }
+}
+
+/*animação 1: a estrela se move repetidamente a cada intervalo de tempo(15min, 6min e 2min)  com velocidade constante*/
+/*animação2: estrela pisca suavemente(começo devagar, meio rapido, final devagar) no intervalo de tempo (30s, 20s, 10s), e apos repete infinitamente esse processo */
+/*lento*/
+.star.star1 {
+  animation: move1 900s linear infinite, twinkle1 30s ease-in-out infinite;
+}
+
+/*medio*/
+.star.star2 {
+  animation: move2 360s linear infinite, twinkle2 20s ease-in-out infinite;
+}
+
+/*rápido*/
+.star.star3 {
+  animation: move3 120s linear infinite, twinkle3 10s ease-in-out infinite;
+}
 
 
 /*piscar estrelas*/
-@keyframes twinkle1 
-{
-    0%, 20%, 40%, 60%, 80%, 100% { opacity: 0.3; }
-    10%, 30%, 50%, 70%, 90% { opacity: 0.9; }
+@keyframes twinkle1 {
+  0%, 20%, 40%, 60%, 80%, 100% {opacity: 0.3;}
+  /*fica escuro*/
+    10%, 30%, 50%, 70%, 90% {opacity: 0.9;}
+  /*fica "brilhante" nessas porcentagens(momentos) da animação*/
 }
 
-@keyframes twinkle2 
-{
-    0%, 25%, 50%, 75%, 100% { opacity: 0.4; }
-    12%, 37%, 62%, 87% { opacity: 0.95; }
+@keyframes twinkle2 {
+  0%, 25%, 50%, 75%, 100% {opacity: 0.4;}
+    12%, 37%, 62%, 87% {opacity: 0.95;}
 }
 
-@keyframes twinkle3 
-{
-    0%, 15%, 30%, 45%, 60%, 75%, 90%, 100% { opacity: 0.5; }
-    5%, 20%, 35%, 50%, 65%, 80%, 95% { opacity: 1; }
+@keyframes twinkle3 {
+ 0%, 15%, 30%, 45%, 60%, 75%, 90%, 100% { opacity: 0.5; }
+    5%, 20%, 35%, 50%, 65%, 80%, 95% { opacity: 1; }          
 }
 
 /* Acessibilidade */
-@media (prefers-reduced-motion: reduce) 
-{
-    .star 
-    {
-        animation: none !important;
-    }
+@media (prefers-reduced-motion: reduce)
+/*se o usuario prefere menos animações por n motivos*/
+  {
+  .star {
+    animation: none !important;
+    /*a animação das estrelas é desativado = deixa estrelas paradas*/
+  }
 }
 
+/*para dimencionar*/
 .ceu-fundo {
   position: fixed;
   top: 0;
@@ -235,5 +357,6 @@ body {
   width: 100%;
   height: 100%;
   border: none;
-  z-index: -1; /* para ficar atrás do conteúdo da página */
+  z-index: -1;
+  /* para ficar atrás do conteúdo da página */
 }

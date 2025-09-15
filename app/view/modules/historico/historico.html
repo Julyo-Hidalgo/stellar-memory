@@ -1,66 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>Histórico de Partidas</title>
 
 	<link rel="stylesheet" href="../../css/global.css" />
-	<link rel="stylesheet" href="../../css/jogo.css" />
+	<link rel="stylesheet" href="../../css/game_data.css" />
+	<link rel="stylesheet" href="../../css/historico.css" />
 
+	<!--conectando as fontes/tipografia-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Press+Start+2P&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+		rel="stylesheet">
 </head>
 <body>
-  <iframe src="../ceu/ceu.html" class="ceu-fundo"></iframe>
+	<iframe src="../ceu/ceu.html" class="ceu-fundo"></iframe>
 
+	<header>
+		<h1>Stellar Memory</h1>
+	</header>
 
-	<section id="historico" class="historico">
+	<button class="menu_button" id="menu-toggle-btn">
+		<span></span>
+		<span></span>
+		<span></span>
+	</button>
+
+	<nav class="side_menu" id="side_menu">
+		<a href="../edicao_perfil/edicao_perfil.html">Editar Perfil</a>
+		<a href="../ranking/ranking.html">Ranking</a>
+		<a href="../jogo/jogo.html">Tela do Jogo</a>
+		<a href="../login/login.html">Desconectar</a>
+
+	</nav>
+
+	<section id="historico" class="historico, information-container">
+		<h1>Histórico de Partidas</h1>
 		<table>
-		  <caption>Histórico de Partidas</caption>
-		  <thead>
-			<tr>
-			  <th>Nome do Jogador</th>
-			  <th>Dimensões do Tabuleiro</th>
-			  <th>Modalidade</th>
-			  <th>Tempo até o Resultado</th>
-			  <th>Nº de Jogadas</th>
-			  <th>Resultado</th>
-			  <th>Data</th>
-			  <th>Hora</th>
-			</tr>
-		  </thead>
-		  <tbody>
-			<tr>
-			  <td>Ana Souza</td>
-			  <td>2 × 2</td>
-			  <td>Clássico</td>
-			  <td><time datetime="PT45S">45s</time></td>
-			  <td>6</td>
-			  <td>Vitória</td>
-			  <td><time datetime="2025-08-20">20/08/2025</time></td>
-			  <td><time datetime="19:24">19:24</time></td>
-			</tr>
-			<tr>
-			  <td>Pedro Lima</td>
-			  <td>4 × 4</td>
-			  <td>Contra o tempo</td>
-			  <td><time datetime="PT01M15S">1m 15s</time></td>
-			  <td>10</td>
-			  <td>Derrota</td>
-			  <td><time datetime="2025-08-21">21/08/2025</time></td>
-			  <td><time datetime="21:10">21:10</time></td>
-			</tr>
-			<tr>
-			  <td>Ana Souza</td>
-			  <td>8 × 3</td>
-			  <td>Clássico</td>
-			  <td><time datetime="PT05M42S">5m 42s</time></td>
-			  <td>22</td>
-			  <td>Vitória</td>
-			  <td><time datetime="2025-08-22">22/08/2025</time></td>
-			  <td><time datetime="14:03">14:03</time></td>
-			</tr>
-		  </tbody>
+			<caption>Jogador X</caption>
+			<thead>
+				<tr>
+					<th>Dimensões do Tabuleiro</th>
+					<th>Modalidade</th>
+					<th>Tempo até o Resultado</th>
+					<th>Nº de Jogadas</th>
+					<th>Resultado</th>
+					<th>Data</th>
+					<th>Hora</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>2 × 2</td>
+					<td>Clássico</td>
+					<td><time datetime="PT45S">45s</time></td>
+					<td>6</td>
+					<td>Vitória</td>
+					<td><time datetime="2025-08-20">20/08/2025</time></td>
+					<td><time datetime="19:24">19:24</time></td>
+				</tr>
+				<tr>
+					<td>4 × 4</td>
+					<td>Contra o tempo</td>
+					<td><time datetime="PT01M15S">1m 15s</time></td>
+					<td>10</td>
+					<td>Derrota</td>
+					<td><time datetime="2025-08-21">21/08/2025</time></td>
+					<td><time datetime="21:10">21:10</time></td>
+				</tr>
+				<tr>
+					<td>8 × 3</td>
+					<td>Clássico</td>
+					<td><time datetime="PT05M42S">5m 42s</time></td>
+					<td>22</td>
+					<td>Vitória</td>
+					<td><time datetime="2025-08-22">22/08/2025</time></td>
+					<td><time datetime="14:03">14:03</time></td>
+				</tr>
+			</tbody>
 		</table>
 	</section>
+
+	<script src="../../js/global.js"></script>
 </body>
+
 </html>
