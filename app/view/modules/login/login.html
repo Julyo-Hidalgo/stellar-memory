@@ -5,7 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/global.css" />
-        <link href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+    <link
+  href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+  rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../../css/forms.css">
     <title>Login</title>
@@ -13,6 +18,10 @@
 
 <body class="login-page">
     <iframe src="../ceu/ceu.html" class="ceu-fundo"></iframe>
+
+      <header class="titulo-principal">
+    <h1>Stellar Memory</h1>
+  </header>
 
     <!-- Caixa de login -->
     <main class="container">
@@ -27,7 +36,7 @@
             <div class="input-box">
                 <input id="password" placeholder="Senha" type="password" required>
                 <button type="button" class="toggle-password">
-                <img src="../../../../app/view/img/red-eyes.png">
+                    <img src="../../../../app/view/img/red-eyes.png">
                 </button>
             </div>
 
@@ -36,12 +45,26 @@
 
             <!-- Link de registro -->
             <div class="register-link">
-                <p>Não tem uma conta? <a href="cadastro.html">Cadastre-se</a></p>
+                <p>Não tem uma conta?
+                    <a href="../cadastro/cadastro.html">Cadastre-se</a>
+                </p>
             </div>
+
         </form>
     </main>
 
     <script src="../../js/forms.js"></script>
+
+    <script>
+  // Seleciona o botão de login
+  const botaoLogin = document.querySelector('button[type="submit"]');
+
+  botaoLogin.addEventListener('click', function (e) {
+    e.preventDefault(); // evita que o formulário seja enviado
+    window.location.href = '../jogo/jogo.html'; // redireciona para o jogo
+  });
+</script>
+    
 </body>
 
 </html>

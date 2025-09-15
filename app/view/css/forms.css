@@ -144,24 +144,12 @@ button:hover {
   display: block;
 }
 
-/* -------------------------------
-   🔹 Estilos exclusivos do LOGIN
----------------------------------*/
-body.login-page {
-    padding-top: 250px;
-}
-
-.login-page .container {
-    width: 350px;
-    padding: 20px;
-}
-
-.login-page form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+h1 {
+  font-family: "Press Start 2P", system-ui; /*muda a fonte */
+  font-size: 48px; /*aumenta o tamanho da fonte */
+  color: #f3ea88; /*muda a cor do texto (um tom de roxo, por exemplo) */
+  margin: 0;
+  text-align: center;
 }
 
 /* -------------------------------
@@ -185,6 +173,40 @@ body.cadastro-page {
 .cadastro-page button {
     grid-column: 2;
 }
+/* -------------------------------
+   🔹 Estilos exclusivos do LOGIN
+---------------------------------*/
+body.login-page {
+    padding-top: 250px;
+}
+
+.login-page .container {
+    width: 350px;
+    padding: 20px;
+}
+
+.login-page form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+/* =========================
+   Ajuste do título principal
+========================= */
+header.titulo-principal {
+  position: absolute;     /* deixa o título flutuando */
+  top: 40px;              /* distância do topo */
+  left: 0;
+  width: 100%;            /* ocupa a largura toda */
+  text-align: center;     /* centraliza o h1 */
+  z-index: 2;             /* garante que fique acima do iframe */
+}
+
+
+
 
 
 
