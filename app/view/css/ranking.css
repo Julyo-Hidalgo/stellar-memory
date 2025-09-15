@@ -1,52 +1,11 @@
-/* Estilos para a página de Ranking */
 @import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Jersey+25&family=Press+Start+2P&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
-h1 {
-    font-family: "Press Start 2P", sans-serif;
-    font-size: 3em;
-    text-transform: uppercase;
-    color: #f3ea88;
-}
-
-h2 {
-    font-family: sans-serif;
-    font-size: 3em;
-    text-transform: uppercase;
-    color: #f3ea88;
-}
-
 .information-container {
-    margin: 2vh auto;
-    padding: 20px;
-    background-color: transparent;
-    border: 2px solid rgba(255, 255, 255, .2);
-    border-radius: 10px;
-    color: white;
-    box-shadow: 0 0 10px rgba(249, 239, 47, 0.2);
-    backdrop-filter: blur(120px);
-    text-align: center;
-    width: 90%;
     max-width: 1000px;
-    font-family: "Roboto Mono", sans-serif;
-}
-
-.information-container table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    text-align: left;
-}
-
-.information-container caption {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    color: #f3ea88;
 }
 
 .information-container th, 
 .information-container td {
-    padding: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, .2);
     color: #ffffff;
 }
 
@@ -68,7 +27,6 @@ h2 {
 .information-container td {
     text-align: center;
 }
-
 
 /* Estilos especiais para os três primeiros lugares */
 .information-container tbody tr:nth-child(1) {
@@ -110,5 +68,3 @@ h2 {
 .information-container tbody tr:nth-child(3):hover {
     background: inherit !important;
 }
-
-
