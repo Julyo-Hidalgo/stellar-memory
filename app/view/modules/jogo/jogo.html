@@ -2,8 +2,8 @@
 <html lang="pt-br">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stellar Memory</title>
 
   <!--conectando as fontes/tipografia-->
@@ -14,8 +14,8 @@
     rel="stylesheet">
 
   <!--conectando o hmtl do jgo com o css ta tela do jogo-->
-  <link rel="stylesheet" href="../../css/global.css" />
-  <link rel="stylesheet" href="../../css/jogo.css" />
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/jogo.css">
 </head>
 
 <body>
@@ -36,59 +36,60 @@
     <a href="../login/login.html">Desconectar</a>
   </nav>
 
-
   <iframe src="../ceu/ceu.html" class="ceu-fundo"></iframe>
 
-  <section class="informacoes_partida">
-    <h2>Informações da Partida</h2>
-    <ul>
-      <li>Tempo da Partida: <span id="tempo-partida">00:00</span></li>
-      <li>Número de Jogadas: <span id="numero-jogadas">0</span></li>
-      <li><li>
-  <label for="configuracao-tabuleiro">Configuração do Tabuleiro:</label>
-  <select id="configuracao-tabuleiro">
-    <option value="" disabled selected>Selecione...</option>
-    <option value="2x2">2x2</option>
-    <option value="3x3">3x3</option>
-    <option value="4x4">4x4</option>
-    <option value="5x5">5x5</option>
-    <option value="6x6">6x6</option>
-    <option value="7x7">7x7</option>
-    <option value="8x8">8x8</option>
-  </select>
-</li>
-<li>
-  <label for="modalidade">Modalidade:</label>
-  <select id="modalidade">
-    <option value="" disabled selected>Selecione...</option>
-    <option value="classico">Clássico</option>
-    <option value="contra_tempo">Contra o Tempo</option>
-  </select>
-</li>
+  <main>
+    <section class="informacoes_partida">
+      <h2>Informações da Partida</h2>
+      <ul>
+        <li>Tempo da Partida: <span id="tempo-partida">00:00</span></li>
+        <li>Número de Jogadas: <span id="numero-jogadas">0</span></li>
+        <li>
+          <label for="configuracao-tabuleiro">Configuração do Tabuleiro:</label>
+          <select id="configuracao-tabuleiro">
+            <option value="" disabled selected>Selecione...</option>
+            <option value="2x2">2x2</option>
+            <option value="3x3">3x3</option>
+            <option value="4x4">4x4</option>
+            <option value="5x5">5x5</option>
+            <option value="6x6">6x6</option>
+            <option value="7x7">7x7</option>
+            <option value="8x8">8x8</option>
+          </select>
+        </li>
+        <li>
+          <label for="modalidade">Modalidade:</label>
+          <select id="modalidade">
+            <option value="" disabled selected>Selecione...</option>
+            <option value="classico">Clássico</option>
+            <option value="contra_tempo">Contra o Tempo</option>
+          </select>
+        </li>
+        <li id="tempo-restante-container">
+          Tempo Restante: <span id="tempo-restante">00:00</span>
+        </li>
+      </ul>
 
-      </li>
-      <li id="tempo-restante-container">
-        Tempo Restante: <span id="tempo-restante">00:00</span>
-      </li>
-    </ul>
+      <div class="controles-jogo">
+        <div class="botoes_trapaca">
+          <button id="botao_ativar_trapaca">Ativar Trapaça</button>
+          <button id="botao_desativar_trapaca">Desativar Trapaça</button>
+        </div>
+      </div>
 
-    <section class="controles-jogo">
-      <div class="botoes_trapaca">
-        <button id="botao_ativar_trapaca">Ativar Trapaça</button>
-        <button id="botao_desativar_trapaca">Desativar Trapaça</button>
+      <div class="secao-jogar">
+        <button id="botao-jogar">Jogar</button>
       </div>
     </section>
 
-    <section class="secao-jogar">
-      <button id="botao-jogar">Jogar</button>
-    </section>
-
-  </section>
-  <section class="tabuleiro-jogo">
-    <div class="tabuleiro">
-      <div id="cartas-container"></div>
+    <div class="tabuleiro-jogo">
+      <div class="tabuleiro">
+        <div id="cartas-container"></div>
+      </div>
     </div>
-  </section>
+
+  </main>
+
   <script src="../../js/jogo.js"></script>
   <script src="../../js/global.js"></script>
 </body>
