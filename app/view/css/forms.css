@@ -152,11 +152,6 @@ button {
     transition: 0.3s;
 }
 
-/* Efeito hover */
-button:hover {
-    background: #52bff9;
-}
-
 /* Links (igual) */
 .register-link {
     font-size: 12px;
