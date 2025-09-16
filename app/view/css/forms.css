@@ -1,5 +1,7 @@
+/*
 @import url('https://fonts.googleapis.com/css2?family=Jersey+25&family=Roboto+Mono:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Chela+One&display=swap');
+*/
 
 /* Estilos gerais para o corpo da página */
 body {
@@ -117,10 +119,22 @@ body {
     pointer-events: none;
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
-    cursor: pointer;
+.input-box input[type="date"] {
+    /* estilos */
 }
+
+/* Depois */
+.input-box input#nascimento {
+    appearance: none;
+    background-color: #fff;
+    border-radius: 15px;
+    height: 50px;
+    padding: 10px 40px 10px 15px;
+    box-shadow: 3px 3px 5px #00000070;
+    border: none;
+    font-size: 14px;
+    color: #000;
+}   
 
 /* Botões (igual) */
 button {
@@ -258,10 +272,9 @@ body.login-page {
 
 /* Ajuste do título principal */
 header.titulo-principal {
-    position: absolute;
-    /* deixa o título flutuando */
-    top: 40px;
-    /* distância do topo */
+    position: fixed;
+    /* deixa o título fixado na tela */
+    top: 0px;
     left: 0;
     width: 100%;
     /* ocupa a largura toda */
