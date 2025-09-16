@@ -4,6 +4,7 @@ h2{
 	font-family: "Jersey 25";
 	font-size: 2em;
 	text-transform: uppercase;
+	align-items: center;
 }
 
 .information-container{
@@ -24,13 +25,20 @@ h2{
 .information-container table{
 	width: 100%;
 	border-collapse: collapse;
-	margin-top: 20px;
+	margin-top: 30px;
     text-align: left;
 }
 
 .information-container caption{
 	font-size: 1.5em;
 	margin-bottom: 10px;
+	font-family: "Jersey 25";
+	font-size: 2em;
+	text-transform: uppercase;
+	color: #f3ea88;
+	margin-top: 15px;
+	margin-bottom: 25px;
+
 }
 
 .information-container th, td{
