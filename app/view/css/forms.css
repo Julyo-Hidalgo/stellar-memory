@@ -1,6 +1,7 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Jersey+25&family=Roboto+Mono:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Chela+One&display=swap');
+
+/* Estilos gerais para o corpo da página */
 body {
     display: flex;
     justify-content: center;
@@ -9,32 +10,62 @@ body {
     background-size: cover;
     background-position: center;
 }
+
 /* Botão do olho ao lado do input de senha */
 .input-box {
-  display: flex;
-  align-items: center;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
+/* Input e botão lado a lado */
 .input-box input {
-  flex: 1;
-  height: 50px;
-  border-radius: 15px 0 0 15px; /*arredonda os lados*/
-  border: none;
-  padding: 10px;
-  box-shadow: 3px 3px 5px #00000070;
+    flex: 1;
+    height: 50px;
+    border-radius: 15px 0 0 15px;
+    /*arredonda os lados*/
+    border: none;
+    padding: 10px;
+    box-shadow: 3px 3px 5px #00000070;
 }
 
+/* Botão do olho */
 .input-box .toggle-password {
-  height: 50px;
-  padding: 0 15px;
-  width: auto;                /* não deixa ocupar largura toda */
-  background: #1aa4df;
-  border: none;
-  border-radius:15px 15px 15px 15px; /* arredonda os lados */
-  cursor: pointer;
-  font-size: 16px;
-  box-shadow: 3px 3px 5px #00000070;
+    height: 50px;
+    padding: 0 15px;
+    width: auto;
+    /* não deixa ocupar largura toda */
+    background: #1aa4df;
+    border: none;
+    border-radius: 15px 15px 15px 15px;
+    /* arredonda os lados */
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 3px 3px 5px #00000070;
+}
+
+/* Esconde o label, mas mantém para acessibilidade */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    border: 0;
+}
+
+/* Ajusta o campo date para ter a mesma cara dos outros */
+.input-box input[type="date"] {
+    appearance: none;
+    background-color: #fff;
+    border-radius: 15px;
+    height: 50px;
+    padding: 10px 40px 10px 15px;
+    box-shadow: 3px 3px 5px #00000070;
+    border: none;
+    font-size: 14px;
+    color: #000;
 }
 
 /* Fonte padrão */
@@ -106,6 +137,7 @@ button {
     transition: 0.3s;
 }
 
+/* Efeito hover */
 button:hover {
     background: #52bff9;
 }
@@ -114,18 +146,21 @@ button:hover {
 .register-link {
     font-size: 12px;
     margin-top: 15px;
-    text-align: center;   /* centraliza o texto */
-    width: 100%;  
-    grid-column: span 2;  /*ocupa as duas colunas do grid */     
-/* garante que ocupe toda a largura do container */
+    text-align: center;
+    /* centraliza o texto */
+    width: 100%;
+    grid-column: span 2;
+    /*ocupa as duas colunas do grid, garante que ocupe toda a largura do container */
 }
 
+/* Estiliza o link */
 .register-link a {
     text-decoration: none;
     color: #1aa4df;
     font-weight: bold;
 }
 
+/* Efeito hover no link */
 .register-link a:hover {
     text-decoration: underline;
 }
@@ -138,53 +173,81 @@ button:hover {
     color: #ffffff;
     text-align: center;
 }
+
+/* Estilos do botão de mostrar/ocultar senha */
 .toggle-password img {
-  width: 20px;   /* ajuste o tamanho que quiser */
-  height: 20px;
-  display: block;
+    width: 20px;
+    /* ajuste o tamanho que quiser */
+    height: 20px;
+    display: block;
 }
 
+/* Título principal (igual) */
 h1 {
-  font-family: "Press Start 2P", system-ui; /*muda a fonte */
-  font-size: 48px; /*aumenta o tamanho da fonte */
-  color: #f3ea88; /*muda a cor do texto (um tom de roxo, por exemplo) */
-  margin: 0;
-  text-align: center;
+    font-family: "Press Start 2P", system-ui;
+    /*muda a fonte */
+    font-size: 48px;
+    /*aumenta o tamanho da fonte */
+    color: #f3ea88;
+    /*muda a cor do texto (um tom de roxo, por exemplo) */
+    margin: 0;
+    text-align: center;
 }
 
-/* -------------------------------
-   🔹 Estilos exclusivos do CADASTRO
----------------------------------*/
+/* Estilos exclusivos do CADASTRO */
 body.cadastro-page {
-    padding-top: 210px;
+    padding-top: 250px;
 }
 
+/* Container maior para o cadastro */
 .cadastro-page .container {
     width: 800px;
     padding: 30px 40px;
 }
 
+/* Campos do cadastro */
 .cadastro-page form {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px 40px;
 }
 
+/* Botão de cadastro */
 .cadastro-page button {
     grid-column: 2;
 }
-/* -------------------------------
-   🔹 Estilos exclusivos do LOGIN
----------------------------------*/
+
+/* Estilos exclusivos do LOGIN */
 body.login-page {
     padding-top: 250px;
 }
 
+/* Container menor para o Login */
 .login-page .container {
-    width: 350px;
-    padding: 20px;
+    width: 500px;
+    padding: 50px;
 }
 
+/* Campos do login */
+.login-page .container .input-box {
+    max-width: 320px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Botão de login com o mesmo limite */
+.login-page .container form>button {
+    max-width: 320px;
+    /* mesmo tamanho dos campos */
+    width: 100%;
+    /* ocupa toda a largura dentro do limite */
+    margin: 0 auto;
+    /* centraliza */
+    display: block;
+    /* garante que respeite largura */
+}
+
+/* Centraliza os itens do formulário */
 .login-page form {
     display: flex;
     flex-direction: column;
@@ -193,21 +256,17 @@ body.login-page {
     gap: 20px;
 }
 
-/* =========================
-   Ajuste do título principal
-========================= */
+/* Ajuste do título principal */
 header.titulo-principal {
-  position: absolute;     /* deixa o título flutuando */
-  top: 40px;              /* distância do topo */
-  left: 0;
-  width: 100%;            /* ocupa a largura toda */
-  text-align: center;     /* centraliza o h1 */
-  z-index: 2;             /* garante que fique acima do iframe */
+    position: absolute;
+    /* deixa o título flutuando */
+    top: 40px;
+    /* distância do topo */
+    left: 0;
+    width: 100%;
+    /* ocupa a largura toda */
+    text-align: center;
+    /* centraliza o h1 */
+    z-index: 2;
+    /* garante que fique acima do iframe */
 }
-
-
-
-
-
-
-
