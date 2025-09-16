@@ -29,8 +29,7 @@ main {
 
 /* Texto de boas-vindas */
 .welcome-text {
-  font-family: Roboto Mono, monospace;
-  font-optical-sizing: auto;
+  font-family: "Roboto Mono", monospace;
   font-weight: 500;
   font-style: normal;
   font-size: 1.1rem;
@@ -42,7 +41,7 @@ main {
 /* Botões de cadastro e login/entre */
 .btn {
   font-family: "Press Start 2P", system-ui;
-  font-size: 12px;
+  font-size: 14px;
   display: inline-block;
   text-decoration: none;
 

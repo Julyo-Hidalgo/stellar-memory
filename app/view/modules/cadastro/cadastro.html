@@ -40,6 +40,7 @@
                 <label for="nascimento" class="sr-only">Data de Nascimento</label>
                 <input id="nascimento" type="text" placeholder="dd/mm/aaaa" required pattern="\d{2}/\d{2}/\d{4}">
                 <i class="bx bx-calendar"></i>
+                <!--tirar i-->
             </div>
 
             <div class="input-box">
@@ -83,15 +84,6 @@
     <!-- Script para o formulário de cadastro -->
     <script src="../../js/forms.js"></script>
 
-    <script>
-        // pega o botão "Cadastrar"
-        const botaoCadastrar = document.querySelector('button[type="submit"]');
-
-        botaoCadastrar.addEventListener('click', function (e) {
-            e.preventDefault(); // evita o envio do formulário
-            window.location.href = '../login/login.html'; // ajuste o caminho se o login não estiver na mesma pasta
-        });
-    </script>
 </body>
 
 </html>

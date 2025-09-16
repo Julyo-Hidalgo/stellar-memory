@@ -119,11 +119,12 @@ body {
     pointer-events: none;
 }
 
+/* Estiliza p input date para ter a mesma cara dos outros */
 .input-box input[type="date"] {
     /* estilos */
 }
 
-/* Depois */
+/* Estiliza o input nascimento para ter a mesma cara dos outros */
 .input-box input#nascimento {
     appearance: none;
     background-color: #fff;
@@ -134,7 +135,7 @@ body {
     border: none;
     font-size: 14px;
     color: #000;
-}   
+}
 
 /* Botões (igual) */
 button {

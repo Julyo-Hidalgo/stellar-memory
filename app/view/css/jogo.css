@@ -20,9 +20,13 @@ body {
 /*estiliza titulo "informaçoes da partida*/
 h2 {
   font-family: "Jersey 25", sans-serif;
-  font-size: 50px;
+  font-size: 65px;
   margin-top: 25px;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
+  align-items: center;
+  justify-content: center;
+  color: #e4e3e3;
+  text-shadow: 4px 3px 6px #b7dae4c6;
 }
 
 /*remove o padrao da lista nao ordenada (bolinhas)*/
@@ -40,6 +44,13 @@ h2 {
 .informacoes_partida li {
   margin: 0 15px;
   /* adiciona espaçamento entre os itens da lista */
+  display: flex;
+  flex-direction: column;
+  /* Coloca os itens em coluna */
+  align-items: center;
+  /* Centraliza horizontalmente */
+  text-align: center;
+  /* Centraliza o texto da label */
 }
 
 /*estilizando cointeiner de temporizador (modalidade contra o tempo)*/
@@ -54,12 +65,12 @@ h2 {
   background-color: #24233B2D;
   color: #f3ea88;
   border: 1px solid #f3ea88;
-  border-radius: 8px;
+  border-radius: 50px;
   /*espaçamento interno*/
   padding: 8px 10px;
   font-family: "Nova Square", sans-serif;
   cursor: pointer;
-  width: 85%;
+  width: 250px;
   /* Remove aparência padrão dos selects */
   appearance: none;
   font-size: 16px;
@@ -88,9 +99,9 @@ h2 {
   background-color: transparent;
   color: #f3ea88;
   border: 2px solid #f3ea88;
-  border-radius: 80px;
+  border-radius: 40px;
   /* Bordas arredondadas */
-  padding: 10px 20px;
+  padding: 12px 20px;
   font-family: "Press Start 2P", system-ui;
   font-size: 12px;
   cursor: pointer;
@@ -109,11 +120,11 @@ h2 {
 
 #botao-jogar {
   /* Fundo preto para destaque */
-  background-color: #010009;
+  background-color: transparent;
   color: #f3ea88;
   border: 4px solid #f3ea88;
   border-radius: 80px;
-  padding: 15px 40px;
+  padding: 16px 40px;
   font-family: "Press Start 2P", system-ui;
   font-size: 20px;
   cursor: pointer;
@@ -127,9 +138,9 @@ h2 {
   /* Transforma a cor de fundo e a borda */
   background-color: #f3ea88;
   color: #010009;
-  border: 4px solid #010009;
+  border: 3.1px solid #05021bc6;
   /* Aumenta o brilho da sombra */
-  box-shadow: 0 0 25px rgba(243, 234, 136, 0.7);
+  box-shadow: 0 0 25px #F3EA88BF;
   transform: scale(1.05);
   /* Um zoom mais suave */
 }
