@@ -320,7 +320,7 @@ body.edicao-page {
     width: 600px;
     max-width: 90%;
     padding: 40px;
-    margin-top: 1px; /*alterei aqui*/
+    margin-top: 150px; /*alterei aqui*/
     background-color: transparent;
     border: 2px solid rgba(255, 255, 255, .2);
     border-radius: 20px;
