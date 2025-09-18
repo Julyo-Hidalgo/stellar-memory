@@ -414,7 +414,7 @@ body.edicao-page {
     grid-column: span 2;
     width: 200px;
     height: 50px;
-    background: #f3ea88;
+    background: #1aa4df;
     border: none;
     border-radius: 15px;
     cursor: pointer;
@@ -438,7 +438,7 @@ body.edicao-page {
     font-family: "Jersey 25", sans-serif;
     font-size: 32px;
     margin-bottom: 30px;
-    color: #1aa4df;
+    color:  #ffffff;
     text-align: center;
     grid-column: span 2;
     /* subtítulo da página de edição com destaque em azul e fonte estilizada */
