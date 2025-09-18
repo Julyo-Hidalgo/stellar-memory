@@ -1,0 +1,17 @@
+/* Container maior para o cadastro */
+.container {
+    width: 800px;
+    padding: 30px 40px;
+}
+
+/* Campos do cadastro */
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 40px;
+}
+
+/* Botão de cadastro */
+button {
+    grid-column: 2;
+}

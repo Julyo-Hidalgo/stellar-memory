@@ -21,51 +21,38 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    document.getElementById('profile-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Alterações salvas com sucesso!');
-    });
+    const path = window.location.pathname;
+	if (path.includes('edicao_perfil.html')) {
+		const form = document.querySelector('form');
+		const submitButton = form.querySelector('button[type="submit"]');
+
+		// Se estiver na página de edição de perfil, adiciona o ouvinte de evento ao formulário
+		submitButton.addEventListener('click', function(e) {
+			e.preventDefault();
+			alert('Alterações salvas com sucesso!');
+		});
+	}
 });
 
-
-
+// Solução temporária para redirecionar entre páginas de login e cadastro
 document.addEventListener('DOMContentLoaded', function () {
+	const form = document.querySelector('form');
+	const submitButton = form.querySelector('button[type="submit"]');
     //novamente espera html e pag inteira carregarem
-    const form = document.querySelector('form');
-    const submitButton = form.querySelector('button[type="submit"]');
-    //seleciona o botao de enviar na pag de login ou cadastro
-
     submitButton.addEventListener('click', function (e) {
-    //adiciona um ouvinte de clique, para quando o usuario clicsr é redirecionado para a pag certa 
-        e.preventDefault(); 
-        // Evita que o formulário seja enviado
+        e.preventDefault();
 
-        const isLoginPage = document.body.classList.contains('login-page');
-        //verifica se o body analisado tem loginpage (pagina de login)
-        if (isLoginPage) {
+        // Obtém o caminho do arquivo da URL atual
+        const path = window.location.pathname;
+
+        // Verifica se o caminho do arquivo inclui 'login.html'
+        if (path.includes('login.html')) {
             // Se estiver na página de login, redireciona para o jogo
             window.location.href = '../jogo/jogo.html';
-        } else {
-            // Se estiver na página de cadastro, redireciona para o login
+        }
+        if (path.includes('cadastro.html')) {
+            // Se estiver na página de cadastro, redireciona para o login 
             window.location.href = '../login/login.html';
         }
     });
 });
-
-/*OU*/
-/*
-//seleciona o botao de login
-        const botaoLogin = document.querySelector('button[type="submit"]');
-
-        botaoLogin.addEventListener('click', function (e) {
-            e.preventDefault(); // evita que o formulário seja enviado
-            window.location.href = '../jogo/jogo.html'; // redireciona para o jogo
-        });
-        // pega o botão "Cadastrar"
-        const botaoCadastrar = document.querySelector('button[type="submit"]');
-
-        botaoCadastrar.addEventListener('click', function (e) {
-            e.preventDefault(); // evita o envio do formulário
-            window.location.href = '../login/login.html'; // ajuste o caminho se o login não estiver na mesma pasta
-        });
-        */
