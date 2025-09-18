@@ -12,11 +12,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (passwordInput.type === 'password') { //se campo for tipo password
             passwordInput.type = 'text'; //muda para text, para mostrar a senha
-            togglePasswordButton.innerHTML = '<img src="../../../../app/view/img/cadeado.png" alt="Ocultar senha" width="20">'; 
+            togglePasswordButton.innerHTML = '<img src="../../img/cadeado.png" alt="Ocultar senha" width="20">'; 
             //imagem muda para cadeado
         } else {//caso campo seja do tipo text
             passwordInput.type = 'password'; //muda para password
-            togglePasswordButton.innerHTML = '<img src="../../../../app/view/img/red-eyes.png" alt="Mostrar senha" width="20">';
+            togglePasswordButton.innerHTML = '<img src="../../img/red-eyes.png" alt="Mostrar senha" width="20">';
             //muda imagem para olho
         }
     });
