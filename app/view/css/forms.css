@@ -31,19 +31,30 @@ body {
     box-shadow: 3px 3px 5px #00000070;
 }
 
-/* Botão do olho */
 .input-box .toggle-password {
     height: 50px;
     padding: 0 15px;
     width: auto;
-    /* não deixa ocupar largura toda */
     background: #1aa4df;
     border: none;
-    border-radius: 15px 15px 15px 15px;
-    /* arredonda os lados */
+    border-radius: 0 15px 15px 0;
     cursor: pointer;
     font-size: 16px;
     box-shadow: 3px 3px 5px #00000070;
+    margin-left: -1px;
+    /* botão para mostrar/ocultar senha com ajuste de borda */
+}
+
+.input-box .toggle-password img {
+    width: 20px;
+    height: 20px;
+    display: block;
+    /* imagem do ícone de olho ajustada no botão de senha */
+}
+
+.input-box:has(.toggle-password) input {
+    border-radius: 15px 0 0 15px;
+    /* se tiver botão de olho, arredonda só os cantos esquerdos do input */
 }
 
 /* Esconde o label, mas mantém para acessibilidade */
@@ -182,14 +193,6 @@ button {
     margin-bottom: 25px;
     color: #ffffff;
     text-align: center;
-}
-
-/* Estilos do botão de mostrar/ocultar senha */
-.toggle-password img {
-    width: 20px;
-    /* ajuste o tamanho que quiser */
-    height: 20px;
-    display: block;
 }
 
 /* Título principal (igual) */

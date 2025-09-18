@@ -56,32 +56,6 @@ form {
     /* ícone dentro do input (como email ou senha) posicionado à direita */
 }
 
-.input-box .toggle-password {
-    height: 50px;
-    padding: 0 15px;
-    width: auto;
-    background: #1aa4df;
-    border: none;
-    border-radius: 0 15px 15px 0;
-    cursor: pointer;
-    font-size: 16px;
-    box-shadow: 3px 3px 5px #00000070;
-    margin-left: -1px;
-    /* botão para mostrar/ocultar senha com ajuste de borda */
-}
-
-.input-box .toggle-password img {
-    width: 20px;
-    height: 20px;
-    display: block;
-    /* imagem do ícone de olho ajustada no botão de senha */
-}
-
-.input-box:has(.toggle-password) input {
-    border-radius: 15px 0 0 15px;
-    /* se tiver botão de olho, arredonda só os cantos esquerdos do input */
-}
-
 button[type="submit"] {
     grid-column: span 2;
     width: 200px;
