@@ -3,7 +3,8 @@ function loadCards() {
   const cartasContainer = document.getElementById("cartas-container");
 
   cartasContainer.innerHTML = "";
-  const verso = "../../img/1.png";
+  const verso = "../../img/jogo/1.png";
+  
   //limpa todo o conteudo html dentro do cointainer, 
   //assim ele pode ser reiniciado ou ter o tamanho alterado
 
@@ -32,9 +33,13 @@ function loadCards() {
   cartasContainer.style.gridTemplateRows = `repeat(${linhas}, 1fr)`;
   //cada coluna e cada linha vao ter o mesmo tamanho
 
+
+
   for (let i = 0; i < quantidadeCartas; i++) {
     const carta = document.createElement("div");
     carta.classList.add("carta");
+
+
 
     const img = document.createElement("img");
     img.src = verso;
@@ -42,6 +47,7 @@ function loadCards() {
 
     carta.appendChild(img);
     cartasContainer.appendChild(carta);
+
   }
 }
 
@@ -57,3 +63,4 @@ document.getElementById("botao-jogar").addEventListener("click", () => {
 //quando o botao "jogar" é clicado
 // (apos o usuairo selecionar as configurações/modalidade do tabuleiro), 
 //o tabuleiro muda suas confgigurações, mostrando a quantidade d cartas selecionadas
+
