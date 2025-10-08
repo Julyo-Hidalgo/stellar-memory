@@ -1,12 +1,128 @@
-/*
-@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Jersey+25&family=Press+Start+2P&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
-*/
+/* Estilos para a página de Ranking */
+@import url("https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Jersey+25&family=Press+Start+2P&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+
 .information-container {
+    margin: 2vh auto;
+    padding: 20px;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 10px;
+    color: white;
+    box-shadow: 0 0 10px rgba(249, 239, 47, 0.2);
+    backdrop-filter: blur(120px);
+    text-align: center;
+    width: 90%;
     max-width: 1000px;
+    font-family: "Roboto Mono", sans-serif;
+}
+
+.information-container h1 {
+    font-family: "Press Start 2P", sans-serif;
+    font-size: 3em;
+    text-transform: uppercase;
+    color: #f3ea88;
+    margin-bottom: 30px;
+}
+
+/* Estilos para o container de filtros */
+.filters-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-family: "Roboto Mono", monospace;
+    font-size: 14px;
+    color: #f3ea88;
+    font-weight: 500;
+}
+
+.filter-group select {
+    background-color: #24233B2D;
+    color: #f3ea88;
+    border: 1px solid #f3ea88;
+    border-radius: 50px;
+    padding: 8px 15px;
+    font-family: "Roboto Mono", monospace;
+    font-size: 14px;
+    font-weight: 450;
+    cursor: pointer;
+    width: 180px;
+    appearance: none;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.filter-group select:hover {
+    background-color: rgba(243, 234, 136, 0.1);
+    border-color: #fff;
+}
+
+.filter-group select:focus {
+    outline: none;
+    border-color: #fff;
+    box-shadow: 0 0 5px rgba(243, 234, 136, 0.5);
+}
+
+.filter-group select option {
+    background-color: #24233b;
+    color: #f3ea88;
+    padding: 10px;
+    font-family: "Roboto Mono", monospace;
+    font-weight: 500;
+}
+
+#apply-filters {
+    background-color: transparent;
+    color: #f3ea88;
+    border: 2px solid #f3ea88;
+    border-radius: 40px;
+    padding: 12px 25px;
+    font-family: "Press Start 2P", system-ui;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+#apply-filters:hover {
+    background-color: #f3ea88;
+    color: #09000f;
+    transform: scale(1.05);
+}
+
+.information-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.information-container caption {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #f3ea88;
 }
 
 .information-container th, 
 .information-container td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, .2);
     color: #ffffff;
 }
 
@@ -68,4 +184,25 @@
 .information-container tbody tr:nth-child(2):hover,
 .information-container tbody tr:nth-child(3):hover {
     background: inherit !important;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .filters-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .filter-group select {
+        width: 200px;
+    }
+    
+    .information-container h1 {
+        font-size: 2em;
+    }
+    
+    .information-container {
+        width: 95%;
+        padding: 15px;
+    }
 }
