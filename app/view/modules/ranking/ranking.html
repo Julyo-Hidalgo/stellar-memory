@@ -18,7 +18,7 @@
         rel="stylesheet">
 </head>
 
-<body>
+<body class="ranking-page">
     <iframe src="../ceu/ceu.html" class="ceu-fundo"></iframe>
 
     <header>
@@ -40,6 +40,27 @@
 
     <section id="ranking" class="ranking, information-container">
         <h2>Ranking Global</h2>
+
+        <div class="filters-container">
+            <div class="filter-group">
+                <label for="modo-jogo">Modo do Jogo:</label>
+                <select id="modo-jogo">
+                    <option value="all">Todos</option>
+                    <option value="classico">Clássico</option>
+                    <option value="contra_tempo">Contra o Tempo</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="tamanho-tabuleiro">Tamanho do Tabuleiro:</label>
+                <select id="tamanho-tabuleiro">
+                    <option value="all">Todos</option>
+                    <option value="2x2">2x2</option>
+                    <option value="4x4">4x4</option>
+                    <option value="6x6">6x6</option>
+                    <option value="8x8">8x8</option>
+                </select>
+            </div>
+        </div>
 
         <table>
             <caption>Top 10 Jogadores</caption>
@@ -128,6 +149,7 @@
     </section>
 
     <script src="../../js/global.js"></script>
+    <script src="../../js/ranking.js"></script>
 </body>
 
 </html>
