@@ -147,25 +147,25 @@
 
 /* Estilos especiais para os três primeiros lugares */
 .information-container tbody tr:nth-child(1) {
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%) !important;
+    background: linear-gradient(135deg, #d4b500 0%, #FFA500 100%) !important;
     color: #000 !important;
     font-weight: bold;
     box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
 }
 
 .information-container tbody tr:nth-child(1) td {
-    color: #000 !important;
+    color: #ffffff !important;
 }
 
 .information-container tbody tr:nth-child(2) {
-    background: linear-gradient(135deg, #C0C0C0 0%, #A8A8A8 100%) !important;
+    background: linear-gradient(135deg, #686767 0%, #A8A8A8 100%) !important;
     color: #000 !important;
     font-weight: bold;
     box-shadow: 0 2px 8px rgba(192, 192, 192, 0.3);
 }
 
 .information-container tbody tr:nth-child(2) td {
-    color: #000 !important;
+    color: #ffffff !important;
 }
 
 .information-container tbody tr:nth-child(3) {
