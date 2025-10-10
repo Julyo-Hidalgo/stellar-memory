@@ -219,11 +219,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Validações específicas
                 if (input.value.trim() === '' && input.required) {
-                    displayError(input, 'Este campo não pode estar vazio.');
+                    displayError(input, 'Não pode estar vazio.');
                 } else if (input.type === 'email' && input.value.trim() !== '' && !validateEmail(input.value.trim())) {
-                    displayError(input, 'E-mail deve ter um formato válido (ex: usuario@exemplo.com)');
+                    displayError(input, 'E-mail inválido');
                 } else if (input.type === 'tel' && input.value.trim() !== '' && !validatePhone(input.value)) {
-                    displayError(input, 'Telefone deve ter 8 ou 9 dígitos + DDD (ex: (11) 98765-4321)');
+                    displayError(input, 'Telefone inválido');
                 } else {
                     removeError(input);
                 }
