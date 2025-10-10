@@ -276,20 +276,193 @@ document.addEventListener('DOMContentLoaded', function() {
         checkFormValidity();
     }
 
-    // Solução temporária para redirecionar entre páginas de login e cadastro
-    if (path.includes('login.html') || path.includes('cadastro.html')) {
-        const form = document.querySelector('form');
+    // Validações para cadastro.html
+    if (path.includes('cadastro.html')) {
+        const form = document.getElementById('form-cadastro');
+        const inputs = form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="password"]');
         const submitButton = form.querySelector('button[type="submit"]');
 
-        if (form && submitButton) {
-            submitButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                if (path.includes('login.html')) {
-                    window.location.href = '../jogo/jogo.html';
-                } else if (path.includes('cadastro.html')) {
-                    window.location.href = '../login/login.html';
+        // Função para verificar a validade do formulário
+        function checkFormValidity() {
+            let formIsValid = true;
+            let hasErrors = false;
+
+            inputs.forEach(input => {
+                // Pular campos readonly
+                if (input.readOnly) return;
+
+                // Verificar se campo obrigatório está vazio
+                if (input.value.trim() === '' && input.required) {
+                    formIsValid = false;
+                }
+                
+                // Validar e-mail
+                if (input.type === 'email' && input.value.trim() !== '' && !validateEmail(input.value.trim())) {
+                    formIsValid = false;
+                }
+
+                // Validar telefone
+                if (input.type === 'tel' && input.value.trim() !== '' && !validatePhone(input.value)) {
+                    formIsValid = false;
+                }
+
+                // Verificar se há mensagens de erro visíveis
+                const inputBox = input.closest('.input-box');
+                const errorElement = inputBox.querySelector('.error-message');
+                if (errorElement && errorElement.textContent.trim() !== '') {
+                    hasErrors = true;
+                    formIsValid = false;
                 }
             });
+
+            // Botão só fica habilitado se formulário é válido
+            submitButton.disabled = !formIsValid || hasErrors;
+            
+            // Adicionar estilo visual para botão desabilitado
+            if (submitButton.disabled) {
+                submitButton.style.opacity = '0.5';
+                submitButton.style.cursor = 'not-allowed';
+            } else {
+                submitButton.style.opacity = '1';
+                submitButton.style.cursor = 'pointer';
+            }
         }
+
+        // Adicionar event listeners para todos os campos
+        inputs.forEach(input => {
+            // Pular campos readonly
+            if (input.readOnly) return;
+
+            input.maxLength = 100; // Limite de 100 caracteres
+
+            // Event listener para validação em tempo real
+            input.addEventListener('input', function() {
+                // Aplicar máscaras automáticas
+                if (input.type === 'tel') {
+                    const cursorPosition = input.selectionStart;
+                    const oldValue = input.value;
+                    input.value = applyPhoneMask(input.value);
+                    
+                    const newCursorPosition = cursorPosition + (input.value.length - oldValue.length);
+                    input.setSelectionRange(newCursorPosition, newCursorPosition);
+                }
+
+                // Aplicar máscara de data para campo de nascimento
+                if (input.id === 'nascimento') {
+                    const cursorPosition = input.selectionStart;
+                    const oldValue = input.value;
+                    input.value = applyDateMask(input.value);
+                    
+                    const newCursorPosition = cursorPosition + (input.value.length - oldValue.length);
+                    input.setSelectionRange(newCursorPosition, newCursorPosition);
+                }
+
+                // Validações específicas
+                if (input.value.trim() === '' && input.required) {
+                    displayError(input, 'Este campo não pode estar vazio.');
+                } else if (input.type === 'email' && input.value.trim() !== '' && !validateEmail(input.value.trim())) {
+                    displayError(input, 'E-mail deve ter um formato válido (ex: usuario@exemplo.com)');
+                } else if (input.type === 'tel' && input.value.trim() !== '' && !validatePhone(input.value)) {
+                    displayError(input, 'Telefone deve ter 8 ou 9 dígitos + DDD (ex: (11) 98765-4321)');
+                } else if (input.id === 'nascimento' && input.value.trim() !== '' && !validateDate(input.value)) {
+                    displayError(input, 'Data deve estar no formato dd/mm/aaaa e ser válida');
+                } else {
+                    removeError(input);
+                }
+
+                checkFormValidity();
+            });
+
+            // Event listener para restringir caracteres em campos numéricos
+            if (input.type === 'tel' || input.id === 'nascimento') {
+                input.addEventListener('keypress', function(e) {
+                    if (!/[0-9]/.test(e.key) && 
+                        !['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                        e.preventDefault();
+                    }
+                });
+            }
+        });
+
+        // Event listener para o submit do formulário
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!submitButton.disabled) {
+                // Redirecionar para login após cadastro
+                window.location.href = '../login/login.html';
+            }
+        });
+
+        // Verificar validade inicial do formulário
+        checkFormValidity();
+    }
+
+    // Validações para login.html
+    if (path.includes('login.html')) {
+        const form = document.querySelector('form');
+        const inputs = form.querySelectorAll('input[type="text"], input[type="password"]');
+        const submitButton = form.querySelector('button[type="submit"]');
+
+        // Função para verificar a validade do formulário
+        function checkFormValidity() {
+            let formIsValid = true;
+            let hasErrors = false;
+
+            inputs.forEach(input => {
+                // Verificar se campo obrigatório está vazio
+                if (input.value.trim() === '' && input.required) {
+                    formIsValid = false;
+                }
+
+                // Verificar se há mensagens de erro visíveis
+                const inputBox = input.closest('.input-box');
+                const errorElement = inputBox.querySelector('.error-message');
+                if (errorElement && errorElement.textContent.trim() !== '') {
+                    hasErrors = true;
+                    formIsValid = false;
+                }
+            });
+
+            // Botão só fica habilitado se formulário é válido
+            submitButton.disabled = !formIsValid || hasErrors;
+            
+            // Adicionar estilo visual para botão desabilitado
+            if (submitButton.disabled) {
+                submitButton.style.opacity = '0.5';
+                submitButton.style.cursor = 'not-allowed';
+            } else {
+                submitButton.style.opacity = '1';
+                submitButton.style.cursor = 'pointer';
+            }
+        }
+
+        // Adicionar event listeners para todos os campos
+        inputs.forEach(input => {
+            input.maxLength = 100; // Limite de 100 caracteres
+
+            // Event listener para validação em tempo real
+            input.addEventListener('input', function() {
+                // Validações específicas
+                if (input.value.trim() === '' && input.required) {
+                    displayError(input, 'Este campo não pode estar vazio.');
+                } else {
+                    removeError(input);
+                }
+
+                checkFormValidity();
+            });
+        });
+
+        // Event listener para o submit do formulário
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!submitButton.disabled) {
+                // Redirecionar para jogo após login
+                window.location.href = '../jogo/jogo.html';
+            }
+        });
+
+        // Verificar validade inicial do formulário
+        checkFormValidity();
     }
 });
