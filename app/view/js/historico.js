@@ -5,7 +5,7 @@ let partidas = [
                         "tempo": "Não se aplica",
                         "movimentos": 43,
                         "resultado": "Vitória",
-                        "data": "2025-08-22",
+                        "data": "22/08/2025",
                         "hora": "14:03"
                     },
                     {
@@ -14,7 +14,7 @@ let partidas = [
                         "tempo": "18min 15s",
                         "movimentos": 12,
                         "resultado": "Derrota",
-                        "data": "2025-08-21",
+                        "data": "21/08/2025",
                         "hora": "21:10"
                     },
                     {
@@ -23,7 +23,7 @@ let partidas = [
                         "tempo": "2min",
                         "movimentos": 3,
                         "resultado": "Vitória",
-                        "data": "2025-08-20",
+                        "data": "20/08/2025",
                         "hora": "19:24"
                     },
                     {
@@ -32,7 +32,7 @@ let partidas = [
                         "tempo": "Não se aplica",
                         "movimentos": 3,
                         "resultado": "Vitória",
-                        "data": "2025-08-20",
+                        "data": "20/08/2025",
                         "hora": "19:20"
                     },
                     {
@@ -41,7 +41,7 @@ let partidas = [
                         "tempo": "4min",
                         "movimentos": 3,
                         "resultado": "Vitória",
-                        "data": "2025-08-20",
+                        "data": "20/08/2025",
                         "hora": "19:13"
                     },
                     {
@@ -50,7 +50,7 @@ let partidas = [
                         "tempo": "Não se aplica",
                         "movimentos": 45,
                         "resultado": "Vitória",
-                        "data": "2025-08-20",
+                        "data": "20/08/2025",
                         "hora": "18:30"
                     }
                 ];
