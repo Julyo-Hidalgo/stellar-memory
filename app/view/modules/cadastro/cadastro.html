@@ -33,45 +33,43 @@
 
             <!-- Coluna esquerda -->
             <div class="input-box">
-                <input placeholder="Nome Completo" type="text" required>
+                <input name="nome_completo" placeholder="Nome Completo" type="text" pattern="[A-Za-zÀ-ÿ\s]+" required>
                 <i class='bx bx-id-card'></i>
             </div>
 
             <div class="input-box">
                 <label for="nascimento" class="sr-only">Data de Nascimento</label>
-                <input id="nascimento" type="text" placeholder="dd/mm/aaaa" required pattern="\d{2}/\d{2}/\d{4}">
+                <input id="nascimento" name="data_nascimento" type="text" placeholder="dd/mm/aaaa" required pattern="\d{2}/\d{2}/\d{4}">
                 <i class="bx bx-calendar"></i>
-                <!--tirar i-->
             </div>
 
             <div class="input-box">
-                <input placeholder="CPF" type="text" maxlength="14" required>
+                <input id="cpf" name="cpf" placeholder="CPF" type="text" maxlength="14" required>
                 <i class='bx bx-id-card'></i>
             </div>
 
             <div class="input-box">
-                <input placeholder="Telefone" type="tel" required>
+                <input name="telefone" placeholder="Telefone" type="tel" required>
                 <i class='bx bx-phone'></i>
             </div>
 
             <!-- Coluna direita -->
             <div class="input-box">
-                <input placeholder="E-mail" type="email" required>
+                <input name="email" placeholder="E-mail" type="email" required>
                 <i class='bx bx-envelope'></i>
             </div>
 
             <div class="input-box">
-                <input placeholder="Username" type="text" required>
+                <input name="username" placeholder="Username" type="text" required>
                 <i class='bx bx-user'></i>
             </div>
 
             <div class="input-box">
-                <input id="password" placeholder="Senha" type="password" required>
+                <input id="password" name="senha" placeholder="Senha" type="password" required>
                 <button type="button" class="toggle-password">
                     <img src="../../img/red-eyes.png" alt="Mostrar ou ocultar senha">
                 </button>
             </div>
-
 
             <!-- Botão -->
             <button type="submit">Cadastrar</button>
