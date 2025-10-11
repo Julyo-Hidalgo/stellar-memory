@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const passwordInput = document.getElementById('password');
     const path = window.location.pathname;
 
+    // Funcionalidade de mostrar/esconder senha
     if (togglePasswordButton && passwordInput) {
         togglePasswordButton.addEventListener('click', function() {
             if (passwordInput.type === 'password') {
@@ -15,12 +16,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Função para exibir mensagem de erro abaixo do container
+    // Função para exibir mensagem de erro
     function displayError(inputElement, message) {
         const inputBox = inputElement.closest(".input-box");
         let errorElement = inputBox.querySelector(".error-message");
         
-        // Garantir que o input-box tenha position relative para o posicionamento absoluto funcionar
+        // Garantir que o input-box tenha position relative
         if (getComputedStyle(inputBox).position === 'static') {
             inputBox.style.position = 'relative';
         }
@@ -35,12 +36,12 @@ document.addEventListener('DOMContentLoaded', function() {
         errorElement.style.color = "red";
         errorElement.style.fontSize = "0.8em";
         errorElement.style.position = "absolute";
-        errorElement.style.bottom = "-20px"; // Posiciona abaixo do container
-        errorElement.style.left = "10px"; // Padding esquerdo
+        errorElement.style.bottom = "-20px";
+        errorElement.style.left = "10px";
         errorElement.style.display = "block";
-        errorElement.style.width = "calc(100% - 20px)"; // Para garantir que o texto não saia do container
+        errorElement.style.width = "calc(100% - 20px)";
         errorElement.style.textAlign = "left";
-        errorElement.style.zIndex = "10"; // Para garantir que fique visível
+        errorElement.style.zIndex = "10";
     }
 
     // Função para remover mensagem de erro
@@ -52,9 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Função para aplicar máscara de telefone automaticamente
+    // Função para aplicar máscara de telefone
     function applyPhoneMask(value) {
-        // Remove tudo que não é dígito
         const cleanValue = value.replace(/\D/g, '');
         
         if (cleanValue.length <= 2) {
@@ -68,9 +68,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Função para aplicar máscara de data automaticamente
+    // Função para aplicar máscara de data
     function applyDateMask(value) {
-        // Remove tudo que não é dígito
         const cleanValue = value.replace(/\D/g, '');
         
         if (cleanValue.length <= 2) {
@@ -79,6 +78,21 @@ document.addEventListener('DOMContentLoaded', function() {
             return cleanValue.replace(/(\d{2})(\d{0,2})/, '$1/$2');
         } else {
             return cleanValue.replace(/(\d{2})(\d{2})(\d{0,4})/, '$1/$2/$3');
+        }
+    }
+
+    // Função para aplicar máscara de CPF
+    function applyCpfMask(value) {
+        const cleanValue = value.replace(/\D/g, '');
+        
+        if (cleanValue.length <= 3) {
+            return cleanValue;
+        } else if (cleanValue.length <= 6) {
+            return cleanValue.replace(/(\d{3})(\d{0,3})/, '$1.$2');
+        } else if (cleanValue.length <= 9) {
+            return cleanValue.replace(/(\d{3})(\d{3})(\d{0,3})/, '$1.$2.$3');
+        } else {
+            return cleanValue.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, '$1.$2.$3-$4');
         }
     }
 
@@ -110,6 +124,44 @@ document.addEventListener('DOMContentLoaded', function() {
         return true;
     }
 
+    // Função para validar CPF
+    function validateCpf(cpf) {
+        const cleanCpf = cpf.replace(/\D/g, '');
+        
+        if (cleanCpf.length !== 11) return false;
+        if (/^(\d)\1{10}$/.test(cleanCpf)) return false; // Números iguais
+        
+        // Validação do primeiro dígito verificador
+        let sum = 0;
+        for (let i = 0; i < 9; i++) {
+            sum += parseInt(cleanCpf.charAt(i)) * (10 - i);
+        }
+        let remainder = 11 - (sum % 11);
+        if (remainder === 10 || remainder === 11) remainder = 0;
+        if (remainder !== parseInt(cleanCpf.charAt(9))) return false;
+        
+        // Validação do segundo dígito verificador
+        sum = 0;
+        for (let i = 0; i < 10; i++) {
+            sum += parseInt(cleanCpf.charAt(i)) * (11 - i);
+        }
+        remainder = 11 - (sum % 11);
+        if (remainder === 10 || remainder === 11) remainder = 0;
+        if (remainder !== parseInt(cleanCpf.charAt(10))) return false;
+        
+        return true;
+    }
+
+    // Função para validar username (sem espaços)
+    function validateUsername(username) {
+        return username.trim() !== '' && !/\s/.test(username);
+    }
+
+    // Função para validar nome (sem números)
+    function validateName(name) {
+        return name.trim() !== '' && !/\d/.test(name);
+    }
+
     // Preenchimento de dados fictícios e validações para edicao_perfil.html
     if (path.includes('edicao_perfil.html')) {
         const form = document.getElementById('profile-form');
@@ -133,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (fictitiousData[name]) {
                 input.value = fictitiousData[name];
             }
-            input.maxLength = 100; // Limite de 100 caracteres
+            input.maxLength = 100;
         });
 
         // Armazenar valores originais para detectar mudanças
@@ -155,25 +207,30 @@ document.addEventListener('DOMContentLoaded', function() {
             let hasErrors = false;
 
             inputs.forEach(input => {
-                // Pular campos readonly
                 if (input.readOnly) return;
 
-                // Verificar se campo obrigatório está vazio
                 if (input.value.trim() === '' && input.required) {
                     formIsValid = false;
                 }
                 
-                // Validar e-mail
                 if (input.type === 'email' && input.value.trim() !== '' && !validateEmail(input.value.trim())) {
                     formIsValid = false;
                 }
 
-                // Validar telefone
                 if (input.type === 'tel' && input.value.trim() !== '' && !validatePhone(input.value)) {
                     formIsValid = false;
                 }
 
-                // Verificar se há mensagens de erro visíveis
+                // Validar nome (sem números)
+                if (input.name === 'nome_completo' && input.value.trim() !== '' && !validateName(input.value)) {
+                    formIsValid = false;
+                }
+
+                // Validar username (sem espaços)
+                if (input.name === 'username' && input.value.trim() !== '' && !validateUsername(input.value)) {
+                    formIsValid = false;
+                }
+
                 const inputBox = input.closest('.input-box');
                 const errorElement = inputBox.querySelector('.error-message');
                 if (errorElement && errorElement.textContent.trim() !== '') {
@@ -182,13 +239,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            // Botão só fica habilitado se:
-            // 1. Formulário é válido (sem erros)
-            // 2. Houve alterações nos campos
             const shouldEnable = formIsValid && !hasErrors && hasChanges();
             submitButton.disabled = !shouldEnable;
             
-            // Adicionar estilo visual para botão desabilitado
             if (submitButton.disabled) {
                 submitButton.style.opacity = '0.5';
                 submitButton.style.cursor = 'not-allowed';
@@ -198,21 +251,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Adicionar event listeners para todos os campos editáveis
+        // Event listeners para campos editáveis
         inputs.forEach(input => {
-            // Pular campos readonly
             if (input.readOnly) return;
 
-            // Event listener para validação em tempo real
             input.addEventListener('input', function() {
-                // Aplicar máscaras automáticas
+                // Aplicar máscaras
                 if (input.type === 'tel') {
-                    // Permitir apenas números para telefone
                     const cursorPosition = input.selectionStart;
                     const oldValue = input.value;
                     input.value = applyPhoneMask(input.value);
                     
-                    // Ajustar posição do cursor
                     const newCursorPosition = cursorPosition + (input.value.length - oldValue.length);
                     input.setSelectionRange(newCursorPosition, newCursorPosition);
                 }
@@ -224,6 +273,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     displayError(input, 'E-mail inválido');
                 } else if (input.type === 'tel' && input.value.trim() !== '' && !validatePhone(input.value)) {
                     displayError(input, 'Telefone inválido');
+                } else if (input.name === 'nome_completo' && input.value.trim() !== '' && !validateName(input.value)) {
+                    displayError(input, 'Nome não pode conter números');
+                } else if (input.name === 'username' && input.value.trim() !== '' && !validateUsername(input.value)) {
+                    displayError(input, 'Não pode conter espaços');
                 } else {
                     removeError(input);
                 }
@@ -231,10 +284,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 checkFormValidity();
             });
 
-            // Event listener para restringir caracteres em campos numéricos
+            // Restringir caracteres em campos numéricos
             if (input.type === 'tel') {
                 input.addEventListener('keypress', function(e) {
-                    // Permitir apenas números, backspace, delete, tab, escape, enter
                     if (!/[0-9]/.test(e.key) && 
                         !['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
                         e.preventDefault();
@@ -245,26 +297,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Função salvarPerfil
         function salvarPerfil() {
-            // Coletar dados do formulário
             const formData = {};
             inputs.forEach(input => {
                 formData[input.name] = input.value;
             });
 
-            // Simular envio para o backend
             console.log('Dados a serem salvos:', formData);
-            
-            // Simulação por enquanto
             alert('Perfil salvo com sucesso! (Simulação)');
             
-            // Atualizar valores originais após "salvar"
             inputs.forEach(input => {
                 originalValues[input.name] = input.value;
             });
             checkFormValidity();
         }
 
-        // Event listener para o submit do formulário
+        // Event listener para submit
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             if (!submitButton.disabled) {
@@ -272,7 +319,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Verificar validade inicial do formulário
         checkFormValidity();
     }
 
@@ -288,25 +334,40 @@ document.addEventListener('DOMContentLoaded', function() {
             let hasErrors = false;
 
             inputs.forEach(input => {
-                // Pular campos readonly
                 if (input.readOnly) return;
 
-                // Verificar se campo obrigatório está vazio
                 if (input.value.trim() === '' && input.required) {
                     formIsValid = false;
                 }
                 
-                // Validar e-mail
                 if (input.type === 'email' && input.value.trim() !== '' && !validateEmail(input.value.trim())) {
                     formIsValid = false;
                 }
 
-                // Validar telefone
                 if (input.type === 'tel' && input.value.trim() !== '' && !validatePhone(input.value)) {
                     formIsValid = false;
                 }
 
-                // Verificar se há mensagens de erro visíveis
+                // Validar nome (sem números)
+                if (input.placeholder === 'Nome Completo' && input.value.trim() !== '' && !validateName(input.value)) {
+                    formIsValid = false;
+                }
+
+                // Validar username (sem espaços)
+                if (input.placeholder === 'Username' && input.value.trim() !== '' && !validateUsername(input.value)) {
+                    formIsValid = false;
+                }
+
+                // Validar CPF
+                if (input.placeholder === 'CPF' && input.value.trim() !== '' && !validateCpf(input.value)) {
+                    formIsValid = false;
+                }
+
+                // Validar data
+                if (input.id === 'nascimento' && input.value.trim() !== '' && !validateDate(input.value)) {
+                    formIsValid = false;
+                }
+
                 const inputBox = input.closest('.input-box');
                 const errorElement = inputBox.querySelector('.error-message');
                 if (errorElement && errorElement.textContent.trim() !== '') {
@@ -315,10 +376,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            // Botão só fica habilitado se formulário é válido
             submitButton.disabled = !formIsValid || hasErrors;
             
-            // Adicionar estilo visual para botão desabilitado
             if (submitButton.disabled) {
                 submitButton.style.opacity = '0.5';
                 submitButton.style.cursor = 'not-allowed';
@@ -328,16 +387,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Adicionar event listeners para todos os campos
+        // Event listeners para todos os campos
         inputs.forEach(input => {
-            // Pular campos readonly
             if (input.readOnly) return;
 
-            input.maxLength = 100; // Limite de 100 caracteres
+            input.maxLength = 100;
 
-            // Event listener para validação em tempo real
             input.addEventListener('input', function() {
-                // Aplicar máscaras automáticas
+                // Aplicar máscaras
                 if (input.type === 'tel') {
                     const cursorPosition = input.selectionStart;
                     const oldValue = input.value;
@@ -347,7 +404,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     input.setSelectionRange(newCursorPosition, newCursorPosition);
                 }
 
-                // Aplicar máscara de data para campo de nascimento
                 if (input.id === 'nascimento') {
                     const cursorPosition = input.selectionStart;
                     const oldValue = input.value;
@@ -357,15 +413,30 @@ document.addEventListener('DOMContentLoaded', function() {
                     input.setSelectionRange(newCursorPosition, newCursorPosition);
                 }
 
+                if (input.placeholder === 'CPF') {
+                    const cursorPosition = input.selectionStart;
+                    const oldValue = input.value;
+                    input.value = applyCpfMask(input.value);
+                    
+                    const newCursorPosition = cursorPosition + (input.value.length - oldValue.length);
+                    input.setSelectionRange(newCursorPosition, newCursorPosition);
+                }
+
                 // Validações específicas
                 if (input.value.trim() === '' && input.required) {
-                    displayError(input, 'Este campo não pode estar vazio.');
+                    displayError(input, 'Não pode estar vazio.');
                 } else if (input.type === 'email' && input.value.trim() !== '' && !validateEmail(input.value.trim())) {
-                    displayError(input, 'E-mail deve ter um formato válido (ex: usuario@exemplo.com)');
+                    displayError(input, 'E-mail inválido');
                 } else if (input.type === 'tel' && input.value.trim() !== '' && !validatePhone(input.value)) {
-                    displayError(input, 'Telefone deve ter 8 ou 9 dígitos + DDD (ex: (11) 98765-4321)');
+                    displayError(input, 'Telefone inválido');
+                } else if (input.placeholder === 'Nome Completo' && input.value.trim() !== '' && !validateName(input.value)) {
+                    displayError(input, 'Não pode conter números');
+                } else if (input.placeholder === 'Username' && input.value.trim() !== '' && !validateUsername(input.value)) {
+                    displayError(input, 'Não pode conter espaços');
+                } else if (input.placeholder === 'CPF' && input.value.trim() !== '' && !validateCpf(input.value)) {
+                    displayError(input, 'CPF deve ter um formato válido');
                 } else if (input.id === 'nascimento' && input.value.trim() !== '' && !validateDate(input.value)) {
-                    displayError(input, 'Data deve estar no formato dd/mm/aaaa e ser válida');
+                    displayError(input, 'Deve ser válido (DD/MM/AAAA)');
                 } else {
                     removeError(input);
                 }
@@ -373,8 +444,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 checkFormValidity();
             });
 
-            // Event listener para restringir caracteres em campos numéricos
-            if (input.type === 'tel' || input.id === 'nascimento') {
+            // Restringir caracteres em campos numéricos
+            if (input.type === 'tel' || input.id === 'nascimento' || input.placeholder === 'CPF') {
                 input.addEventListener('keypress', function(e) {
                     if (!/[0-9]/.test(e.key) && 
                         !['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
@@ -384,16 +455,34 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Event listener para o submit do formulário
+        // Event listener para submit
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+            
+            // Verificar erros visuais
+            const erros = document.querySelectorAll(".error-message");
+            const temErro = Array.from(erros).some(e => e.textContent.trim() !== "");
+            if (temErro) {
+                alert("Corrija os campos antes de prosseguir.");
+                return;
+            }
+
+            // Verificar campos obrigatórios
+            const camposObrigatorios = form.querySelectorAll("input[required]");
+            for (let campo of camposObrigatorios) {
+                if (!campo.value.trim()) {
+                    alert("Preencha todos os campos obrigatórios.");
+                    campo.focus();
+                    return;
+                }
+            }
+
             if (!submitButton.disabled) {
-                // Redirecionar para login após cadastro
-                window.location.href = '../login/login.html';
+                alert("Cadastro realizado com sucesso!");
+                window.location.href = "../login/login.html";
             }
         });
 
-        // Verificar validade inicial do formulário
         checkFormValidity();
     }
 
@@ -403,18 +492,26 @@ document.addEventListener('DOMContentLoaded', function() {
         const inputs = form.querySelectorAll('input[type="text"], input[type="password"]');
         const submitButton = form.querySelector('button[type="submit"]');
 
+        // Adicionar ID ao formulário se não existir
+        if (!form.id) {
+            form.id = 'form-login';
+        }
+
         // Função para verificar a validade do formulário
         function checkFormValidity() {
             let formIsValid = true;
             let hasErrors = false;
 
             inputs.forEach(input => {
-                // Verificar se campo obrigatório está vazio
                 if (input.value.trim() === '' && input.required) {
                     formIsValid = false;
                 }
 
-                // Verificar se há mensagens de erro visíveis
+                // Validar username (sem espaços)
+                if (input.placeholder === 'Username' && input.value.trim() !== '' && !validateUsername(input.value)) {
+                    formIsValid = false;
+                }
+
                 const inputBox = input.closest('.input-box');
                 const errorElement = inputBox.querySelector('.error-message');
                 if (errorElement && errorElement.textContent.trim() !== '') {
@@ -423,10 +520,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            // Botão só fica habilitado se formulário é válido
             submitButton.disabled = !formIsValid || hasErrors;
             
-            // Adicionar estilo visual para botão desabilitado
             if (submitButton.disabled) {
                 submitButton.style.opacity = '0.5';
                 submitButton.style.cursor = 'not-allowed';
@@ -436,15 +531,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Adicionar event listeners para todos os campos
+        // Event listeners para todos os campos
         inputs.forEach(input => {
-            input.maxLength = 100; // Limite de 100 caracteres
+            input.maxLength = 100;
 
-            // Event listener para validação em tempo real
             input.addEventListener('input', function() {
                 // Validações específicas
                 if (input.value.trim() === '' && input.required) {
                     displayError(input, 'Este campo não pode estar vazio.');
+                } else if (input.placeholder === 'Username' && input.value.trim() !== '' && !validateUsername(input.value)) {
+                    displayError(input, 'Username não pode conter espaços');
                 } else {
                     removeError(input);
                 }
@@ -453,16 +549,25 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Event listener para o submit do formulário
+        // Event listener para submit
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+
+            const usuario = document.querySelector('input[placeholder="Username"]');
+            const senha = document.getElementById("password");
+
+            if (!usuario.value.trim() || !senha.value.trim()) {
+                alert("Preencha todos os campos.");
+                return;
+            }
+
             if (!submitButton.disabled) {
-                // Redirecionar para jogo após login
+                alert("Login realizado com sucesso!");
+                //adicionar lógica de autenticação p proxima entrega
                 window.location.href = '../jogo/jogo.html';
             }
         });
 
-        // Verificar validade inicial do formulário
         checkFormValidity();
     }
 });
