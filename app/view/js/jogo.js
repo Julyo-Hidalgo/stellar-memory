@@ -121,9 +121,38 @@ function desativarModoTrapaca() {
   document.getElementById('botao_desativar_trapaca').classList.add('ativo');
 }
 
+let intervalo;
+
 /*adicionando um script js para fazer a repetição das cartas*/
 function loadCards() {
   const cartasContainer = document.getElementById("cartas-container");
+
+  document.getElementById("numero-jogadas").textContent = 0;
+
+  const tempoPartida = document.getElementById("tempo-partida");
+  const modalidade = document.getElementById("modalidade").value;
+  clearInterval(intervalo);
+
+  let segundos = modalidade === "contra_tempo" ? 10 * 60 : 0; // inicia em 10 minutos para contra o tempo, 0 para clássico
+
+  intervalo = setInterval(() => {
+    // Atualiza o tempo da partida 
+    const min = Math.floor(segundos / 60);
+    const seg = segundos % 60;
+    tempoPartida.textContent = `${min.toString().padStart(2, "0")}:${seg
+      .toString()
+      .padStart(2, "0")}`;
+    
+    // incrementa ou decrementa o tempo dependendo da modalidade
+    if (modalidade === "classico") {
+      segundos++;
+    } else if (modalidade === "contra_tempo") {
+      segundos--;
+      if (segundos < 0) {
+        clearInterval(intervalo);
+      }
+    }
+  }, 1000);
 
   cartasContainer.innerHTML = "";
   const verso = "../../img/jogo/1.png";
@@ -219,6 +248,11 @@ function virarCarta(indice) {
     podeVirar = false;
     setTimeout(verificarPar, 1000);
   }
+
+  //atualiza o contador de jogadas
+  contadorJogadas = document.getElementById("numero-jogadas").textContent;
+  contadorJogadas = parseInt(contadorJogadas) + 1;
+  document.getElementById("numero-jogadas").textContent = contadorJogadas;
   
 }
 
@@ -262,6 +296,7 @@ function verificarPar() {
 function desistirJogo() {
   // Para qualquer temporizador ativo (se tiver)
   clearTimeout();
+  clearInterval(intervalo);
   
   //apaga/reseta todas as variáveis do jogo
   cartas = [];
