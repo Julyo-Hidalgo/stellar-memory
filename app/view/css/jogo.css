@@ -235,6 +235,53 @@ h2 {
   opacity: 0.7;
 }
 
+/* estilo base do fundo do modal */
+.modal {
+  display: none; /* fica escondido inicialmente */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+/* conteúdo interno */
+.modal-conteudo {
+  background: #181822;
+  padding: 30px 40px;
+  border-radius: 12px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  animation: aparecer 0.3s ease;
+  width: 400px;
+}
+
+.modal-conteudo button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #f3ea88;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.modal-conteudo button:hover {
+  background-color: #f3ea88;
+}
+
+@keyframes transicao {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+
 /* Estilo para quando o botão desistir está desabilitado */
 #botao-desistir:disabled {
   opacity: 0.5;

@@ -256,6 +256,21 @@ function virarCarta(indice) {
   
 }
 
+function modalVitoria() {
+  //Para o timer
+  clearInterval(intervalo);
+  tempoPartida = document.getElementById("tempo-partida").textContent;
+  document.getElementById("tempo-partida").textContent = tempoPartida;
+
+  const modal = document.getElementById("modal-vitoria");
+  modal.style.display = "flex"; 
+  document.getElementById("btn-fechar-modal").onclick = () => {
+    modal.style.display = "none";
+    desistirJogo(); 
+  };
+}
+
+
 function verificarPar() {
   const [indice1, indice2] = cartasViradas; //tenta achar o valor das cartas viradas
   
@@ -269,7 +284,7 @@ function verificarPar() {
     //verifica se o numerodo de pares encontrados é igual a qntd total de pares
     if (paresEncontrados === cartas.length / 2) {//pares encontrados  cartas totais daquele jogo/2
       setTimeout(() => {
-        alert("Parabéns! Você completou o jogo!");//luiz mudar
+        modalVitoria();//luiz mudar
       }, 500);//espera 0,5s
     }
   } else {
