@@ -1,573 +1,294 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const togglePasswordButton = document.querySelector('.toggle-password');
-    const passwordInput = document.getElementById('password');
+document.addEventListener("DOMContentLoaded", () => {
+
+    // Alternância de visibilidade da senha 
+    document.querySelectorAll(".toggle-password").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const input = btn.parentElement.querySelector("input[type='password'], input[type='text']");
+            if (!input) return;
+            if (input.type === "password") {
+                input.type = "text";
+                btn.querySelector("img").src = "../../img/cadeado.png";
+            } else {
+                input.type = "password";
+                btn.querySelector("img").src = "../../img/red-eyes.png";
+            }
+        });
+    });
+
+    // Criação do objeto global formUtils
+    // Ele agrupa todas as funções usadas pelos formulários do site
+    window.formUtils = {
+
+        /* Exibição e remoção de mensagens de erro */
+        displayError(input, message) {
+            if (!input) return;
+            const box = input.closest(".input-box") || input.parentElement;
+            if (!box) return;
+            let error = box.querySelector(".error-message");
+            if (!error) {
+                error = document.createElement("div");
+                error.className = "error-message";
+                box.appendChild(error);
+            }
+            error.textContent = message;
+            Object.assign(error.style, {
+                color: "red",
+                fontSize: "0.8em",
+                position: "absolute",
+                bottom: "-20px",
+                left: "10px",
+            });
+        },
+
+        removeError(input) {
+            const box = input.closest(".input-box") || input.parentElement;
+            if (!box) return;
+            const error = box.querySelector(".error-message");
+            if (error) error.remove();
+        },
+        /*Funções auxiliares de formatação*/
+        onlyDigits(v) {
+            return String(v || "").replace(/\D/g, "");
+        },
+
+        /* Máscaras para campos específicos */
+        applyCpfMask(v) {
+            const d = window.formUtils.onlyDigits(v).slice(0, 11);
+            if (d.length <= 3) return d;
+            if (d.length <= 6) return d.replace(/(\d{3})(\d{0,3})/, "$1.$2");
+            if (d.length <= 9) return d.replace(/(\d{3})(\d{3})(\d{0,3})/, "$1.$2.$3");
+            return d.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, "$1.$2.$3-$4");
+        },
+
+        applyDateMask(v) {
+            const d = window.formUtils.onlyDigits(v).slice(0, 8);
+            if (d.length <= 2) return d;
+            if (d.length <= 4) return d.replace(/(\d{2})(\d{0,2})/, "$1/$2");
+            return d.replace(/(\d{2})(\d{2})(\d{0,4})/, "$1/$2/$3");
+        },
+
+        applyPhoneMask(v) {
+            const d = window.formUtils.onlyDigits(v).slice(0, 11);
+            if (d.length <= 2) return d ? `(${d}` : d;
+            if (d.length <= 6) return d.replace(/(\d{2})(\d{0,4})/, "($1) $2");
+            if (d.length <= 10) return d.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3");
+            return d.replace(/(\d{2})(\d{5})(\d{0,4})/, "($1) $2-$3");
+        },
+
+        /* Validações de campos */
+        validateName(name) {
+            return /^[A-Za-zÀ-ÿ\s]+$/.test(name.trim());
+        },
+        validateUsername(u) {
+            return /^[A-Za-z0-9!@#$%^&*()_\-+=.?]{2,10}$/.test(u.trim());
+        },
+        validatePassword(p) {
+            return /^[A-Za-z0-9!@#$%^&*()_\-+=.?]{8,10}$/.test(p.trim());
+        },
+        validateEmail(e) {
+            return /^[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}$/.test(e.trim());
+        },
+        validateCpf(cpf) {
+            return window.formUtils.onlyDigits(cpf).length === 11;
+        },
+        validatePhone(tel) {
+            const len = window.formUtils.onlyDigits(tel).length;
+            return len === 10 || len === 11;
+        },
+        validateDate(date) {
+            const d = window.formUtils.onlyDigits(date);
+
+            // Se o campo estiver vazio, não mostra erro ainda
+            if (d.length === 0) return true;
+
+            // Se tiver menos de 8 dígitos, já é considerado inválido
+            if (d.length < 8) return false;
+
+            // Verifica formato completo
+            const day = +d.substring(0, 2);
+            const month = +d.substring(2, 4);
+            const year = +d.substring(4, 8);
+
+            // Valida faixas possíveis
+            if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2025) return false;
+
+            const obj = new Date(year, month - 1, day);
+            const valid =
+                obj.getFullYear() === year &&
+                obj.getMonth() === month - 1 &&
+                obj.getDate() === day;
+
+            return valid;
+        },
+
+        /* Configuração de inputs interativos */
+        setupInteractiveInputs(form) {
+            const inputs = form.querySelectorAll("input");
+
+            inputs.forEach((input) => {
+                const name = input.name;
+                const id = input.id;
+
+                // máscaras dinâmicas
+                input.addEventListener("input", () => {
+                    if (name === "cpf") input.value = window.formUtils.applyCpfMask(input.value);
+                    if (name === "telefone") input.value = window.formUtils.applyPhoneMask(input.value);
+                    if (id === "nascimento" || name === "data_nascimento")
+                        input.value = window.formUtils.applyDateMask(input.value);
+                });
+
+                // Restrições de caracteres durante a digitação
+                input.addEventListener("keypress", (e) => {
+                    if (["cpf", "telefone", "data_nascimento"].includes(name) || id === "nascimento") {
+                        // assume que o Enter sempre é permitido
+                        if (e.key === "Enter") return;
+
+                        // Permite apenas números
+                        if (!/[0-9]/.test(e.key)) {
+                            e.preventDefault();
+                            window.formUtils.displayError(input, "Apenas números permitidos.");
+                            setTimeout(() => window.formUtils.removeError(input), 1500);
+                            return;
+                        }
+
+                        const max =
+                            name === "cpf"
+                                ? 11
+                                : name === "telefone"
+                                    ? 11
+                                    : name === "data_nascimento" || id === "nascimento"
+                                        ? 8
+                                        : null;
+
+                        if (max && window.formUtils.onlyDigits(input.value).length >= max) {
+                            e.preventDefault();
+                            window.formUtils.displayError(input, `Limite de ${max} números atingido.`);
+                            setTimeout(() => window.formUtils.removeError(input), 1500);
+                        }
+                    }
+
+                    if (name === "nome_completo" && !/[A-Za-zÀ-ÿ\s]/.test(e.key)) {
+                        e.preventDefault();
+                        window.formUtils.displayError(input, "Apenas letras permitidas.");
+                        setTimeout(() => window.formUtils.removeError(input), 1500);
+                    }
+
+                    if ((name === "username" || name === "senha") && input.value.length >= 10) {
+                        e.preventDefault();
+                        window.formUtils.displayError(input, "Limite máximo de 10 caracteres atingido.");
+                        setTimeout(() => window.formUtils.removeError(input), 1500);
+                    }
+                });
+
+                // Navegação com Enter
+                input.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        const form = input.form;
+                        if (!form) return;
+
+                        const focusable = Array.from(form.querySelectorAll("input, select, textarea"))
+                            .filter(el => !el.disabled && el.offsetParent !== null);
+
+                        const index = focusable.indexOf(input);
+                        if (index !== -1 && index + 1 < focusable.length) {
+                            focusable[index + 1].focus();
+                        } else {
+                            form.querySelector("button, input[type='submit']")?.focus();
+                        }
+                    }
+                });
+
+                // Validação ao sair do campo
+                input.addEventListener("blur", () => {
+                    const val = input.value.trim();
+                    window.formUtils.removeError(input);
+                    if (!val) return;
+
+                    if (name === "nome_completo" && !window.formUtils.validateName(val))
+                        window.formUtils.displayError(input, "O nome deve conter apenas letras.");
+                    else if (name === "username" && !window.formUtils.validateUsername(val))
+                        window.formUtils.displayError(input, "Mínimo 2 caracteres.");
+                    else if (name === "senha" && !window.formUtils.validatePassword(val))
+                        window.formUtils.displayError(input, "Mínimo 8 caracteres.");
+                    else if (name === "cpf" && !window.formUtils.validateCpf(val))
+                        window.formUtils.displayError(input, "CPF deve ter 11 números.");
+                    else if (name === "telefone" && !window.formUtils.validatePhone(val))
+                        window.formUtils.displayError(input, "Telefone inválido.");
+                    else if ((id === "nascimento" || name === "data_nascimento") && !window.formUtils.validateDate(val))
+                        window.formUtils.displayError(input, "Data inválida.");
+                    else if (input.type === "email" && !window.formUtils.validateEmail(val))
+                        window.formUtils.displayError(input, "E-mail inválido.");
+                });
+            });
+        },
+
+        /* Envio unificado de formulários */
+        setupFormSubmission(selector, options = {}) {
+            const form = document.querySelector(selector);
+            if (!form) return;
+
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                let valid = true;
+
+                const inputs = form.querySelectorAll("input");
+                inputs.forEach((input) => {
+                    const val = input.value.trim();
+                    window.formUtils.removeError(input);
+                    // Validações específicas
+                    if (input.required && !val) {
+                        window.formUtils.displayError(input, "Campo obrigatório.");
+                        valid = false;
+                    } else if (input.name === "nome_completo" && !window.formUtils.validateName(val)) {
+                        window.formUtils.displayError(input, "Nome deve conter apenas letras.");
+                        valid = false;
+                    } else if (input.name === "username" && !window.formUtils.validateUsername(val)) {
+                        window.formUtils.displayError(input, "Mínimo 2 caracteres.");
+                        valid = false;
+                    } else if (input.name === "senha" && !window.formUtils.validatePassword(val)) {
+                        window.formUtils.displayError(input, "Mínimo 8 caracteres.");
+                        valid = false;
+                    } else if (input.name === "cpf" && !window.formUtils.validateCpf(val)) {
+                        window.formUtils.displayError(input, "CPF inválido.");
+                        valid = false;
+                    } else if (input.name === "telefone" && !window.formUtils.validatePhone(val)) {
+                        window.formUtils.displayError(input, "Telefone inválido.");
+                        valid = false;
+                    } else if (input.name === "data_nascimento" && !window.formUtils.validateDate(val)) {
+                        window.formUtils.displayError(input, "Data inválida.");
+                        valid = false;
+                    } else if (input.type === "email" && !window.formUtils.validateEmail(val)) {
+                        window.formUtils.displayError(input, "E-mail inválido.");
+                        valid = false;
+                    }
+                });
+                
+                if (valid) {
+                    alert(options.successMessage || "Form submitted successfully!");
+                    if (options.redirect) window.location.href = options.redirect;
+                }
+            });
+        },
+    };
+
+    // Aplica funcionalidades específicas dependente da página
     const path = window.location.pathname;
 
-    // Funcionalidade de mostrar/esconder senha
-    if (togglePasswordButton && passwordInput) {
-        togglePasswordButton.addEventListener('click', function() {
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                togglePasswordButton.innerHTML = '<img src="../../img/cadeado.png" alt="Ocultar senha" width="20">';
-            } else {
-                passwordInput.type = 'password';
-                togglePasswordButton.innerHTML = '<img src="../../img/red-eyes.png" alt="Mostrar senha" width="20">';
-            }
+    const setupPageForm = (selector) => {
+        const form = document.querySelector(selector);
+        if (!form) return;
+        window.formUtils.setupInteractiveInputs(form);
+    };
+
+    if (path.includes("cadastro.html")) setupPageForm("form");
+    if (path.includes("edicao_perfil.html")) setupPageForm("#profile-form");
+    if (path.includes("login.html")) setupPageForm("#form-login");
+
+    // Garante que as máscaras permaneçam aplicadas ao enviar qualquer formulário
+    document.querySelectorAll("form").forEach((form) => {
+        form.addEventListener("submit", () => {
+            // intencionalmente vazio - as máscaras sãi aplicadas em tempo real
         });
-    }
-
-    // Função para exibir mensagem de erro
-    function displayError(inputElement, message) {
-        const inputBox = inputElement.closest(".input-box");
-        let errorElement = inputBox.querySelector(".error-message");
-        
-        // Garantir que o input-box tenha position relative
-        if (getComputedStyle(inputBox).position === 'static') {
-            inputBox.style.position = 'relative';
-        }
-        
-        if (!errorElement) {
-            errorElement = document.createElement("div");
-            errorElement.classList.add("error-message");
-            inputBox.appendChild(errorElement);
-        }
-        
-        errorElement.textContent = message;
-        errorElement.style.color = "red";
-        errorElement.style.fontSize = "0.8em";
-        errorElement.style.position = "absolute";
-        errorElement.style.bottom = "-20px";
-        errorElement.style.left = "10px";
-        errorElement.style.display = "block";
-        errorElement.style.width = "calc(100% - 20px)";
-        errorElement.style.textAlign = "left";
-        errorElement.style.zIndex = "10";
-    }
-
-    // Função para remover mensagem de erro
-    function removeError(inputElement) {
-        const inputBox = inputElement.closest('.input-box');
-        const errorElement = inputBox.querySelector('.error-message');
-        if (errorElement) {
-            errorElement.remove();
-        }
-    }
-
-    // Função para aplicar máscara de telefone
-    function applyPhoneMask(value) {
-        const cleanValue = value.replace(/\D/g, '');
-        
-        if (cleanValue.length <= 2) {
-            return cleanValue.replace(/(\d{0,2})/, '($1');
-        } else if (cleanValue.length <= 6) {
-            return cleanValue.replace(/(\d{2})(\d{0,4})/, '($1) $2');
-        } else if (cleanValue.length <= 10) {
-            return cleanValue.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
-        } else {
-            return cleanValue.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
-        }
-    }
-
-    // Função para aplicar máscara de data
-    function applyDateMask(value) {
-        const cleanValue = value.replace(/\D/g, '');
-        
-        if (cleanValue.length <= 2) {
-            return cleanValue;
-        } else if (cleanValue.length <= 4) {
-            return cleanValue.replace(/(\d{2})(\d{0,2})/, '$1/$2');
-        } else {
-            return cleanValue.replace(/(\d{2})(\d{2})(\d{0,4})/, '$1/$2/$3');
-        }
-    }
-
-    // Função para aplicar máscara de CPF
-    function applyCpfMask(value) {
-        const cleanValue = value.replace(/\D/g, '');
-        
-        if (cleanValue.length <= 3) {
-            return cleanValue;
-        } else if (cleanValue.length <= 6) {
-            return cleanValue.replace(/(\d{3})(\d{0,3})/, '$1.$2');
-        } else if (cleanValue.length <= 9) {
-            return cleanValue.replace(/(\d{3})(\d{3})(\d{0,3})/, '$1.$2.$3');
-        } else {
-            return cleanValue.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, '$1.$2.$3-$4');
-        }
-    }
-
-    // Função para validar e-mail
-    function validateEmail(email) {
-        const re = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)*(\.[a-z]{2,})$/i;
-        return re.test(String(email).toLowerCase());
-    }
-
-    // Função para validar telefone
-    function validatePhone(phone) {
-        const cleanPhone = phone.replace(/\D/g, '');
-        return cleanPhone.length >= 10 && cleanPhone.length <= 11;
-    }
-
-    // Função para validar data
-    function validateDate(date) {
-        const cleanDate = date.replace(/\D/g, '');
-        if (cleanDate.length !== 8) return false;
-        
-        const day = parseInt(cleanDate.substring(0, 2));
-        const month = parseInt(cleanDate.substring(2, 4));
-        const year = parseInt(cleanDate.substring(4, 8));
-        
-        if (day < 1 || day > 31) return false;
-        if (month < 1 || month > 12) return false;
-        if (year < 1900 || year > new Date().getFullYear()) return false;
-        
-        return true;
-    }
-
-    // Função para validar CPF
-    function validateCpf(cpf) {
-        const cleanCpf = cpf.replace(/\D/g, '');
-        
-        if (cleanCpf.length !== 11) return false;
-        if (/^(\d)\1{10}$/.test(cleanCpf)) return false; // Números iguais
-        
-        // Validação do primeiro dígito verificador
-        let sum = 0;
-        for (let i = 0; i < 9; i++) {
-            sum += parseInt(cleanCpf.charAt(i)) * (10 - i);
-        }
-        let remainder = 11 - (sum % 11);
-        if (remainder === 10 || remainder === 11) remainder = 0;
-        if (remainder !== parseInt(cleanCpf.charAt(9))) return false;
-        
-        // Validação do segundo dígito verificador
-        sum = 0;
-        for (let i = 0; i < 10; i++) {
-            sum += parseInt(cleanCpf.charAt(i)) * (11 - i);
-        }
-        remainder = 11 - (sum % 11);
-        if (remainder === 10 || remainder === 11) remainder = 0;
-        if (remainder !== parseInt(cleanCpf.charAt(10))) return false;
-        
-        return true;
-    }
-
-    // Função para validar username (sem espaços)
-    function validateUsername(username) {
-        return username.trim() !== '' && !/\s/.test(username);
-    }
-
-    // Função para validar nome (sem números)
-    function validateName(name) {
-        return name.trim() !== '' && !/\d/.test(name);
-    }
-
-    // Preenchimento de dados fictícios e validações para edicao_perfil.html
-    if (path.includes('edicao_perfil.html')) {
-        const form = document.getElementById('profile-form');
-        const inputs = form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="password"]');
-        const submitButton = form.querySelector('button[type="submit"]');
-
-        // Dados fictícios
-        const fictitiousData = {
-            'nome_completo': 'João da Silva',
-            'data_nascimento': '01/01/1990',
-            'cpf': '123.456.789-00',
-            'telefone': '(11) 98765-4321',
-            'email': 'joao.silva@example.com',
-            'username': 'joaosilva',
-            'senha': 'senha123'
-        };
-
-        // Preencher campos com dados fictícios
-        inputs.forEach(input => {
-            const name = input.name;
-            if (fictitiousData[name]) {
-                input.value = fictitiousData[name];
-            }
-            input.maxLength = 100;
-        });
-
-        // Armazenar valores originais para detectar mudanças
-        const originalValues = {};
-        inputs.forEach(input => {
-            originalValues[input.name] = input.value;
-        });
-
-        // Função para verificar se houve alterações
-        function hasChanges() {
-            return Array.from(inputs).some(input => {
-                return originalValues[input.name] !== input.value;
-            });
-        }
-
-        // Função para verificar a validade do formulário
-        function checkFormValidity() {
-            let formIsValid = true;
-            let hasErrors = false;
-
-            inputs.forEach(input => {
-                if (input.readOnly) return;
-
-                if (input.value.trim() === '' && input.required) {
-                    formIsValid = false;
-                }
-                
-                if (input.type === 'email' && input.value.trim() !== '' && !validateEmail(input.value.trim())) {
-                    formIsValid = false;
-                }
-
-                if (input.type === 'tel' && input.value.trim() !== '' && !validatePhone(input.value)) {
-                    formIsValid = false;
-                }
-
-                // Validar nome (sem números)
-                if (input.name === 'nome_completo' && input.value.trim() !== '' && !validateName(input.value)) {
-                    formIsValid = false;
-                }
-
-                // Validar username (sem espaços)
-                if (input.name === 'username' && input.value.trim() !== '' && !validateUsername(input.value)) {
-                    formIsValid = false;
-                }
-
-                const inputBox = input.closest('.input-box');
-                const errorElement = inputBox.querySelector('.error-message');
-                if (errorElement && errorElement.textContent.trim() !== '') {
-                    hasErrors = true;
-                    formIsValid = false;
-                }
-            });
-
-            const shouldEnable = formIsValid && !hasErrors && hasChanges();
-            submitButton.disabled = !shouldEnable;
-            
-            if (submitButton.disabled) {
-                submitButton.style.opacity = '0.5';
-                submitButton.style.cursor = 'not-allowed';
-            } else {
-                submitButton.style.opacity = '1';
-                submitButton.style.cursor = 'pointer';
-            }
-        }
-
-        // Event listeners para campos editáveis
-        inputs.forEach(input => {
-            if (input.readOnly) return;
-
-            input.addEventListener('input', function() {
-                // Aplicar máscaras
-                if (input.type === 'tel') {
-                    const cursorPosition = input.selectionStart;
-                    const oldValue = input.value;
-                    input.value = applyPhoneMask(input.value);
-                    
-                    const newCursorPosition = cursorPosition + (input.value.length - oldValue.length);
-                    input.setSelectionRange(newCursorPosition, newCursorPosition);
-                }
-
-                // Validações específicas
-                if (input.value.trim() === '' && input.required) {
-                    displayError(input, 'Não pode estar vazio.');
-                } else if (input.type === 'email' && input.value.trim() !== '' && !validateEmail(input.value.trim())) {
-                    displayError(input, 'E-mail inválido');
-                } else if (input.type === 'tel' && input.value.trim() !== '' && !validatePhone(input.value)) {
-                    displayError(input, 'Telefone inválido');
-                } else if (input.name === 'nome_completo' && input.value.trim() !== '' && !validateName(input.value)) {
-                    displayError(input, 'Nome não pode conter números');
-                } else if (input.name === 'username' && input.value.trim() !== '' && !validateUsername(input.value)) {
-                    displayError(input, 'Não pode conter espaços');
-                } else {
-                    removeError(input);
-                }
-
-                checkFormValidity();
-            });
-
-            // Restringir caracteres em campos numéricos
-            if (input.type === 'tel') {
-                input.addEventListener('keypress', function(e) {
-                    if (!/[0-9]/.test(e.key) && 
-                        !['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
-                        e.preventDefault();
-                    }
-                });
-            }
-        });
-
-        // Função salvarPerfil
-        function salvarPerfil() {
-            const formData = {};
-            inputs.forEach(input => {
-                formData[input.name] = input.value;
-            });
-
-            console.log('Dados a serem salvos:', formData);
-            alert('Perfil salvo com sucesso! (Simulação)');
-            
-            inputs.forEach(input => {
-                originalValues[input.name] = input.value;
-            });
-            checkFormValidity();
-        }
-
-        // Event listener para submit
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            if (!submitButton.disabled) {
-                salvarPerfil();
-            }
-        });
-
-        checkFormValidity();
-    }
-
-    // Validações para cadastro.html
-    if (path.includes('cadastro.html')) {
-        const form = document.getElementById('form-cadastro');
-        const inputs = form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="password"]');
-        const submitButton = form.querySelector('button[type="submit"]');
-
-        // Função para verificar a validade do formulário
-        function checkFormValidity() {
-            let formIsValid = true;
-            let hasErrors = false;
-
-            inputs.forEach(input => {
-                if (input.readOnly) return;
-
-                if (input.value.trim() === '' && input.required) {
-                    formIsValid = false;
-                }
-                
-                if (input.type === 'email' && input.value.trim() !== '' && !validateEmail(input.value.trim())) {
-                    formIsValid = false;
-                }
-
-                if (input.type === 'tel' && input.value.trim() !== '' && !validatePhone(input.value)) {
-                    formIsValid = false;
-                }
-
-                // Validar nome (sem números)
-                if (input.placeholder === 'Nome Completo' && input.value.trim() !== '' && !validateName(input.value)) {
-                    formIsValid = false;
-                }
-
-                // Validar username (sem espaços)
-                if (input.placeholder === 'Username' && input.value.trim() !== '' && !validateUsername(input.value)) {
-                    formIsValid = false;
-                }
-
-                // Validar CPF
-                if (input.placeholder === 'CPF' && input.value.trim() !== '' && !validateCpf(input.value)) {
-                    formIsValid = false;
-                }
-
-                // Validar data
-                if (input.id === 'nascimento' && input.value.trim() !== '' && !validateDate(input.value)) {
-                    formIsValid = false;
-                }
-
-                const inputBox = input.closest('.input-box');
-                const errorElement = inputBox.querySelector('.error-message');
-                if (errorElement && errorElement.textContent.trim() !== '') {
-                    hasErrors = true;
-                    formIsValid = false;
-                }
-            });
-
-            submitButton.disabled = !formIsValid || hasErrors;
-            
-            if (submitButton.disabled) {
-                submitButton.style.opacity = '0.5';
-                submitButton.style.cursor = 'not-allowed';
-            } else {
-                submitButton.style.opacity = '1';
-                submitButton.style.cursor = 'pointer';
-            }
-        }
-
-        // Event listeners para todos os campos
-        inputs.forEach(input => {
-            if (input.readOnly) return;
-
-            input.maxLength = 100;
-
-            input.addEventListener('input', function() {
-                // Aplicar máscaras
-                if (input.type === 'tel') {
-                    const cursorPosition = input.selectionStart;
-                    const oldValue = input.value;
-                    input.value = applyPhoneMask(input.value);
-                    
-                    const newCursorPosition = cursorPosition + (input.value.length - oldValue.length);
-                    input.setSelectionRange(newCursorPosition, newCursorPosition);
-                }
-
-                if (input.id === 'nascimento') {
-                    const cursorPosition = input.selectionStart;
-                    const oldValue = input.value;
-                    input.value = applyDateMask(input.value);
-                    
-                    const newCursorPosition = cursorPosition + (input.value.length - oldValue.length);
-                    input.setSelectionRange(newCursorPosition, newCursorPosition);
-                }
-
-                if (input.placeholder === 'CPF') {
-                    const cursorPosition = input.selectionStart;
-                    const oldValue = input.value;
-                    input.value = applyCpfMask(input.value);
-                    
-                    const newCursorPosition = cursorPosition + (input.value.length - oldValue.length);
-                    input.setSelectionRange(newCursorPosition, newCursorPosition);
-                }
-
-                // Validações específicas
-                if (input.value.trim() === '' && input.required) {
-                    displayError(input, 'Não pode estar vazio.');
-                } else if (input.type === 'email' && input.value.trim() !== '' && !validateEmail(input.value.trim())) {
-                    displayError(input, 'E-mail inválido');
-                } else if (input.type === 'tel' && input.value.trim() !== '' && !validatePhone(input.value)) {
-                    displayError(input, 'Telefone inválido');
-                } else if (input.placeholder === 'Nome Completo' && input.value.trim() !== '' && !validateName(input.value)) {
-                    displayError(input, 'Não pode conter números');
-                } else if (input.placeholder === 'Username' && input.value.trim() !== '' && !validateUsername(input.value)) {
-                    displayError(input, 'Não pode conter espaços');
-                } else if (input.placeholder === 'CPF' && input.value.trim() !== '' && !validateCpf(input.value)) {
-                    displayError(input, 'CPF deve ter um formato válido');
-                } else if (input.id === 'nascimento' && input.value.trim() !== '' && !validateDate(input.value)) {
-                    displayError(input, 'Deve ser válido (DD/MM/AAAA)');
-                } else {
-                    removeError(input);
-                }
-
-                checkFormValidity();
-            });
-
-            // Restringir caracteres em campos numéricos
-            if (input.type === 'tel' || input.id === 'nascimento' || input.placeholder === 'CPF') {
-                input.addEventListener('keypress', function(e) {
-                    if (!/[0-9]/.test(e.key) && 
-                        !['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
-                        e.preventDefault();
-                    }
-                });
-            }
-        });
-
-        // Event listener para submit
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Verificar erros visuais
-            const erros = document.querySelectorAll(".error-message");
-            const temErro = Array.from(erros).some(e => e.textContent.trim() !== "");
-            if (temErro) {
-                alert("Corrija os campos antes de prosseguir.");
-                return;
-            }
-
-            // Verificar campos obrigatórios
-            const camposObrigatorios = form.querySelectorAll("input[required]");
-            for (let campo of camposObrigatorios) {
-                if (!campo.value.trim()) {
-                    alert("Preencha todos os campos obrigatórios.");
-                    campo.focus();
-                    return;
-                }
-            }
-
-            if (!submitButton.disabled) {
-                alert("Cadastro realizado com sucesso!");
-                window.location.href = "../login/login.html";
-            }
-        });
-
-        checkFormValidity();
-    }
-
-    // Validações para login.html
-    if (path.includes('login.html')) {
-        const form = document.querySelector('form');
-        const inputs = form.querySelectorAll('input[type="text"], input[type="password"]');
-        const submitButton = form.querySelector('button[type="submit"]');
-
-        // Adicionar ID ao formulário se não existir
-        if (!form.id) {
-            form.id = 'form-login';
-        }
-
-        // Função para verificar a validade do formulário
-        function checkFormValidity() {
-            let formIsValid = true;
-            let hasErrors = false;
-
-            inputs.forEach(input => {
-                if (input.value.trim() === '' && input.required) {
-                    formIsValid = false;
-                }
-
-                // Validar username (sem espaços)
-                if (input.placeholder === 'Username' && input.value.trim() !== '' && !validateUsername(input.value)) {
-                    formIsValid = false;
-                }
-
-                const inputBox = input.closest('.input-box');
-                const errorElement = inputBox.querySelector('.error-message');
-                if (errorElement && errorElement.textContent.trim() !== '') {
-                    hasErrors = true;
-                    formIsValid = false;
-                }
-            });
-
-            submitButton.disabled = !formIsValid || hasErrors;
-            
-            if (submitButton.disabled) {
-                submitButton.style.opacity = '0.5';
-                submitButton.style.cursor = 'not-allowed';
-            } else {
-                submitButton.style.opacity = '1';
-                submitButton.style.cursor = 'pointer';
-            }
-        }
-
-        // Event listeners para todos os campos
-        inputs.forEach(input => {
-            input.maxLength = 100;
-
-            input.addEventListener('input', function() {
-                // Validações específicas
-                if (input.value.trim() === '' && input.required) {
-                    displayError(input, 'Este campo não pode estar vazio.');
-                } else if (input.placeholder === 'Username' && input.value.trim() !== '' && !validateUsername(input.value)) {
-                    displayError(input, 'Username não pode conter espaços');
-                } else {
-                    removeError(input);
-                }
-
-                checkFormValidity();
-            });
-        });
-
-        // Event listener para submit
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const usuario = document.querySelector('input[placeholder="Username"]');
-            const senha = document.getElementById("password");
-
-            if (!usuario.value.trim() || !senha.value.trim()) {
-                alert("Preencha todos os campos.");
-                return;
-            }
-
-            if (!submitButton.disabled) {
-                alert("Login realizado com sucesso!");
-                //adicionar lógica de autenticação p proxima entrega
-                window.location.href = '../jogo/jogo.html';
-            }
-        });
-
-        checkFormValidity();
-    }
+    });
 });
