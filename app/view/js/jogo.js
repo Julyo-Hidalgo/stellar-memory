@@ -5,6 +5,90 @@ let podeVirar = true;
 let modoTrapacaAtivo = false;//ver se a trapaça esta ativada ou n
 let contadorJogadas = 0;
 
+// Sistema de notificações
+function mostrarNotificacao(mensagem, tipo = 'info') {
+  // Remove notificações existentes para evitar duplicação
+  document.querySelectorAll('.notificacao').forEach(notif => notif.remove());
+  
+  const notificacao = document.createElement('div');
+  notificacao.className = `notificacao notificacao-${tipo}`;
+  notificacao.innerHTML = `
+    <div class="notificacao-conteudo">
+      <span class="notificacao-mensagem">${mensagem}</span>
+      <button class="notificacao-fechar">&times;</button>
+    </div>
+  `;
+  
+  document.body.appendChild(notificacao);
+  
+  setTimeout(() => {
+    notificacao.classList.add('notificacao-ativa');
+  }, 10);
+  
+  const timeout = setTimeout(() => {
+    fecharNotificacao(notificacao);
+  }, 4000);
+  
+  const btnFechar = notificacao.querySelector('.notificacao-fechar');
+  btnFechar.addEventListener('click', () => {
+    clearTimeout(timeout);
+    fecharNotificacao(notificacao);
+  });
+}
+
+function fecharNotificacao(notificacao) {
+  notificacao.classList.remove('notificacao-ativa');
+  notificacao.classList.add('notificacao-saindo');
+  
+  setTimeout(() => {
+    if (notificacao.parentNode) {
+      notificacao.parentNode.removeChild(notificacao);
+    }
+  }, 500);
+}
+
+// vitoria
+function mostrarModalVitoria() {
+  const modal = document.createElement('div');
+  modal.className = 'modal-vitoria';
+  modal.innerHTML = `
+    <div class="modal-conteudo">
+      <h2>Parabéns!</h2>
+      <p>Você concluiu esse jogo com sucesso!</p>
+      <div class="estatisticas-vitoria">
+        <div class="estatistica">
+          <span class="estatistica-titulo">Tempo</span>
+          <span class="estatistica-valor">${document.getElementById('tempo-partida').textContent}</span>
+        </div>
+        <div class="estatistica">
+          <span class="estatistica-titulo">Jogadas</span>
+          <span class="estatistica-valor">${document.getElementById('numero-jogadas').textContent}</span>
+        </div>
+      </div>
+      <div class="modal-botoes">
+        <button class="btn-modal" id="btn-jogar-novamente">JOGAR NOVAMENTE</button>
+        <button class="btn-modal" id="btn-voltar-menu">VOLTAR AO MENU</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  
+  modal.querySelector('#btn-jogar-novamente').addEventListener('click', () => {
+    modal.remove();
+    loadCards();
+  });
+  
+  modal.querySelector('#btn-voltar-menu').addEventListener('click', () => {
+    modal.remove();
+    desistirJogo();
+  });
+  
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.remove();
+  });
+}
+
 function criarParesParaTabuleiro(quantidadeCartas) {
   //lista de cartas
   const todasCartas = [
@@ -190,7 +274,7 @@ let segundos = modalidade === "contra_tempo" ? tempoBase : 0;
       segundos--;
       if (segundos < 0) {
         clearInterval(intervalo);
-        alert("Tempo esgotado! Você perdeu!")
+        mostrarNotificacao('Tempo esgotado! Tente novamente.', 'erro');
       }
     }
   }, 1000);
@@ -291,7 +375,7 @@ function verificarPar() {
     if (paresEncontrados === cartas.length / 2) {//pares encontrados  cartas totais daquele jogo/2
       setTimeout(() => {
         clearInterval(intervalo);
-        alert("Parabéns! Você completou o jogo!");
+        mostrarModalVitoria();
       }, 500);//espera 0,5s
     }
   } else {
