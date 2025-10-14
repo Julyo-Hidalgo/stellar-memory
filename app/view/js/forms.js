@@ -146,10 +146,19 @@ document.addEventListener("DOMContentLoaded", () => {
                         // Permite apenas números
                         if (!/[0-9]/.test(e.key)) {
                             e.preventDefault();
-                            window.formUtils.displayError(input, "Apenas números permitidos.");
-                            setTimeout(() => window.formUtils.removeError(input), 1500);
+
+                            // Só exibe o aviso se não for a página de edição de perfil
+                            // (porque lá CPF e data são apenas leitura)
+                            const isEditProfile = window.location.pathname.includes("edicao_perfil.html");
+                            const isEditableNumericField = !isEditProfile || name === "telefone";
+
+                            if (isEditableNumericField) {
+                                window.formUtils.displayError(input, "Apenas números permitidos.");
+                                setTimeout(() => window.formUtils.removeError(input), 1500);
+                            }
                             return;
                         }
+
 
                         const max =
                             name === "cpf"
@@ -187,17 +196,32 @@ document.addEventListener("DOMContentLoaded", () => {
                         const form = input.form;
                         if (!form) return;
 
-                        const focusable = Array.from(form.querySelectorAll("input, select, textarea"))
-                            .filter(el => !el.disabled && el.offsetParent !== null);
+                        // Seleciona todos os campos focáveis relevantes
+                        const focusable = Array.from(
+                            form.querySelectorAll("input, select, textarea, button, input[type='submit']")
+                        ).filter(el =>
+                            !el.disabled &&
+                            el.offsetParent !== null &&
+                            !el.classList.contains("toggle-password") // 🔸 ignora o botão de ver senha
+                        );
 
                         const index = focusable.indexOf(input);
+
                         if (index !== -1 && index + 1 < focusable.length) {
+                            // Foca no próximo campo
                             focusable[index + 1].focus();
                         } else {
-                            form.querySelector("button, input[type='submit']")?.focus();
+                            // Último campo → clica automaticamente no botão de envio
+                            const button = form.querySelector("button[type='submit'], input[type='submit']");
+                            if (button) {
+                                button.focus();
+                                button.click(); // 🔹 dispara o clique automático
+                            }
                         }
                     }
                 });
+
+
 
                 // Validação ao sair do campo
                 input.addEventListener("blur", () => {
@@ -263,7 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         valid = false;
                     }
                 });
-                
+
                 if (valid) {
                     alert(options.successMessage || "Form submitted successfully!");
                     if (options.redirect) window.location.href = options.redirect;
