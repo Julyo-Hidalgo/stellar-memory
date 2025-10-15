@@ -80,10 +80,10 @@ document.addEventListener("DOMContentLoaded", () => {
             return /^[A-Za-zÀ-ÿ\s]+$/.test(name.trim());
         },
         validateUsername(u) {
-            return /^[A-Za-z0-9!@#$%^&*()_\-+=.?]{2,10}$/.test(u.trim());
+            return /^[A-Za-z0-9!@#$%^&*()_\-+=.?]{3,100}$/.test(u.trim());
         },
         validatePassword(p) {
-            return /^[A-Za-z0-9!@#$%^&*()_\-+=.?]{8,10}$/.test(p.trim());
+            return /^[A-Za-z0-9!@#$%^&*()_\-+=.?]{8,100}$/.test(p.trim());
         },
         validateEmail(e) {
             return /^[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}$/.test(e.trim());
@@ -182,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         setTimeout(() => window.formUtils.removeError(input), 1500);
                     }
 
-                    if ((name === "username" || name === "senha") && input.value.length >= 10) {
+                    if ((name === "username" || name === "senha") && input.value.length >= 100) {
                         e.preventDefault();
                         window.formUtils.displayError(input, "Limite máximo de 10 caracteres atingido.");
                         setTimeout(() => window.formUtils.removeError(input), 1500);
@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (name === "nome_completo" && !window.formUtils.validateName(val))
                         window.formUtils.displayError(input, "O nome deve conter apenas letras.");
                     else if (name === "username" && !window.formUtils.validateUsername(val))
-                        window.formUtils.displayError(input, "Mínimo 2 caracteres.");
+                        window.formUtils.displayError(input, "Mínimo 3 caracteres.");
                     else if (name === "senha" && !window.formUtils.validatePassword(val))
                         window.formUtils.displayError(input, "Mínimo 8 caracteres.");
                     else if (name === "cpf" && !window.formUtils.validateCpf(val))
@@ -268,7 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         window.formUtils.displayError(input, "Nome deve conter apenas letras.");
                         valid = false;
                     } else if (input.name === "username" && !window.formUtils.validateUsername(val)) {
-                        window.formUtils.displayError(input, "Mínimo 2 caracteres.");
+                        window.formUtils.displayError(input, "Mínimo 3 caracteres.");
                         valid = false;
                     } else if (input.name === "senha" && !window.formUtils.validatePassword(val)) {
                         window.formUtils.displayError(input, "Mínimo 8 caracteres.");
@@ -289,9 +289,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
 
                 if (valid) {
-                    alert(options.successMessage || "Form submitted successfully!");
-                    if (options.redirect) window.location.href = options.redirect;
+                    // Exibe alerta apenas se houver uma mensagem de sucesso definida (cadastro, edição, etc.)
+                    if (options.successMessage) {
+                        alert(options.successMessage);
+                    }
+
+                    // No login não há successMessage → redireciona direto
+                    if (options.redirect) {
+                        window.location.href = options.redirect;
+                    }
                 }
+
             });
         },
     };
@@ -305,10 +313,15 @@ document.addEventListener("DOMContentLoaded", () => {
         window.formUtils.setupInteractiveInputs(form);
     };
 
-    if (path.includes("cadastro.html")) setupPageForm("form");
-    if (path.includes("edicao_perfil.html")) setupPageForm("#profile-form");
-    if (path.includes("login.html")) setupPageForm("#form-login");
+    // === LOGIN ===
+// Só o login é tratado aqui, porque cadastro e edição já têm seus próprios arquivos JS
+if (path.includes("login.html")) {
+    setupPageForm("#form-login");
+    window.formUtils.setupFormSubmission("#form-login", {
+    });
+}
 
+    
     // Garante que as máscaras permaneçam aplicadas ao enviar qualquer formulário
     document.querySelectorAll("form").forEach((form) => {
         form.addEventListener("submit", () => {
