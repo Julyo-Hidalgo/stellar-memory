@@ -1,6 +1,11 @@
-// Aguarda o carregamento completo do DOM antes de executar o script
 document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("#form-login");
+  if (form) {
+    window.formUtils.setupInteractiveInputs(form);
+  }
+
   window.formUtils.setupFormSubmission("#form-login", {
     redirect: "../jogo/jogo.html"
   });
 });
+
