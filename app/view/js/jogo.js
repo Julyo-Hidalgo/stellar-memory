@@ -3,6 +3,91 @@ let cartasViradas = [];//armazena as cartas q foram clicadas e viradas
 let paresEncontrados = 0;//conta os pares que foram escontrados
 let podeVirar = true;
 let modoTrapacaAtivo = false;//ver se a trapaça esta ativada ou n
+let contadorJogadas = 0;
+
+// Sistema de notificações
+function mostrarNotificacao(mensagem, tipo = 'info') {
+  // Remove notificações existentes para evitar duplicação
+  document.querySelectorAll('.notificacao').forEach(notif => notif.remove());
+  
+  const notificacao = document.createElement('div');
+  notificacao.className = `notificacao notificacao-${tipo}`;
+  notificacao.innerHTML = `
+    <div class="notificacao-conteudo">
+      <span class="notificacao-mensagem">${mensagem}</span>
+      <button class="notificacao-fechar">&times;</button>
+    </div>
+  `;
+  
+  document.body.appendChild(notificacao);
+  
+  setTimeout(() => {
+    notificacao.classList.add('notificacao-ativa');
+  }, 10);
+  
+  const timeout = setTimeout(() => {
+    fecharNotificacao(notificacao);
+  }, 4000);
+  
+  const btnFechar = notificacao.querySelector('.notificacao-fechar');
+  btnFechar.addEventListener('click', () => {
+    clearTimeout(timeout);
+    fecharNotificacao(notificacao);
+  });
+}
+
+function fecharNotificacao(notificacao) {
+  notificacao.classList.remove('notificacao-ativa');
+  notificacao.classList.add('notificacao-saindo');
+  
+  setTimeout(() => {
+    if (notificacao.parentNode) {
+      notificacao.parentNode.removeChild(notificacao);
+    }
+  }, 500);
+}
+
+// vitoria
+function mostrarModalVitoria() {
+  const modal = document.createElement('div');
+  modal.className = 'modal-vitoria';
+  modal.innerHTML = `
+    <div class="modal-conteudo">
+      <h2>Parabéns!</h2>
+      <p>Você concluiu esse jogo com sucesso!</p>
+      <div class="estatisticas-vitoria">
+        <div class="estatistica">
+          <span class="estatistica-titulo">Tempo</span>
+          <span class="estatistica-valor">${document.getElementById('tempo-partida').textContent}</span>
+        </div>
+        <div class="estatistica">
+          <span class="estatistica-titulo">Jogadas</span>
+          <span class="estatistica-valor">${document.getElementById('numero-jogadas').textContent}</span>
+        </div>
+      </div>
+      <div class="modal-botoes">
+        <button class="btn-modal" id="btn-jogar-novamente">JOGAR NOVAMENTE</button>
+        <button class="btn-modal" id="btn-voltar-menu">VOLTAR AO MENU</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  
+  modal.querySelector('#btn-jogar-novamente').addEventListener('click', () => {
+    modal.remove();
+    loadCards();
+  });
+  
+  modal.querySelector('#btn-voltar-menu').addEventListener('click', () => {
+    modal.remove();
+    desistirJogo();
+  });
+  
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.remove();
+  });
+}
 
 function criarParesParaTabuleiro(quantidadeCartas) {
   //lista de cartas
@@ -128,13 +213,52 @@ function loadCards() {
   const cartasContainer = document.getElementById("cartas-container");
 
   document.getElementById("numero-jogadas").textContent = 0;
+  contadorJogadas = 0;
 
   const tempoPartida = document.getElementById("tempo-partida");
   const modalidade = document.getElementById("modalidade").value;
   clearInterval(intervalo);
 
-  let segundos = modalidade === "contra_tempo" ? 10 * 60 : 0; // inicia em 10 minutos para contra o tempo, 0 para clássico
+  cartasContainer.innerHTML = "";
+  const verso = "../../img/jogo/1.png";
+  
+  
+  const quantitySelector = document.getElementById(
+    "configuracao-tabuleiro"
+  ).value;
+  //pega o valor selecionado pelo usuario no select configuração do tabuleiro
+  let quantidadeCartas = 16;
+  let linhas = 4;
+  let colunas = 4;
+ // Calcula tempo baseado no tamanho do tabuleiro
 
+ 
+  if (quantitySelector !== "selecione") {
+    const splitQuantity = quantitySelector.split("x");
+    //divide a string como marco desse divisão sendo o x
+    //ou seja um lado fica como coluna e outro como linha 
+    linhas = parseInt(splitQuantity[0]);
+    colunas = parseInt(splitQuantity[1]);
+    //converte a string em inteiros
+    quantidadeCartas = linhas * colunas;
+    //calcula a qntd de cartas que deve aparecer
+    //de acordo com o que o usuario seleciona
+    //multiplicando as linhas e as colunas
+  }
+
+
+let tempoBase;
+if (quantidadeCartas <= 4) { //2x2
+  tempoBase = 30; // 30segundos
+} else if (quantidadeCartas <= 16) { // 4x4
+  tempoBase = 120; // 2 minutos
+} else if (quantidadeCartas <= 36) { //6x6
+  tempoBase = 300; // 5 minutos
+} else { // 8x8
+  tempoBase = 600; // 10 minutos
+}
+
+let segundos = modalidade === "contra_tempo" ? tempoBase : 0;
   intervalo = setInterval(() => {
     // Atualiza o tempo da partida 
     const min = Math.floor(segundos / 60);
@@ -150,36 +274,15 @@ function loadCards() {
       segundos--;
       if (segundos < 0) {
         clearInterval(intervalo);
+        mostrarNotificacao('Tempo esgotado! Tente novamente.', 'erro');
       }
     }
   }, 1000);
 
-  cartasContainer.innerHTML = "";
-  const verso = "../../img/jogo/1.png";
-  
   //limpa todo o conteudo html dentro do cointainer, 
   //assim ele pode ser reiniciado ou ter o tamanho alterado
 
-  const quantitySelector = document.getElementById(
-    "configuracao-tabuleiro"
-  ).value;
-  //pega o valor selecionado pelo usuario no select configuração do tabuleiro
-  let quantidadeCartas = 16;
-  let linhas = 4;
-  let colunas = 4;
 
-  if (quantitySelector !== "selecione") {
-    const splitQuantity = quantitySelector.split("x");
-    //divide a string como marco desse divisão sendo o x
-    //ou seja um lado fica como coluna e outro como linha 
-    linhas = parseInt(splitQuantity[0]);
-    colunas = parseInt(splitQuantity[1]);
-    //converte a string em inteiros
-    quantidadeCartas = linhas * colunas;
-    //calcula a qntd de cartas que deve aparecer
-    //de acordo com o que o usuario seleciona
-    //multiplicando as linhas e as colunas
-  }
 
   cartasContainer.style.gridTemplateColumns = `repeat(${colunas}, 1fr)`;
   cartasContainer.style.gridTemplateRows = `repeat(${linhas}, 1fr)`;
@@ -250,9 +353,11 @@ function virarCarta(indice) {
   }
 
   //atualiza o contador de jogadas
+  if (cartasViradas.length  === 2){
   contadorJogadas = document.getElementById("numero-jogadas").textContent;
   contadorJogadas = parseInt(contadorJogadas) + 1;
   document.getElementById("numero-jogadas").textContent = contadorJogadas;
+  }
   
 }
 
@@ -284,7 +389,8 @@ function verificarPar() {
     //verifica se o numerodo de pares encontrados é igual a qntd total de pares
     if (paresEncontrados === cartas.length / 2) {//pares encontrados  cartas totais daquele jogo/2
       setTimeout(() => {
-        modalVitoria();//luiz mudar
+        clearInterval(intervalo);
+        mostrarModalVitoria();
       }, 500);//espera 0,5s
     }
   } else {
@@ -298,14 +404,14 @@ function verificarPar() {
       
       cartas[indice1].virada = false;
       cartas[indice2].virada = false;
-    }, 1000);
+    }, 1000);//espera 1s
   }
   
   //apaga dadosinormações para a proxima jogada, reativando cliques
   setTimeout(() => {
     cartasViradas = [];
     podeVirar = true;
-  }, 1000);//espera
+  }, 1200);//espera
 }
 
 function desistirJogo() {
@@ -324,6 +430,14 @@ function desistirJogo() {
   const cartasContainer = document.getElementById("cartas-container");
   cartasContainer.innerHTML = "";
   
+
+  document.getElementById("configuracao-tabuleiro").value = "";
+  document.getElementById("modalidade").value = "";
+
+    //remove qualquer estilo de grid do container
+  cartasContainer.style.gridTemplateColumns = "";
+  cartasContainer.style.gridTemplateRows = "";
+
   //volta para a tela de configurações
   document.body.classList.remove("jogo-ativo");
   
@@ -342,8 +456,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("botao_ativar_trapaca").addEventListener("click", ativarModoTrapaca);
   document.getElementById("botao_desativar_trapaca").addEventListener("click", desativarModoTrapaca);
-  
-  // ADICIONAR ESTA LINHA ↓
+
   document.getElementById("botao-desistir").addEventListener("click", desistirJogo);
 });
 
