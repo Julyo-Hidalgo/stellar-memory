@@ -233,7 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         window.formUtils.displayError(input, "O nome deve conter apenas letras.");
 					else if (name === "username") {
 						if (/\s/.test(val)) {
-							window.formUtils.displayError(input, "Caracteres no meio do nome de usuário.");
+							window.formUtils.displayError(input, "Proibido o caractere espaço.");
 						} else if (!window.formUtils.validateUsername(val)) {
 							window.formUtils.displayError(input, "Mínimo 3 caracteres.");
 						}
