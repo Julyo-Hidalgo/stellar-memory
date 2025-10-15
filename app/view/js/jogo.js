@@ -361,21 +361,6 @@ function virarCarta(indice) {
   
 }
 
-function modalVitoria() {
-  //Para o timer
-  clearInterval(intervalo);
-  tempoPartida = document.getElementById("tempo-partida").textContent;
-  document.getElementById("tempo-partida").textContent = tempoPartida;
-
-  const modal = document.getElementById("modal-vitoria");
-  modal.style.display = "flex"; 
-  document.getElementById("btn-fechar-modal").onclick = () => {
-    modal.style.display = "none";
-    desistirJogo(); 
-  };
-}
-
-
 function verificarPar() {
   const [indice1, indice2] = cartasViradas; //tenta achar o valor das cartas viradas
   
@@ -449,7 +434,27 @@ function desistirJogo() {
   document.getElementById("numero-jogadas").textContent = "0";
   document.getElementById("tempo-partida").textContent = "00:00";
   document.getElementById("tempo-restante").textContent = "00:00";
+  document.querySelector('.botoes_trapaca').style.display = 'none';
+  document.querySelector('.botoes_trapaca').style.display = 'none';
+
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  // esconde os botões ao carregar a página 
+  document.querySelector('.botoes_trapaca').style.display = 'none';
+
+  document.getElementById("botao_ativar_trapaca").addEventListener("click", ativarModoTrapaca);
+  document.getElementById("botao_desativar_trapaca").addEventListener("click", desativarModoTrapaca);
+
+  document.getElementById("botao-desistir").addEventListener("click", desistirJogo);
+});
+
+document.getElementById("botao-jogar").addEventListener("click", () => {
+  loadCards();
+  // mostra os botões de trapaça apenas após o jogo começar
+  document.querySelector('.botoes_trapaca').style.display = 'flex';
+});
+
 
 document.addEventListener("DOMContentLoaded", () => {
   loadCards();
