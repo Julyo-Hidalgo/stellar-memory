@@ -247,6 +247,35 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         },
 
+        /* Exibição do Modal de Sucesso */
+        mostrarModalSucesso(message, redirectUrl) {
+            const modal = document.createElement('div');
+            modal.className = 'modal-sucesso';
+            modal.innerHTML = `
+                <div class="modal-conteudo-sucesso">
+                    <h2>Sucesso!</h2>
+                    <p>${message}</p>
+                    <button class="btn-modal-sucesso" id="btn-modal-fechar">FECHAR</button>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            // Adiciona evento para fechar o modal
+            modal.querySelector('#btn-modal-fechar').addEventListener('click', () => {
+                modal.remove();
+                if (redirectUrl) window.location.href = redirectUrl;
+            });
+
+            // Permite fechar clicando fora
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                    if (redirectUrl) window.location.href = redirectUrl;
+                }
+            });
+        },
+
         /* Envio unificado de formulários */
         setupFormSubmission(selector, options = {}) {
             const form = document.querySelector(selector);
@@ -291,11 +320,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (valid) {
                     // Exibe alerta apenas se houver uma mensagem de sucesso definida (cadastro, edição, etc.)
                     if (options.successMessage) {
-                        alert(options.successMessage);
-                    }
-
-                    // No login não há successMessage → redireciona direto
-                    if (options.redirect) {
+                        // Substitui o alert() pelo novo modal
+                        window.formUtils.mostrarModalSucesso(
+                            options.successMessage,
+                            options.redirect
+                        );
+                    } else if (options.redirect) {
+                        // No login não há successMessage → redireciona direto
                         window.location.href = options.redirect;
                     }
                 }
