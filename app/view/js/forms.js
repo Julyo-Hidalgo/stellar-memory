@@ -231,8 +231,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     if (name === "nome_completo" && !window.formUtils.validateName(val))
                         window.formUtils.displayError(input, "O nome deve conter apenas letras.");
-                    else if (name === "username" && !window.formUtils.validateUsername(val))
-                        window.formUtils.displayError(input, "Mínimo 3 caracteres.");
+					else if (name === "username") {
+						if (/\s/.test(val)) {
+							window.formUtils.displayError(input, "Caracteres no meio do nome de usuário.");
+						} else if (!window.formUtils.validateUsername(val)) {
+							window.formUtils.displayError(input, "Mínimo 3 caracteres.");
+						}
+					}
                     else if (name === "senha" && !window.formUtils.validatePassword(val))
                         window.formUtils.displayError(input, "Mínimo 8 caracteres.");
                     else if (name === "cpf" && !window.formUtils.validateCpf(val))
