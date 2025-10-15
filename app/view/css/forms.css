@@ -130,24 +130,6 @@ body {
     pointer-events: none;
 }
 
-/* Estiliza p input date para ter a mesma cara dos outros */
-.input-box input[type="date"] {
-    /* estilos */
-}
-
-/* Estiliza o input nascimento para ter a mesma cara dos outros */
-.input-box input#nascimento {
-    appearance: none;
-    background-color: #fff;
-    border-radius: 15px;
-    height: 50px;
-    padding: 10px 40px 10px 15px;
-    box-shadow: 3px 3px 5px #00000070;
-    border: none;
-    font-size: 14px;
-    color: #000;
-}
-
 /* Botões (igual) */
 button {
     width: 100%;
