@@ -5,35 +5,45 @@ let podeVirar = true;
 let modoTrapacaAtivo = false;//ver se a trapaça esta ativada ou n
 let contadorJogadas = 0;
 
-// Sistema de notificações
+//notificações
 function mostrarNotificacao(mensagem, tipo = 'info') {
-  // Remove notificações existentes para evitar duplicação
-  document.querySelectorAll('.notificacao').forEach(notif => notif.remove());
-  
-  const notificacao = document.createElement('div');
-  notificacao.className = `notificacao notificacao-${tipo}`;
-  notificacao.innerHTML = `
-    <div class="notificacao-conteudo">
-      <span class="notificacao-mensagem">${mensagem}</span>
-      <button class="notificacao-fechar">&times;</button>
-    </div>
-  `;
-  
-  document.body.appendChild(notificacao);
-  
-  setTimeout(() => {
-    notificacao.classList.add('notificacao-ativa');
-  }, 10);
-  
-  const timeout = setTimeout(() => {
-    fecharNotificacao(notificacao);
-  }, 4000);
-  
-  const btnFechar = notificacao.querySelector('.notificacao-fechar');
-  btnFechar.addEventListener('click', () => {
-    clearTimeout(timeout);
-    fecharNotificacao(notificacao);
-  });
+  //tira notificações existentes caso exista para evitar duplicação
+document.querySelectorAll('.notificacao').forEach(notif => notif.remove());
+    
+    const notificacao = document.createElement('div');
+    notificacao.className = `notificacao notificacao-${tipo}`;
+    
+    const conteudo = document.createElement('div');
+    conteudo.className = 'notificacao-conteudo';
+    
+    const spanMensagem = document.createElement('span');
+    spanMensagem.className = 'notificacao-mensagem';
+    spanMensagem.textContent = mensagem; //textContent para a mensagem
+    
+    const btnFechar = document.createElement('button');
+    btnFechar.className = 'notificacao-fechar';
+    btnFechar.textContent = '×'; 
+    
+
+    conteudo.appendChild(spanMensagem);
+    conteudo.appendChild(btnFechar);
+    notificacao.appendChild(conteudo);
+    
+    document.body.appendChild(notificacao);
+    
+    setTimeout(() => {
+      notificacao.classList.add('notificacao-ativa');
+    }, 10);
+    
+    //timeout e fechar
+    const timeout = setTimeout(() => {
+      fecharNotificacao(notificacao);
+    }, 4000);
+    
+    btnFechar.addEventListener('click', () => {
+      clearTimeout(timeout);
+      fecharNotificacao(notificacao);
+    });
 }
 
 function fecharNotificacao(notificacao) {
@@ -49,44 +59,30 @@ function fecharNotificacao(notificacao) {
 
 // vitoria
 function mostrarModalVitoria() {
-  const modal = document.createElement('div');
-  modal.className = 'modal-vitoria';
-  modal.innerHTML = `
-    <div class="modal-conteudo">
-      <h2>Parabéns!</h2>
-      <p>Você concluiu esse jogo com sucesso!</p>
-      <div class="estatisticas-vitoria">
-        <div class="estatistica">
-          <span class="estatistica-titulo">Tempo</span>
-          <span class="estatistica-valor">${document.getElementById('tempo-partida').textContent}</span>
-        </div>
-        <div class="estatistica">
-          <span class="estatistica-titulo">Jogadas</span>
-          <span class="estatistica-valor">${document.getElementById('numero-jogadas').textContent}</span>
-        </div>
-      </div>
-      <div class="modal-botoes">
-        <button class="btn-modal" id="btn-jogar-novamente">JOGAR NOVAMENTE</button>
-        <button class="btn-modal" id="btn-voltar-menu">VOLTAR AO MENU</button>
-      </div>
-    </div>
-  `;
-  
-  document.body.appendChild(modal);
-  
-  modal.querySelector('#btn-jogar-novamente').addEventListener('click', () => {
-    modal.remove();
-    loadCards();
-  });
-  
-  modal.querySelector('#btn-voltar-menu').addEventListener('click', () => {
-    modal.remove();
-    desistirJogo();
-  });
-  
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.remove();
-  });
+const modal = document.getElementById('modal-vitoria-fundo');
+    
+    //preenche as estatísticas da vitoria com os valores atuais
+    document.getElementById('modal-tempo-partida').textContent = document.getElementById('tempo-partida').textContent;
+    document.getElementById('modal-numero-jogadas').textContent = document.getElementById('numero-jogadas').textContent;
+
+    //adiciona o código para mostrar o modal
+    modal.style.display = 'flex';
+
+    //event Listeners
+    modal.querySelector('#btn-jogar-novamente').onclick = () => {
+        modal.style.display = 'none';
+        loadCards();
+    };
+    
+    modal.querySelector('#btn-voltar-menu').onclick = () => {
+        modal.style.display = 'none';
+        desistirJogo();
+    };
+    
+    //fechar se clicar fora
+    modal.onclick = (e) => {
+        if (e.target === modal) modal.style.display = 'none';
+    };
 }
 
 function criarParesParaTabuleiro(quantidadeCartas) {
@@ -279,8 +275,6 @@ let segundos = modalidade === "contra_tempo" ? tempoBase : 0;
     }
   }, 800);
 
-  //limpa todo o conteudo html dentro do cointainer, 
-  //assim ele pode ser reiniciado ou ter o tamanho alterado
 
 
 
@@ -400,7 +394,7 @@ function verificarPar() {
 }
 
 function desistirJogo() {
-  // Para qualquer temporizador ativo (se tiver)
+  //para qualquer temporizador ativo (caso tenha)
   clearTimeout();
   clearInterval(intervalo);
   
@@ -465,9 +459,9 @@ function iniciarJogo() {
     loadCards(); 
     
     // Troca de Telas/Containers
-    document.getElementById("config-menu").style.display = 'none'; // Esconde os selects e botão Jogar
-    document.getElementById("status-jogo").style.display = 'flex'; // Mostra os status e botões de controle
+    document.getElementById("config-menu").style.display = 'none'; //esconde os selects e botão Jogar
+    document.getElementById("status-jogo").style.display = 'flex'; //mostra os status e botões de controle
 }
 
-// Chama função de inicialização quando o DOM estiver pronto
+
 document.addEventListener("DOMContentLoaded", inicializarEventos);
