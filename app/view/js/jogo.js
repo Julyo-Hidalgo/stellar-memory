@@ -60,7 +60,7 @@ function fecharNotificacao(notificacao) {
 // vitoria
 function mostrarModalVitoria() {
 const modal = document.getElementById('modal-vitoria-fundo');
-    
+  
     //preenche as estatísticas da vitoria com os valores atuais
     document.getElementById('modal-tempo-partida').textContent = document.getElementById('tempo-partida').textContent;
     document.getElementById('modal-numero-jogadas').textContent = document.getElementById('numero-jogadas').textContent;
@@ -273,7 +273,7 @@ let segundos = modalidade === "contra_tempo" ? tempoBase : 0;
         mostrarNotificacao('Tempo esgotado! Tente novamente.', 'erro');
       }
     }
-  }, 800);
+  }, 1000);
 
 
 
@@ -424,10 +424,9 @@ function desistirJogo() {
   document.getElementById('botao_ativar_trapaca').classList.remove('ativo');
   document.getElementById('botao_desativar_trapaca').classList.remove('ativo');
   
-  //apaga/zera os textos, como movimentos, tempo restante e tempo da partida
+  //apaga/zera os textos, como movimentos e tempo da partida
   document.getElementById("numero-jogadas").textContent = "0";
   document.getElementById("tempo-partida").textContent = "00:00";
-  document.getElementById("tempo-restante").textContent = "00:00";
   document.getElementById("status-jogo").style.display = 'none'; // Esconde os status/controles
   document.getElementById("config-menu").style.display = 'flex'; // Mostra os selects/botão Jogar
 
