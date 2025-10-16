@@ -79,11 +79,39 @@ document.addEventListener("DOMContentLoaded", () => {
         validateName(name) {
             return /^[A-Za-zÀ-ÿ\s]+$/.test(name.trim());
         },
-        validateUsername(u) {
-            return /^[A-Za-z0-9!@#$%^&*()_\-+=.?]{3,100}$/.test(u.trim());
+        validateUsername(val, input) {
+			const invalidCharMatch = val.match(/[^A-Za-z0-9ç!@#$%^&*()_\-+=.?]/);
+
+			if (val.lenght < 3){
+				window.formUtils.displayError(input, "Mínimo 3 caracteres.");
+			} else if (invalidCharMatch) {
+				const invalidChar = invalidCharMatch[0];
+				window.formUtils.displayError(input, `Caractere inválido: "${invalidChar}"`);
+			} else if (val.length > 100) {
+				window.formUtils.displayError(input, "Limite máximo de 100 caracteres.");
+			} else{
+				return true;
+			}
+
+			return false;
         },
-        validatePassword(p) {
-            return /^[A-Za-z0-9ç!@#$%^&*()_\s\-+=.?\/]{8,100}$/.test(p.trim());
+        validatePassword(val, input) {
+			const invalidCharMatch = val.match(/[^A-Za-z0-9ç!@#$%^&*()_\s\-+=.?\/]/);
+			
+			if (val.length < 8) {
+				window.formUtils.displayError(input, "Mínimo 8 caracteres.");
+			} 
+			else if (invalidCharMatch) {
+				const invalidChar = invalidCharMatch[0];
+				window.formUtils.displayError(input, `Caractere inválido: "${invalidChar}"`);
+			}
+			else if (val.length > 100) {
+				window.formUtils.displayError(input, "Limite máximo de 100 caracteres.");
+			} else{
+				return true;
+			}
+
+			return false;
         },
         validateEmail(e) {
             return /^[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}$/.test(e.trim());
@@ -185,7 +213,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     if ((name === "username" || name === "senha") && input.value.length >= 100) {
                         e.preventDefault();
                         window.formUtils.displayError(input, "Limite máximo de 100 caracteres atingido.");
-                        setTimeout(() => window.formUtils.removeError(input), 1500);
                     }
                 });
 
@@ -202,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         ).filter(el =>
                             !el.disabled &&
                             el.offsetParent !== null &&
-                            !el.classList.contains("toggle-password") // 🔸 ignora o botão de ver senha
+                            !el.classList.contains("toggle-password") // ignora o botão de ver senha
                         );
 
                         const index = focusable.indexOf(input);
@@ -215,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             const button = form.querySelector("button[type='submit'], input[type='submit']");
                             if (button) {
                                 button.focus();
-                                button.click(); // 🔹 dispara o clique automático
+                                button.click(); // dispara o clique automático
                             }
                         }
                     }
@@ -232,25 +259,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (name === "nome_completo" && !window.formUtils.validateName(val))
                         window.formUtils.displayError(input, "O nome deve conter apenas letras.");
 					else if (name === "username") {
-						if (/\s/.test(val)) {
-							window.formUtils.displayError(input, "Proibido o caractere espaço.");
-						} else if (!window.formUtils.validateUsername(val)) {
-							window.formUtils.displayError(input, "Mínimo 3 caracteres.");
-						}
+						window.formUtils.validateUsername(val, input);
 					}
 					else if (name === "senha") {
-						const invalidCharMatch = val.match(/[^A-Za-z0-9ç!@#$%^&*()_\s\-+=.?\/]/);
-						
-						if (val.length < 8) {
-							window.formUtils.displayError(input, "Mínimo 8 caracteres.");
-						} 
-						else if (invalidCharMatch) {
-							const invalidChar = invalidCharMatch[0];
-							window.formUtils.displayError(input, `Caractere inválido: "${invalidChar}"`);
-						} 
-						else if (val.length > 100) {
-							window.formUtils.displayError(input, "Limite máximo de 100 caracteres.");
-						}
+						window.formUtils.validatePassword(val, input);
 					}
                     else if (name === "cpf" && !window.formUtils.validateCpf(val))
                         window.formUtils.displayError(input, "CPF deve ter 11 números.");
@@ -313,17 +325,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     } else if (input.name === "nome_completo" && !window.formUtils.validateName(val)) {
                         window.formUtils.displayError(input, "Nome deve conter apenas letras.");
                         valid = false;
-                    } else if (input.name === "username" && !window.formUtils.validateUsername(val)) {
-                        window.formUtils.displayError(input, "Mínimo 3 caracteres.");
-                        valid = false;
+                    } else if (input.name === "username") {
+						let response = window.formUtils.validateUsername(val, input);
+						valid = (response) ? valid : false;
 					} else if (input.name === "senha") {
-						if (val.length < 8) {
-							window.formUtils.displayError(input, "Mínimo 8 caracteres.");
-							valid = false;
-						} else if (!/^[A-Za-z0-9ç!@#$%^&*()_\s\-+=.?\/]{8,100}$/.test(val.trim())) {
-							window.formUtils.displayError(input, "Caractere inválido na senha.");
-							valid = false;
-						}
+						let response = window.formUtils.validatePassword(val, input);
+						valid = (response) ? valid : false;
                     } else if (input.name === "cpf" && !window.formUtils.validateCpf(val)) {
                         window.formUtils.displayError(input, "CPF inválido.");
                         valid = false;
