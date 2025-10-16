@@ -349,7 +349,7 @@ function virarCarta(indice) {
   //se sim, bloqueia ovos cliques por 1s e é verificado o par
   if (cartasViradas.length === 2) {
     podeVirar = false;
-    setTimeout(verificarPar, 1000);
+    setTimeout(verificarPar, 500);
   }
 
   //atualiza o contador de jogadas
