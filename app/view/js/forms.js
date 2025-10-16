@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return /^[A-Za-z0-9!@#$%^&*()_\-+=.?]{3,100}$/.test(u.trim());
         },
         validatePassword(p) {
-            return /^[A-Za-z0-9!@#$%^&*()_\-+=.?]{8,100}$/.test(p.trim());
+            return /^[A-Za-z0-9ç!@#$%^&*()_\s\-+=.?\/]{8,100}$/.test(p.trim());
         },
         validateEmail(e) {
             return /^[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}$/.test(e.trim());
@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     if ((name === "username" || name === "senha") && input.value.length >= 100) {
                         e.preventDefault();
-                        window.formUtils.displayError(input, "Limite máximo de 10 caracteres atingido.");
+                        window.formUtils.displayError(input, "Limite máximo de 100 caracteres atingido.");
                         setTimeout(() => window.formUtils.removeError(input), 1500);
                     }
                 });
@@ -238,8 +238,20 @@ document.addEventListener("DOMContentLoaded", () => {
 							window.formUtils.displayError(input, "Mínimo 3 caracteres.");
 						}
 					}
-                    else if (name === "senha" && !window.formUtils.validatePassword(val))
-                        window.formUtils.displayError(input, "Mínimo 8 caracteres.");
+					else if (name === "senha") {
+						const invalidCharMatch = val.match(/[^A-Za-z0-9ç!@#$%^&*()_\s\-+=.?\/]/);
+						
+						if (val.length < 8) {
+							window.formUtils.displayError(input, "Mínimo 8 caracteres.");
+						} 
+						else if (invalidCharMatch) {
+							const invalidChar = invalidCharMatch[0];
+							window.formUtils.displayError(input, `Caractere inválido: "${invalidChar}"`);
+						} 
+						else if (val.length > 100) {
+							window.formUtils.displayError(input, "Limite máximo de 100 caracteres.");
+						}
+					}
                     else if (name === "cpf" && !window.formUtils.validateCpf(val))
                         window.formUtils.displayError(input, "CPF deve ter 11 números.");
                     else if (name === "telefone" && !window.formUtils.validatePhone(val))
@@ -304,9 +316,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     } else if (input.name === "username" && !window.formUtils.validateUsername(val)) {
                         window.formUtils.displayError(input, "Mínimo 3 caracteres.");
                         valid = false;
-                    } else if (input.name === "senha" && !window.formUtils.validatePassword(val)) {
-                        window.formUtils.displayError(input, "Mínimo 8 caracteres.");
-                        valid = false;
+					} else if (input.name === "senha") {
+						if (val.length < 8) {
+							window.formUtils.displayError(input, "Mínimo 8 caracteres.");
+							valid = false;
+						} else if (!/^[A-Za-z0-9ç!@#$%^&*()_\s\-+=.?\/]{8,100}$/.test(val.trim())) {
+							window.formUtils.displayError(input, "Caractere inválido na senha.");
+							valid = false;
+						}
                     } else if (input.name === "cpf" && !window.formUtils.validateCpf(val)) {
                         window.formUtils.displayError(input, "CPF inválido.");
                         valid = false;
