@@ -40,43 +40,48 @@
 
   <main>
     <section class="informacoes_partida">
-      <h2>Configurações da Partida</h2>
-      <ul>
-        <li>Tempo da Partida: <span id="tempo-partida">00:00</span></li>
-        <li>Número de Jogadas: <span id="numero-jogadas">0</span></li>
-        <li>
-          <label for="configuracao-tabuleiro">Configuração do Tabuleiro:</label>
-          <select id="configuracao-tabuleiro">
-            <option value="" disabled selected>Selecione...</option>
-            <option value="2x2">2x2</option>
-            <option value="4x4">4x4</option>
-            <option value="6x6">6x6</option>
-            <option value="8x8">8x8</option>
-          </select>
-        </li>
-        <li>
-          <label for="modalidade">Modalidade:</label>
-          <select id="modalidade">
-            <option value="" disabled selected>Selecione...</option>
-            <option value="classico">Clássico</option>
-            <option value="contra_tempo">Contra o Tempo</option>
-          </select>
-        </li>
-        <li id="tempo-restante-container">
-          Tempo Restante: <span id="tempo-restante">00:00</span>
-        </li>
-      </ul>
 
-      <div class="controles-jogo">
-        <div class="botoes_trapaca">
-          <button id="botao_ativar_trapaca">Ativar Trapaça</button>
-          <button id="botao_desativar_trapaca">Desativar Trapaça</button>
-        </div>
+      <div class="config-menu" id="config-menu">
+        <h2>Configurações da Partida</h2>
+        <ul>
+          <li>
+            <label for="configuracao-tabuleiro">Configuração do Tabuleiro:</label>
+            <select id="configuracao-tabuleiro">
+              <option value="" disabled selected>Selecione...</option>
+              <option value="2x2">2x2</option>
+              <option value="4x4">4x4</option>
+              <option value="6x6">6x6</option>
+              <option value="8x8">8x8</option>
+            </select>
+          </li>
+          <li>
+            <label for="modalidade">Modalidade:</label>
+            <select id="modalidade">
+              <option value="" disabled selected>Selecione...</option>
+              <option value="classico">Clássico</option>
+              <option value="contra_tempo">Contra o Tempo</option>
+            </select>
+          </li>
+        </ul>
+        <button id="botao-jogar">Jogar</button>
       </div>
 
-      <div class="secao-jogar">
-        <button id="botao-jogar">Jogar</button>
-        <button id="botao-desistir">Desistir</button>
+      <div class="status-jogo" id="status-jogo">
+        <ul>
+          <li>Tempo da Partida: <span id="tempo-partida">00:00</span></li>
+          <li>Número de Jogadas: <span id="numero-jogadas">0</span></li>
+          <li id="tempo-restante-container">
+            Tempo Restante: <span id="tempo-restante">00:00</span>
+          </li>
+        </ul>
+
+        <div class="controles-jogo">
+          <div class="botoes_trapaca" id="botoes-trapaca-container">
+            <button id="botao_ativar_trapaca">Ativar Trapaça</button>
+            <button id="botao_desativar_trapaca">Desativar Trapaça</button>
+          </div>
+          <button id="botao-desistir" class="botao-desistir">Desistir</button>
+        </div>
       </div>
     </section>
 
@@ -86,7 +91,7 @@
       </div>
     </div>
   </main>
-    <div id="modal-vitoria" class="modal">
+  <div id="modal-vitoria" class="modal">
     <div class="modal-conteudo">
       <h2>Parabéns!</h2>
       <h3>Você completou o jogo!</h3>

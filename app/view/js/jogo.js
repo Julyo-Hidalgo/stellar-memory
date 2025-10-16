@@ -249,7 +249,7 @@ function loadCards() {
 
 let tempoBase;
 if (quantidadeCartas <= 4) { //2x2
-  tempoBase = 30; // 30segundos
+  tempoBase = 20; // 30segundos
 } else if (quantidadeCartas <= 16) { // 4x4
   tempoBase = 120; // 2 minutos
 } else if (quantidadeCartas <= 36) { //6x6
@@ -434,37 +434,40 @@ function desistirJogo() {
   document.getElementById("numero-jogadas").textContent = "0";
   document.getElementById("tempo-partida").textContent = "00:00";
   document.getElementById("tempo-restante").textContent = "00:00";
-  document.querySelector('.botoes_trapaca').style.display = 'none';
-  document.querySelector('.botoes_trapaca').style.display = 'none';
+  document.getElementById("status-jogo").style.display = 'none'; // Esconde os status/controles
+  document.getElementById("config-menu").style.display = 'flex'; // Mostra os selects/botão Jogar
 
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  // esconde os botões ao carregar a página 
-  document.querySelector('.botoes_trapaca').style.display = 'none';
 
-  document.getElementById("botao_ativar_trapaca").addEventListener("click", ativarModoTrapaca);
-  document.getElementById("botao_desativar_trapaca").addEventListener("click", desativarModoTrapaca);
+function inicializarEventos() {
+    //ocultar os status do jogo ao carregar
+    document.getElementById("status-jogo").style.display = 'none';
 
-  document.getElementById("botao-desistir").addEventListener("click", desistirJogo);
-});
+    //event Listeners
+    document.getElementById("botao_ativar_trapaca").addEventListener("click", ativarModoTrapaca);
+    document.getElementById("botao_desativar_trapaca").addEventListener("click", desativarModoTrapaca);
+    document.getElementById("botao-desistir").addEventListener("click", desistirJogo);
+    document.getElementById("botao-jogar").addEventListener("click", iniciarJogo);
+}
 
-document.getElementById("botao-jogar").addEventListener("click", () => {
-  loadCards();
-  // mostra os botões de trapaça apenas após o jogo começar
-  document.querySelector('.botoes_trapaca').style.display = 'flex';
-});
+function iniciarJogo() {
+    const tabuleiroSelecionado = document.getElementById("configuracao-tabuleiro").value;
+    const modalidadeSelecionada = document.getElementById("modalidade").value;
 
+    if (!tabuleiroSelecionado || tabuleiroSelecionado === "Selecione..." || 
+        !modalidadeSelecionada || modalidadeSelecionada === "Selecione...") {
+        mostrarNotificacao('Por favor, selecione a Configuração do Tabuleiro e a Modalidade para começar.', 'erro');
+        return;
+    }
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadCards();
+    //iniciar o jogo
+    loadCards(); 
+    
+    // Troca de Telas/Containers
+    document.getElementById("config-menu").style.display = 'none'; // Esconde os selects e botão Jogar
+    document.getElementById("status-jogo").style.display = 'flex'; // Mostra os status e botões de controle
+}
 
-  document.getElementById("botao_ativar_trapaca").addEventListener("click", ativarModoTrapaca);
-  document.getElementById("botao_desativar_trapaca").addEventListener("click", desativarModoTrapaca);
-
-  document.getElementById("botao-desistir").addEventListener("click", desistirJogo);
-});
-
-document.getElementById("botao-jogar").addEventListener("click", () => {
-  loadCards();
-});
+// Chama função de inicialização quando o DOM estiver pronto
+document.addEventListener("DOMContentLoaded", inicializarEventos);

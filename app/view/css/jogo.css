@@ -25,19 +25,29 @@ h2 {
 }
 
 /*remove o padrao da lista nao ordenada (bolinhas)*/
-.informacoes_partida ul {
+.config-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza horizontalmente */
+    width: 100%; /* Ocupa toda a largura do pai */
+}
+
+#config-menu ul {
+  display: flex;
   list-style-type: none;
   /* tira os marcadores de lista (as bolinhas) */
   padding: 0;
   /* tira o espaçamento padrão que o navegador coloca */
   margin: 0;
   /* tira a margem padrão */
-  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 40px;
 }
 
 /*estiliza lista*/
-.informacoes_partida li {
-  margin: 0 15px;
+#config-menu li{
+  margin: 0px;
   /* adiciona espaçamento entre os itens da lista */
   display: flex;
   flex-direction: column;
@@ -47,12 +57,34 @@ h2 {
   text-align: center;
   /* Centraliza o texto da label */
 }
-
-/*estilizando cointeiner de temporizador (modalidade contra o tempo)*/
-#tempo-restante-container {
-  display: none;
-  /*significa q só vai aparecer quando o usuario clicar na modalidade contra o tempo (porem isso só ira acontecer na implementação Java Script)*/
+.status-jogo {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza tudo (Status, Botões) */
+    width: 100%;
 }
+
+/* Estilo para a lista de status (Tempo e Jogadas) - Devem ficar lado a lado */
+.status-jogo ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 50px; /* Aumenta a distância entre Tempo e Jogadas */
+    margin-bottom: 30px; /* Espaço abaixo dos status */
+}
+
+/* Garante que o texto de Status fique centralizado e fácil de ler */
+.status-jogo li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 18px; /* Aumenta um pouco para destaque */
+    margin: 0;
+}
+
+
 
 /*estiliza selects configuração e modalidade*/
 #configuracao-tabuleiro,
@@ -90,20 +122,25 @@ h2 {
 }
 
 /*estilização dos botoes de trapaça*/
+.botoes_trapaca {
+    display: flex;
+    justify-content: center; /* CENTRALIZA os dois botões (Ativar/Desativar) */
+    gap: 20px; /* Adiciona um pequeno espaço entre eles */
+    /* Você pode manter ou ajustar as margens verticais aqui, no container: */
+    margin-top: 25px; 
+    margin-bottom: 15px; /* Reduza um pouco para o Desistir não ficar tão longe */
+}
 .botoes_trapaca button {
   background-color: transparent;
   color: #f3ea88;
   border: 2px solid #f3ea88;
   border-radius: 40px;
-  /* Bordas arredondadas */
   padding: 12px 20px;
   font-family: "Press Start 2P", system-ui;
   font-size: 12px;
   cursor: pointer;
   transition: all 0.65s ease;
-  margin: 0 80px;
-  margin-top: 25px;
-  margin-bottom: 45px;
+  margin: 0;
 }
 
 .botoes_trapaca button:hover {
@@ -143,16 +180,17 @@ h2 {
 #botao-desistir {
   background-color: transparent;
   color: #f3ea88;
-  border: 4px solid #f3ea88;
-  border-radius: 80px;
-  padding: 16px 40px;
+  border: 3px solid #f3ea88;
+  border-radius: 40px;
+  padding: 12px 30px;
   font-family: "Press Start 2P", system-ui;
-  font-size: 20px;
+  font-size: 14px;
   cursor: pointer;
   box-shadow: 0 0 15px #F3EA8866;
   transition: all 0.3s ease;
   text-transform: uppercase;
-  margin-top: 20px;
+  margin-top: 30px;
+  width: 170px;
 }
 
 #botao-desistir:hover {
@@ -160,7 +198,7 @@ h2 {
   color: #010009;
   border: 3.1px solid #05021bc6;
   box-shadow: 0 0 25px #F3EA88BF;
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 
@@ -217,23 +255,12 @@ h2 {
 
 .controles-jogo {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   margin-top: 20px;
+  align-items: center;
 }
 
-/* Adicione isso no final do seu jogo.css */
-
-.jogo-ativo {
-  /* Esta classe marca quando o jogo está em andamento */
-  pointer-events: auto; /* Permite interação */
-  opacity: 1;
-}
-
-.jogo-inativo {
-  /* Esta classe marca quando o jogo NÃO está em andamento */
-  pointer-events: none; /* Bloqueia interação */
-  opacity: 0.7;
-}
 
 /* estilo base do fundo do modal */
 .modal {
