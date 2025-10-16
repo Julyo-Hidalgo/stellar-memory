@@ -277,7 +277,7 @@ let segundos = modalidade === "contra_tempo" ? tempoBase : 0;
         mostrarNotificacao('Tempo esgotado! Tente novamente.', 'erro');
       }
     }
-  }, 1000);
+  }, 800);
 
   //limpa todo o conteudo html dentro do cointainer, 
   //assim ele pode ser reiniciado ou ter o tamanho alterado
@@ -376,7 +376,7 @@ function verificarPar() {
       setTimeout(() => {
         clearInterval(intervalo);
         mostrarModalVitoria();
-      }, 500);//espera 0,5s
+      }, 200);//espera 0,2s
     }
   } else {
     //caso as cartas viadas não sejam pares, é buscado a carta de verso na pasta img
@@ -384,19 +384,19 @@ function verificarPar() {
       const img1 = cartas[indice1].elemento.querySelector('img');
       const img2 = cartas[indice2].elemento.querySelector('img');
       
-      img1.src = "../../img/jogo/1.png"; // Corrigido o caminho do verso
+      img1.src = "../../img/jogo/1.png";
       img2.src = "../../img/jogo/1.png";
       
       cartas[indice1].virada = false;
       cartas[indice2].virada = false;
-    }, 1000);//espera 1s
+    }, 300);//espera 0,3s
   }
   
   //apaga dadosinormações para a proxima jogada, reativando cliques
   setTimeout(() => {
     cartasViradas = [];
     podeVirar = true;
-  }, 1200);//espera
+  }, 600);//espera
 }
 
 function desistirJogo() {
