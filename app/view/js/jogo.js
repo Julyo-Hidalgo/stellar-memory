@@ -5,45 +5,35 @@ let podeVirar = true;
 let modoTrapacaAtivo = false;//ver se a trapaça esta ativada ou n
 let contadorJogadas = 0;
 
-//notificações
+// Sistema de notificações
 function mostrarNotificacao(mensagem, tipo = 'info') {
-  //tira notificações existentes caso exista para evitar duplicação
-document.querySelectorAll('.notificacao').forEach(notif => notif.remove());
-    
-    const notificacao = document.createElement('div');
-    notificacao.className = `notificacao notificacao-${tipo}`;
-    
-    const conteudo = document.createElement('div');
-    conteudo.className = 'notificacao-conteudo';
-    
-    const spanMensagem = document.createElement('span');
-    spanMensagem.className = 'notificacao-mensagem';
-    spanMensagem.textContent = mensagem; //textContent para a mensagem
-    
-    const btnFechar = document.createElement('button');
-    btnFechar.className = 'notificacao-fechar';
-    btnFechar.textContent = '×'; 
-    
-
-    conteudo.appendChild(spanMensagem);
-    conteudo.appendChild(btnFechar);
-    notificacao.appendChild(conteudo);
-    
-    document.body.appendChild(notificacao);
-    
-    setTimeout(() => {
-      notificacao.classList.add('notificacao-ativa');
-    }, 10);
-    
-    //timeout e fechar
-    const timeout = setTimeout(() => {
-      fecharNotificacao(notificacao);
-    }, 4000);
-    
-    btnFechar.addEventListener('click', () => {
-      clearTimeout(timeout);
-      fecharNotificacao(notificacao);
-    });
+  // Remove notificações existentes para evitar duplicação
+  document.querySelectorAll('.notificacao').forEach(notif => notif.remove());
+  
+  const notificacao = document.createElement('div');
+  notificacao.className = `notificacao notificacao-${tipo}`;
+  notificacao.innerHTML = `
+    <div class="notificacao-conteudo">
+      <span class="notificacao-mensagem">${mensagem}</span>
+      <button class="notificacao-fechar">&times;</button>
+    </div>
+  `;
+  
+  document.body.appendChild(notificacao);
+  
+  setTimeout(() => {
+    notificacao.classList.add('notificacao-ativa');
+  }, 10);
+  
+  const timeout = setTimeout(() => {
+    fecharNotificacao(notificacao);
+  }, 4000);
+  
+  const btnFechar = notificacao.querySelector('.notificacao-fechar');
+  btnFechar.addEventListener('click', () => {
+    clearTimeout(timeout);
+    fecharNotificacao(notificacao);
+  });
 }
 
 function fecharNotificacao(notificacao) {
@@ -59,30 +49,30 @@ function fecharNotificacao(notificacao) {
 
 // vitoria
 function mostrarModalVitoria() {
-const modal = document.getElementById('modal-vitoria-fundo');
+  const modal = document.getElementById('modal-vitoria');
   
-    //preenche as estatísticas da vitoria com os valores atuais
-    document.getElementById('modal-tempo-partida').textContent = document.getElementById('tempo-partida').textContent;
-    document.getElementById('modal-numero-jogadas').textContent = document.getElementById('numero-jogadas').textContent;
+  // Preenche as estatísticas da vitória com os valores atuais
+  document.getElementById('modal-tempo-partida').textContent = document.getElementById('tempo-partida').textContent;
+  document.getElementById('modal-numero-jogadas').textContent = document.getElementById('numero-jogadas').textContent;
 
-    //adiciona o código para mostrar o modal
-    modal.style.display = 'flex';
+  // Mostra o modal
+  modal.style.display = 'flex';
 
-    //event Listeners
-    modal.querySelector('#btn-jogar-novamente').onclick = () => {
-        modal.style.display = 'none';
-        loadCards();
-    };
-    
-    modal.querySelector('#btn-voltar-menu').onclick = () => {
-        modal.style.display = 'none';
-        desistirJogo();
-    };
-    
-    //fechar se clicar fora
-    modal.onclick = (e) => {
-        if (e.target === modal) modal.style.display = 'none';
-    };
+  // Event Listeners
+  document.getElementById('btn-jogar-novamente').onclick = () => {
+    modal.style.display = 'none';
+    loadCards();
+  };
+  
+  document.getElementById('btn-voltar-menu').onclick = () => {
+    modal.style.display = 'none';
+    desistirJogo();
+  };
+  
+  // Fechar se clicar fora
+  modal.onclick = (e) => {
+    if (e.target === modal) modal.style.display = 'none';
+  };
 }
 
 function criarParesParaTabuleiro(quantidadeCartas) {
@@ -273,8 +263,10 @@ let segundos = modalidade === "contra_tempo" ? tempoBase : 0;
         mostrarNotificacao('Tempo esgotado! Tente novamente.', 'erro');
       }
     }
-  }, 1000);
+  }, 800);
 
+  //limpa todo o conteudo html dentro do cointainer, 
+  //assim ele pode ser reiniciado ou ter o tamanho alterado
 
 
 
@@ -394,8 +386,7 @@ function verificarPar() {
 }
 
 function desistirJogo() {
-  //para qualquer temporizador ativo (caso tenha)
-  clearTimeout();
+  // Para qualquer temporizador ativo (se tiver)
   clearInterval(intervalo);
   
   //apaga/reseta todas as variáveis do jogo
@@ -424,7 +415,7 @@ function desistirJogo() {
   document.getElementById('botao_ativar_trapaca').classList.remove('ativo');
   document.getElementById('botao_desativar_trapaca').classList.remove('ativo');
   
-  //apaga/zera os textos, como movimentos e tempo da partida
+  //apaga/zera os textos, como movimentos, tempo restante e tempo da partida
   document.getElementById("numero-jogadas").textContent = "0";
   document.getElementById("tempo-partida").textContent = "00:00";
   document.getElementById("status-jogo").style.display = 'none'; // Esconde os status/controles
@@ -458,9 +449,9 @@ function iniciarJogo() {
     loadCards(); 
     
     // Troca de Telas/Containers
-    document.getElementById("config-menu").style.display = 'none'; //esconde os selects e botão Jogar
-    document.getElementById("status-jogo").style.display = 'flex'; //mostra os status e botões de controle
+    document.getElementById("config-menu").style.display = 'none'; // Esconde os selects e botão Jogar
+    document.getElementById("status-jogo").style.display = 'flex'; // Mostra os status e botões de controle
 }
 
-
+// Chama função de inicialização quando o DOM estiver pronto
 document.addEventListener("DOMContentLoaded", inicializarEventos);
