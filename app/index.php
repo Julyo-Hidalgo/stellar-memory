@@ -4,12 +4,12 @@ include_once 'config.php';
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 switch ($uri) {
-	case '/':
+	case '/stellar-memory/app/':
 		include 'view/modules/inicio/inicio.html';
 		break;
 
-	default:
-		echo 'erro 404';
+	delfault:
+		echo $uri;
 		break;
 }
 

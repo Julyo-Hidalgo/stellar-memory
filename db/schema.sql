@@ -20,7 +20,6 @@ CREATE TABLE usuario (
 CREATE TABLE partida (
     id INT PRIMARY KEY AUTO_INCREMENT,
     usuario_id INT NOT NULL,
-    pontuacao INT NOT NULL,
     tempo_jogo INT NOT NULL, -- em segundos (baseado no tempo-partida)
     data_partida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     modalidade VARCHAR(20) NOT NULL, -- 'classico' ou 'contra_tempo'
@@ -28,6 +27,7 @@ CREATE TABLE partida (
     total_jogadas INT NOT NULL, -- contadorJogadas
 --    pares_encontrados INT NOT NULL, -- guardar as desistidas?
     vitoria BOOLEAN DEFAULT FALSE,
+    ranking INT, -- 0:sem ranking, 1: 2x2 c, 2: 4x4 c, 3: 6x6 c, 4: 8x8 c, 5: 2x2 ct, 6: 4x4 ct, 7: 6x6 ct, 8: 8x8 ct.
     
     FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE
 );
@@ -80,8 +80,8 @@ INSERT INTO usuario (username, email, senha, cpf, data_nascimento, nome_completo
 
 -- INSERTS: Gatilhos a fazer
 
--- Gatilho para quando inserir o usuário verificar se o usuário/email já existe, usando a função já implementada acima -- Ana
+-- Gatilho para quando inserir o usuário verificar se o usuário(username)/email já existe, usando a função já implementada acima -- Ana
 
--- Gatilho para calcular a pontuação -- Adriano 
+-- Gatilho para calcular a pontuação e posicionamento dos 10 melhores-- Adriano 
 
 
