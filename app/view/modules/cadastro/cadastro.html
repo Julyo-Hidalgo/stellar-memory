@@ -6,20 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="view/css/global.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../../css/forms.css">
-    <link rel="stylesheet" href="../../css/cadastro.css">
+    <link rel="stylesheet" href="view/css/forms.css">
+    <link rel="stylesheet" href="view/css/cadastro.css">
     <title>Cadastro</title>
 </head>
 <!-- Página de cadastro -->
 
 <body>
-    <iframe src="../ceu/ceu.html" class="ceu-fundo"></iframe>
+	<?php
+		include "view/components/ceu/ceu.html";
+	?>
 
     <header>
         <h1>Stellar Memory</h1>
@@ -68,7 +70,7 @@
             <div class="input-box">
                 <input id="password" name="senha" placeholder="Senha" type="password" required>
                 <button type="button" class="toggle-password">
-                    <img src="../../img/red-eyes.png" alt="Mostrar ou ocultar senha">
+                    <img src="view/img/red-eyes.png" alt="Mostrar ou ocultar senha">
                 </button>
             </div>
 
@@ -77,13 +79,13 @@
 
             <!-- Link Login -->
             <div class="register-link">
-                <p>Já tem uma conta? <a href="../login/login.html">Login</a></p>
+                <p>Já tem uma conta? <a href="/login">Login</a></p>
             </div>
         </form>
     </main>
     <!-- Script para o formulário de cadastro -->
-    <script src="../../js/forms.js" defer></script>
-    <script src="../../js/cadastro.js" defer></script>
+    <script src="view/js/forms.js" defer></script>
+    <script src="view/js/cadastro.js" defer></script>
     
 </body>
 

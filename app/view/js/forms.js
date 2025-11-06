@@ -7,10 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!input) return;
             if (input.type === "password") {
                 input.type = "text";
-                btn.querySelector("img").src = "../../img/cadeado.png";
+                btn.querySelector("img").src = "view/img/cadeado.png";
             } else {
                 input.type = "password";
-                btn.querySelector("img").src = "../../img/red-eyes.png";
+                btn.querySelector("img").src = "view/img/red-eyes.png";
             }
         });
     });

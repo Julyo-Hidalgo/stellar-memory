@@ -4,19 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="view/css/global.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../../css/forms.css">
+    <link rel="stylesheet" href="view/css/forms.css">
     <title>Login</title>
 </head>
 <!-- página de login -->
 
 <body>
-    <iframe src="../ceu/ceu.html" class="ceu-fundo"></iframe>
+	<?php
+		include "view/components/ceu/ceu.html";
+	?>
+
 
     <header>
         <h1>Stellar Memory</h1>
@@ -35,7 +38,7 @@
             <div class="input-box">
                 <input id="password" name="senha" placeholder="Senha" type="password" required>
                 <button type="button" class="toggle-password">
-                    <img src="../../img/red-eyes.png" alt="mostrar ou ocultar senha">
+                    <img src="view/img/red-eyes.png" alt="mostrar ou ocultar senha">
                 </button>
             </div>
 
@@ -45,15 +48,15 @@
             <!-- Link de registro -->
             <div class="register-link">
                 <p>Não tem uma conta?
-                    <a href="../cadastro/cadastro.html">Cadastre-se</a>
+                    <a href="/cadastro">Cadastre-se</a>
                 </p>
             </div>
 
         </form>
     </main>
     <!-- Script para o formulário de login -->
-    <script src="../../js/forms.js"></script>
-    <script src="../../js/login.js"></script>
+    <script src="view/js/forms.js"></script>
+    <script src="view/js/login.js"></script>
 
 </body>
 

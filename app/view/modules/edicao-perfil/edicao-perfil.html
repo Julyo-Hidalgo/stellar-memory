@@ -6,36 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="../../css/global.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Press+Start+2P&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="view/css/global.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../../css/forms.css">
-    <link rel="stylesheet" href="../../css/cadastro.css">
-    <link rel="stylesheet" href="../../css/edicao-perfil.css">
+    <link rel="stylesheet" href="view/css/forms.css">
+    <link rel="stylesheet" href="view/css/cadastro.css">
+    <link rel="stylesheet" href="view/css/edicao-perfil.css">
+    <link rel="stylesheet" href="view/css/nav.css">
     <title>Edição de Dados</title>
 </head>
 
 <body class="cadastro-page">
-    <iframe src="../ceu/ceu.html" class="ceu-fundo"></iframe>
-
-    <header>
-        <h1>Stellar Memory</h1>
-    </header>
-
-    <button class="menu_button" id="menu-toggle-btn">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-
-    <nav class="side_menu" id="side_menu">
-		<a href="../historico/historico.html">Histórico</a>
-		<a href="../ranking/ranking.html">Ranking</a>
-        <a href="../jogo/jogo.html">Tela do Jogo</a>
-        <a href="../login/login.html">Desconectar</a>
-    </nav>
+	<?php
+		include "view/components/ceu/ceu.html";
+		include "view/components/header/header.html";
+	?>
 
     <!-- Caixa de edição -->
     <main class="container">
@@ -78,7 +63,7 @@
             <div class="input-box">
                 <input id="password" name="senha" placeholder="Senha" type="password" required>
                 <button type="button" class="toggle-password">
-                    <img src="../../img/red-eyes.png" alt="Mostrar senha">
+                    <img src="view/img/red-eyes.png" alt="Mostrar senha">
                 </button>
             </div>
 
@@ -87,9 +72,8 @@
         </form>
     </main>
     <!-- Script para o formulário de edição de perfil -->
-    <script src="../../js/forms.js" defer></script>
-    <script src="../../js/edicao-perfil.js" defer></script>
-  <script src="../../js/global.js"></script>
+    <script src="view/js/forms.js" defer></script>
+    <script src="view/js/edicao-perfil.js" defer></script>
 </body>
 
 </html>

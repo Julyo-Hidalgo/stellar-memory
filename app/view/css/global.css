@@ -54,101 +54,6 @@ h1 {
 
 }
 
-
-/*menu*/
-
-/*botao do menu*/
-.menu_button {
-    position: fixed;
-    top: 18px;
-    left: 18px;
-    z-index: 1001;
-    /*garante que o botão fique em cima do menu e outros elementos*/
-    width: 37px;
-    height: 27px;
-    background: transparent;
-    /*fundo transparente do botao*/
-    border: none;
-    cursor: pointer;
-    display: flex;
-    /*alinha elementos*/
-    flex-direction: column;
-    /*fica em forma de coluna/verticalmente*/
-    justify-content: space-between;
-    /*espaço igual entre as linhas*/
-}
-
-/*estilizando as 3linhas do menu*/
-.menu_button span {
-    display: block;
-    width: 100%;
-    height: 4px;
-    background-color: #f3ea88;
-    border-radius: 2px;
-    /*cantos meio arredondados*/
-    transition: all 0.3s ease;
-}
-
-/*estilos para o menu lateral*/
-.side_menu {
-    position: fixed;
-    /* Fixa o menu na tela, não importa onde o usuário role */
-    top: 0;
-    /*colado*/
-    left: 0;
-    /*colado*/
-    height: 100%;
-    /*menu ocupa a altura total da tela */
-    width: 190px;
-    background: #010009f7;
-    backdrop-filter: blur(5px);
-    /* efeito para deixar um pouco desfocado*/
-    padding: 80px 20px 20px;
-    box-shadow: 2px 0 10px #F9EF2F33;
-    /*ou #00000080*/
-    display: flex;
-    flex-direction: column;
-    /*fica em forma de coluna/verticalmente*/
-    align-items: flex-start;
-    /*alinha os links à esquerda */
-    transition: all 0.3s ease;
-    /* transição suave para efeitos de abrir/fechar */
-    z-index: 1000;
-    /*deixa o menu fique na frente de outros elementos */
-    transform: translateX(-100%);
-    /*esconde o menu fora da tela à esquerda */
-}
-
-.side_menu a {
-    font-family: "Roboto Mono", monospace;
-    color: #f3ea88;
-    text-decoration: none;
-    /*remove o sublinhado */
-    padding: 15px 0;
-    margin-bottom: 10px;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-    /*transiçao para quando o cursor passar sobre/hover*/
-    border-bottom: 1px solid #F3EA8833;
-    /*linha divisória sutil entre cada elemeno do menu */
-    width: 100%;
-}
-
-/* efeito quando o mouse passa sobre os links do menu */
-.side_menu a:hover {
-    color: #fff;
-    background-color: #F3EA881A;
-    transform: translateX(10px);
-    /*move o link um pouco para a direita ao passar o mouse */
-}
-
-/*para mostrar o menu quando o usuario clica(usa js)*/
-.side_menu.show {
-    transform: translateX(0);
-    /*move o menu de volta para a tela*/
-}
-
-
 /*ceu/fundo*/
 .sky {
   position: relative;
@@ -352,7 +257,7 @@ h1 {
 }
 
 /*para dimencionar*/
-.ceu-fundo {
+.sky{
   position: fixed;
   top: 0;
   left: 0;

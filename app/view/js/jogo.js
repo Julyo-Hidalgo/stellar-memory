@@ -183,7 +183,7 @@ function desativarModoTrapaca() {
   cartas.forEach(carta => {
     if (!carta.virada && !carta.encontrada) {
       const img = carta.elemento.querySelector('img');
-      img.src = "../../img/jogo/1.png";
+      img.src = "view/img/jogo/1.png";
     }
   });
   
@@ -206,7 +206,7 @@ function loadCards() {
   clearInterval(intervalo);
 
   cartasContainer.innerHTML = "";
-  const verso = "../../img/jogo/1.png";
+  const verso = "view/img/jogo/1.png";
   
   
   const quantitySelector = document.getElementById(
@@ -301,7 +301,7 @@ const cartasDoJogo = criarParesParaTabuleiro(quantidadeCartas);
      cartas.push({
       indice: i,//posição/valor dessa carta 
       valorPar: cartasDoJogo[i].valorPar, // Valor que define o par
-      imagemFrente: `../../img/jogo/cartas/${cartasDoJogo[i].imagem}`,// Imagem da frente
+      imagemFrente: `view/img/jogo/cartas/${cartasDoJogo[i].imagem}`,// Imagem da frente
       nome: cartasDoJogo[i].nome,// Nome da carta
       virada: false,  // Se está com frente visível
       encontrada: false, // Se já formou par
@@ -370,8 +370,8 @@ function verificarPar() {
       const img1 = cartas[indice1].elemento.querySelector('img');
       const img2 = cartas[indice2].elemento.querySelector('img');
       
-      img1.src = "../../img/jogo/1.png";
-      img2.src = "../../img/jogo/1.png";
+      img1.src = "view/img/jogo/1.png";
+      img2.src = "view/img/jogo/1.png";
       
       cartas[indice1].virada = false;
       cartas[indice2].virada = false;

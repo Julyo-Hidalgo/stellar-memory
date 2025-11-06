@@ -6,6 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.formUtils.setupFormSubmission("#form-cadastro", {
     successMessage: "Cadastro realizado com sucesso!",
-    redirect: "../../modules/login/login.html"
+    redirect: "/login"
   });
 });

@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // CÓDIGO DAS ESTRELAS - só executa se o container existir
     const container = document.getElementById('stars-container');
     
-    if (container) { // ⬅️ VERIFICA SE O ELEMENTO EXISTE
+    if (container) { // VERIFICA SE O ELEMENTO EXISTE
         const starCount = 900;
         
         for (let i = 0; i < starCount; i++) {
@@ -21,18 +21,5 @@ document.addEventListener('DOMContentLoaded', function() {
             
             container.appendChild(star);
         }
-    }
-});
-
-/*botao menu */
-document.addEventListener('DOMContentLoaded', function() {
-    const menuToggleButton = document.getElementById('menu-toggle-btn');
-    const sideMenu = document.getElementById('side_menu');
-
-    // ⬇️ VERIFICA SE OS ELEMENTOS EXISTEM ANTES DE ADICIONAR EVENT LISTENERS
-    if (menuToggleButton && sideMenu) {
-        menuToggleButton.addEventListener('click', function() {
-            sideMenu.classList.toggle('show');
-        });
     }
 });

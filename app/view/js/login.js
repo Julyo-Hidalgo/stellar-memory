@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   window.formUtils.setupFormSubmission("#form-login", {
-    redirect: "../jogo/jogo.html"
+    redirect: "/jogo"
   });
 });
 

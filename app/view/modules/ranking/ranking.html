@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ranking Global</title>
 
-    <link rel="stylesheet" href="../../css/global.css" >
-	<link rel="stylesheet" href="../../css/game-data.css" >
-    <link rel="stylesheet" href="../../css/ranking.css" >
+    <link rel="stylesheet" href="view/css/global.css" >
+	<link rel="stylesheet" href="view/css/game-data.css" >
+    <link rel="stylesheet" href="view/css/ranking.css" >
 
     <!--conectando as fontes/tipografia-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,27 +16,14 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Press+Start+2P&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="view/css/nav.css">
 </head>
 
 <body class="ranking-page">
-    <iframe src="../ceu/ceu.html" class="ceu-fundo"></iframe>
-
-    <header>
-        <h1>Stellar Memory</h1>
-    </header>
-
-    <button class="menu_button" id="menu-toggle-btn">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-
-    <nav class="side_menu" id="side_menu">
-        <a href="../edicao-perfil/edicao-perfil.html">Editar Perfil</a>
-        <a href="../historico/historico.html">Histórico de Partidas</a>
-        <a href="../jogo/jogo.html">Tela do Jogo</a>
-        <a href="../login/login.html">Desconectar</a>
-    </nav>
+	<?php
+		include "view/components/ceu/ceu.html";
+		include "view/components/header/header.html";
+	?>
 
     <section id="ranking" class="ranking, information-container">
         <h2>Ranking Global</h2>
@@ -159,8 +146,7 @@
         </table>
     </section>
 
-    <script src="../../js/global.js"></script>
-    <script src="../../js/ranking.js"></script>
+    <script src="view/js/ranking.js"></script>
 </body>
 
 </html>

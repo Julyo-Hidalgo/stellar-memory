@@ -21,11 +21,13 @@
 <body>
 
   <!-- Fundo -->
-  <iframe src="view/modules/ceu/ceu.html" class="ceu-fundo"></iframe>
+  <?php
+	include "view/components/ceu/ceu.html";
+  ?>
 
   <!-- Navegação -->
   <nav>
-    <a href="view/modules/login/login.html" class="btn">Entre</a>
+    <a href="/login" class="btn">Entre</a>
   </nav>
 
   <!-- Conteúdo Principal -->
@@ -36,15 +38,11 @@
 
       <h1 class="game-title">Stellar Memory</h1>
       <div class="cta-section">
-        <a href="view/modules/cadastro/cadastro.html" class="btn">Cadastre-se</a>
+        <a href="/cadastro" class="btn">Cadastre-se</a>
 
       </div>
     </div>
   </main>
-
-  <footer>
-
-  </footer>
 
 </body>
 
