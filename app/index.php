@@ -4,13 +4,37 @@ include_once 'config.php';
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 switch ($uri) {
-	case '/stellar-memory/app/':
-		include 'view/modules/inicio/inicio.html';
-		break;
+    case '/':
+        include 'view/modules/inicio/inicio.html';
+        break;
 
-	delfault:
-		echo $uri;
-		break;
+    case '/login':
+        include 'view/modules/login/login.html';
+        break;
+
+    case '/cadastro':
+        include 'view/modules/cadastro/cadastro.html';
+        break;
+
+    case '/edicao-perfil':
+        include 'view/modules/edicao-perfil/edicao-perfil.html';
+        break;
+
+    case '/historico':
+        include 'view/modules/historico/historico.html';
+        break;
+
+    case '/jogo':
+        include 'view/modules/jogo/jogo.html';
+        break;
+
+    case '/ranking':
+        include 'view/modules/ranking/ranking.html';
+        break;
+
+    default:
+        echo "Página não encontrada: " . htmlspecialchars($uri);
+        break;
 }
 
 ?>
