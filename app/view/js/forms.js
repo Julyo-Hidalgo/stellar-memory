@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                             // Só exibe o aviso se não for a página de edição de perfil
                             // (porque lá CPF e data são apenas leitura)
-                            const isEditProfile = window.location.pathname.includes("edicao_perfil.html");
+                            const isEditProfile = window.location.pathname.includes("edicao-perfil.html");
                             const isEditableNumericField = !isEditProfile || name === "telefone";
 
                             if (isEditableNumericField) {
