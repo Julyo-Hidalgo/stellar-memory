@@ -9,13 +9,7 @@ class UsuarioModel {
     private $data_nascimento;
     private $nome_completo;
     private $telefone;
-    private $data_cadastro;
-
-    //getters e setters
-    //setter para modificar 
+	private $posicao_ranking;
 }
-
-
-
 
 ?>
