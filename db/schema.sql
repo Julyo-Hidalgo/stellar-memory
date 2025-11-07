@@ -12,8 +12,7 @@ CREATE TABLE usuario (
     cpf DECIMAL(11, 0) UNIQUE NOT NULL,
     data_nascimento DATE NOT NULL,
     nome_completo VARCHAR(100) NOT NULL,
-    telefone DECIMAL(11, 0),
-    posicao_ranking NUMERIC(1, 0) -- posição no ranking (0 a 10)
+    telefone DECIMAL(11, 0)
 );
 
 -- TABELA: partida
@@ -26,8 +25,10 @@ CREATE TABLE partida (
     tamanho_tabuleiro DECIMAL(1, 0) NOT NULL, -- 2 - 2x2 ou 4 - 4x4 ou 6 - 6x6 ou 8 - 8x8
     total_jogadas INT NOT NULL,
     vitoria BOOLEAN DEFAULT FALSE,
+    pontuacao INT,
     FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE
 );
 
 -- A fazer:
--- Gatilho para calcular a pontuação e posicionamento dos 10 melhores jogadores disparado ao inserir uma partida -- Adriano 
+-- View para calcular os 10 melhores jogadores disparado ao inserir uma partida,   -- Adriano
+-- Gatilho para pontuacao tempo_partida * total_jogadas
