@@ -29,6 +29,18 @@ CREATE TABLE partida (
     FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE
 );
 
--- A fazer:
--- View para calcular os 10 melhores jogadores disparado ao inserir uma partida,   -- Adriano
--- Gatilho para pontuacao tempo_partida * total_jogadas
+-- A fazer para o Adriano:
+-- Transformar a seguinte consulta em uma procedure que recebe como parâmetro modalidade e tamanho_tabuleiro da partida
+    /*
+    SELECT 
+        u.username,
+        SUM(p.points) AS pontuacao_total
+    FROM usuários u
+    LEFT JOIN Partidas p
+    ON u.id = p.usuario_id
+    WHERE p.tipo_partida = '2x2'
+    GROUP BY username
+    ORDER BY pontuacao_total DESC
+    LIMIT 10*/
+
+-- Criar um gatilho para calcular o valor da pontuacao (tempo_partida * total_jogadas) todas as vezes que inserir uma partida
