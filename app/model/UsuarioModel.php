@@ -20,7 +20,6 @@ class UsuarioModel {
         include_once 'dao/UsuarioDAO.php';
         $dao = new UsuarioDAO();
 
-        // Chama o DAO para verificar o usuário
         return $dao->buscarPorUsernameSenha($username, $senha);
     }
 }

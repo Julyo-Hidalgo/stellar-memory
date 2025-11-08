@@ -189,7 +189,6 @@ document.addEventListener("DOMContentLoaded", () => {
         },
     };
 
-    // === Inicializa campos interativos ===
     const path = window.location.pathname;
     if (path.includes("/cadastro")) {
         const form = document.querySelector("#form-cadastro");
@@ -200,7 +199,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (form) window.formUtils.setupInteractiveInputs(form);
     }
 
-    // === NOVO: Ativa o modal automaticamente se sucesso=true na URL ===
     const params = new URLSearchParams(window.location.search);
     if (params.get("sucesso") === "true" || params.get("sucesso") === "1") {
         let msg = "Operação realizada com sucesso!";
@@ -208,4 +206,17 @@ document.addEventListener("DOMContentLoaded", () => {
         if (path.includes("edicao")) msg = "Perfil atualizado com sucesso!";
         window.formUtils.mostrarModalSucesso(msg, "/login");
     }
+
+    if (params.get("erro")) {
+        const mensagem = decodeURIComponent(params.get("erro"));
+        const box = document.createElement("div");
+        box.className = "erro-cadastro-box";
+        box.innerHTML = `
+            <div class="erro-cadastro">
+                <p>${mensagem}</p>
+            </div>
+        `;
+        document.body.appendChild(box);
+    }
+
 });

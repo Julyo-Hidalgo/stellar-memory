@@ -354,7 +354,6 @@ form {
   z-index: 1;
 }
 
-/* --- Fim dos Estilos do Modal de Sucesso --- */
 header{
     position: absolute;
     /* deixa o título fixado na tela */
@@ -367,3 +366,35 @@ header{
     z-index: 2;
     /* garante que fique acima do iframe */
 }
+
+.erro-cadastro-box {
+    position: fixed;
+    top: 185px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 60, 60, 0.95);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-family: "Roboto Mono", monospace;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    animation: fadeInOut 4s ease forwards;
+    z-index: 3000;
+    border: 2px solid #f3ea88;
+    text-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translate(-50%, -10px); }
+    10%, 90% { opacity: 1; transform: translate(-50%, 0); }
+    100% { opacity: 0; transform: translate(-50%, -10px); }
+}
+
+.erro-cadastro-box p {
+    margin: 0;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+

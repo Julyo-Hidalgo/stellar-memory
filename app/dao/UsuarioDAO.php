@@ -1,5 +1,4 @@
 <?php
-
 include 'dao/DAO.php';
 
 class UsuarioDAO extends DAO  {
@@ -27,32 +26,44 @@ class UsuarioDAO extends DAO  {
             return $stmt->execute(); 
 
         } catch (PDOException $e) {
-            echo "Ocorreu um erro ao inserir o usuário: " . $e->getMessage();
+            // 🔥 Aqui vai o tratamento certo do erro de duplicidade
+            if (str_contains($e->getMessage(), '1062')) {
+                if (str_contains($e->getMessage(), 'username')) {
+                    return "O username informado já está em uso.";
+                }
+                if (str_contains($e->getMessage(), 'email')) {
+                    return "O e-mail informado já está em uso.";
+                }
+                if (str_contains($e->getMessage(), 'cpf')) {
+                    return "O CPF informado já está em uso.";
+                }
+                return "Dados duplicados. Verifique suas informações.";
+            }
+
+            return "Erro ao salvar usuário: " . $e->getMessage();
         }
     }
 
     public function buscarPorUsernameSenha($username, $senha) {
-    try {
-        // Aqui usamos hash SHA1 igual ao seu exemplo
-        $sql = "SELECT id, nome_completo, username 
-                FROM usuario 
-                WHERE username = :username AND senha = :senha";
+        try {
+            $sql = "SELECT id, nome_completo, username 
+                    FROM usuario 
+                    WHERE username = :username AND senha = :senha";
 
-        $stmt = $this->connection->prepare($sql);
-        $stmt->bindValue(':username', $username);
-        $stmt->bindValue(':senha', $senha);
-        $stmt->execute();
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':username', $username);
+            $stmt->bindValue(':senha', $senha);
+            $stmt->execute();
 
-        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-         return ($resultado && isset($resultado['id'])) ? $resultado : false;
-
-    } catch (PDOException $e) {
-        echo "Erro ao validar login: " . $e->getMessage();
-        return null;
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            return ($resultado && isset($resultado['id'])) ? $resultado : false;
+        } catch (PDOException $e) {
+            return "Erro ao buscar usuário: " . $e->getMessage();
+        }
     }
 }
 
-}
+
 
 
 

@@ -12,7 +12,7 @@ CREATE TABLE usuario (
     cpf DECIMAL(11, 0) UNIQUE NOT NULL,
     data_nascimento DATE NOT NULL,
     nome_completo VARCHAR(100) NOT NULL,
-    telefone DECIMAL(11, 0)
+    telefone VARCHAR(20)
 );
 
 -- TABELA: partida

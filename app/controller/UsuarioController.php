@@ -17,14 +17,19 @@ class UsuarioController {
             }
         }
         $model->data_nascimento = $data_nascimento;
-       $model->nome_completo = $_POST['nome_completo'];
-       $model->telefone = $_POST['telefone'];
+        $model->nome_completo = $_POST['nome_completo'];
+        $model->telefone = preg_replace('/\D/', '', $_POST['telefone']);
 
        $resultado = $model->salvar();
-       if ($resultado == true){
+       if ($resultado === true) {
             header("Location: /login?sucesso=true");
-       }else {
-            header("Location: /cadastro?erro=true");
-       }
+            exit;
+        } else {
+            
+            $erro = urlencode($resultado);
+            header("Location: /cadastro?erro=" . $erro);
+            exit;
+        }
+
     }
 }

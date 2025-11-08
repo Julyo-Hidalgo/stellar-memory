@@ -22,11 +22,9 @@ class LoginController {
             header("Location: /jogo");
             exit;
         } else {
-            echo "<script>
-                    alert('Usuário ou senha incorretos!');
-                    window.location.href = '/login';
-                  </script>";
+            header("Location: /login?erro=" . urlencode("Usuário ou senha incorretos!"));
             exit;
+
         }
     }
 
