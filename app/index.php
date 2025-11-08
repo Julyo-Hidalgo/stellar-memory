@@ -12,8 +12,23 @@ switch ($uri) {
         include 'view/modules/login/login.html';
         break;
 
+    case '/login/validar':
+        include 'controller/LoginController.php';
+        LoginController::validar();
+        break;
+
+    case '/logout':
+        include 'controller/LoginController.php';
+        LoginController::logout();
+        break;
+
     case '/cadastro':
         include 'view/modules/cadastro/cadastro.html';
+        break;
+
+    case '/cadastro/salvar':
+        include 'controller/UsuarioController.php';
+        UsuarioController::salvar();
         break;
 
     case '/edicao-perfil':

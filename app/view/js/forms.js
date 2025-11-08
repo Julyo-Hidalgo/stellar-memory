@@ -15,8 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Criação do objeto global formUtils
-    // Ele agrupa todas as funções usadas pelos formulários do site
+    // === Objeto global com todas as funções ===
     window.formUtils = {
 
         /* Exibição e remoção de mensagens de erro */
@@ -46,12 +45,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const error = box.querySelector(".error-message");
             if (error) error.remove();
         },
-        /*Funções auxiliares de formatação*/
+
+        /* Funções auxiliares */
         onlyDigits(v) {
             return String(v || "").replace(/\D/g, "");
         },
 
-        /* Máscaras para campos específicos */
+        /* Máscaras */
         applyCpfMask(v) {
             const d = window.formUtils.onlyDigits(v).slice(0, 11);
             if (d.length <= 3) return d;
@@ -75,43 +75,35 @@ document.addEventListener("DOMContentLoaded", () => {
             return d.replace(/(\d{2})(\d{5})(\d{0,4})/, "($1) $2-$3");
         },
 
-        /* Validações de campos */
+        /* Validações */
         validateName(name) {
             return /^[A-Za-zÀ-ÿ\s]+$/.test(name.trim());
         },
         validateUsername(val, input) {
-			const invalidCharMatch = val.match(/[^A-Za-z0-9ç!@#$%^&*()_\-+=.?]/);
-
-			if (val.lenght < 3){
-				window.formUtils.displayError(input, "Mínimo 3 caracteres.");
-			} else if (invalidCharMatch) {
-				const invalidChar = invalidCharMatch[0];
-				window.formUtils.displayError(input, `Caractere inválido: "${invalidChar}"`);
-			} else if (val.length > 100) {
-				window.formUtils.displayError(input, "Limite máximo de 100 caracteres.");
-			} else{
-				return true;
-			}
-
-			return false;
+            const invalidCharMatch = val.match(/[^A-Za-z0-9ç!@#$%^&*()_\-+=.?]/);
+            if (val.length < 3) {
+                window.formUtils.displayError(input, "Mínimo 3 caracteres.");
+            } else if (invalidCharMatch) {
+                window.formUtils.displayError(input, `Caractere inválido: "${invalidCharMatch[0]}"`);
+            } else if (val.length > 100) {
+                window.formUtils.displayError(input, "Limite máximo de 100 caracteres.");
+            } else {
+                return true;
+            }
+            return false;
         },
         validatePassword(val, input) {
-			const invalidCharMatch = val.match(/[^A-Za-z0-9ç!@#$%^&*()_\s\-+=.?\/]/);
-			
-			if (val.length < 8) {
-				window.formUtils.displayError(input, "Mínimo 8 caracteres.");
-			} 
-			else if (invalidCharMatch) {
-				const invalidChar = invalidCharMatch[0];
-				window.formUtils.displayError(input, `Caractere inválido: "${invalidChar}"`);
-			}
-			else if (val.length > 100) {
-				window.formUtils.displayError(input, "Limite máximo de 100 caracteres.");
-			} else{
-				return true;
-			}
-
-			return false;
+            const invalidCharMatch = val.match(/[^A-Za-z0-9ç!@#$%^&*()_\s\-+=.?\/]/);
+            if (val.length < 8) {
+                window.formUtils.displayError(input, "Mínimo 8 caracteres.");
+            } else if (invalidCharMatch) {
+                window.formUtils.displayError(input, `Caractere inválido: "${invalidCharMatch[0]}"`);
+            } else if (val.length > 100) {
+                window.formUtils.displayError(input, "Limite máximo de 100 caracteres.");
+            } else {
+                return true;
+            }
+            return false;
         },
         validateEmail(e) {
             return /^[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}$/.test(e.trim());
@@ -125,39 +117,23 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         validateDate(date) {
             const d = window.formUtils.onlyDigits(date);
-
-            // Se o campo estiver vazio, não mostra erro ainda
             if (d.length === 0) return true;
-
-            // Se tiver menos de 8 dígitos, já é considerado inválido
             if (d.length < 8) return false;
-
-            // Verifica formato completo
             const day = +d.substring(0, 2);
             const month = +d.substring(2, 4);
             const year = +d.substring(4, 8);
-
-            // Valida faixas possíveis
             if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2025) return false;
-
             const obj = new Date(year, month - 1, day);
-            const valid =
-                obj.getFullYear() === year &&
-                obj.getMonth() === month - 1 &&
-                obj.getDate() === day;
-
-            return valid;
+            return obj.getFullYear() === year && obj.getMonth() === month - 1 && obj.getDate() === day;
         },
 
         /* Configuração de inputs interativos */
         setupInteractiveInputs(form) {
             const inputs = form.querySelectorAll("input");
-
             inputs.forEach((input) => {
                 const name = input.name;
                 const id = input.id;
 
-                // máscaras dinâmicas
                 input.addEventListener("input", () => {
                     if (name === "cpf") input.value = window.formUtils.applyCpfMask(input.value);
                     if (name === "telefone") input.value = window.formUtils.applyPhoneMask(input.value);
@@ -165,92 +141,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         input.value = window.formUtils.applyDateMask(input.value);
                 });
 
-                // Restrições de caracteres durante a digitação
-                input.addEventListener("keypress", (e) => {
-                    if (["cpf", "telefone", "data_nascimento"].includes(name) || id === "nascimento") {
-                        // assume que o Enter sempre é permitido
-                        if (e.key === "Enter") return;
-
-                        // Permite apenas números
-                        if (!/[0-9]/.test(e.key)) {
-                            e.preventDefault();
-
-                            // Só exibe o aviso se não for a página de edição de perfil
-                            // (porque lá CPF e data são apenas leitura)
-                            const isEditProfile = window.location.pathname.includes("edicao-perfil.html");
-                            const isEditableNumericField = !isEditProfile || name === "telefone";
-
-                            if (isEditableNumericField) {
-                                window.formUtils.displayError(input, "Apenas números permitidos.");
-                                setTimeout(() => window.formUtils.removeError(input), 1500);
-                            }
-                            return;
-                        }
-
-
-                        const max =
-                            name === "cpf"
-                                ? 11
-                                : name === "telefone"
-                                    ? 11
-                                    : name === "data_nascimento" || id === "nascimento"
-                                        ? 8
-                                        : null;
-
-                        if (max && window.formUtils.onlyDigits(input.value).length >= max) {
-                            e.preventDefault();
-                            window.formUtils.displayError(input, `Limite de ${max} números atingido.`);
-                            setTimeout(() => window.formUtils.removeError(input), 1500);
-                        }
-                    }
-
-                    if (name === "nome_completo" && !/[A-Za-zÀ-ÿ\s]/.test(e.key)) {
-                        e.preventDefault();
-                        window.formUtils.displayError(input, "Apenas letras permitidas.");
-                        setTimeout(() => window.formUtils.removeError(input), 1500);
-                    }
-
-                    if ((name === "username" || name === "senha") && input.value.length >= 100) {
-                        e.preventDefault();
-                        window.formUtils.displayError(input, "Limite máximo de 100 caracteres atingido.");
-                    }
-                });
-
-                // Navegação com Enter
-                input.addEventListener("keydown", (e) => {
-                    if (e.key === "Enter") {
-                        e.preventDefault();
-                        const form = input.form;
-                        if (!form) return;
-
-                        // Seleciona todos os campos focáveis relevantes
-                        const focusable = Array.from(
-                            form.querySelectorAll("input, select, textarea, button, input[type='submit']")
-                        ).filter(el =>
-                            !el.disabled &&
-                            el.offsetParent !== null &&
-                            !el.classList.contains("toggle-password") // ignora o botão de ver senha
-                        );
-
-                        const index = focusable.indexOf(input);
-
-                        if (index !== -1 && index + 1 < focusable.length) {
-                            // Foca no próximo campo
-                            focusable[index + 1].focus();
-                        } else {
-                            // Último campo → clica automaticamente no botão de envio
-                            const button = form.querySelector("button[type='submit'], input[type='submit']");
-                            if (button) {
-                                button.focus();
-                                button.click(); // dispara o clique automático
-                            }
-                        }
-                    }
-                });
-
-
-
-                // Validação ao sair do campo
                 input.addEventListener("blur", () => {
                     const val = input.value.trim();
                     window.formUtils.removeError(input);
@@ -258,12 +148,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     if (name === "nome_completo" && !window.formUtils.validateName(val))
                         window.formUtils.displayError(input, "O nome deve conter apenas letras.");
-					else if (name === "username") {
-						window.formUtils.validateUsername(val, input);
-					}
-					else if (name === "senha") {
-						window.formUtils.validatePassword(val, input);
-					}
+                    else if (name === "username") window.formUtils.validateUsername(val, input);
+                    else if (name === "senha") window.formUtils.validatePassword(val, input);
                     else if (name === "cpf" && !window.formUtils.validateCpf(val))
                         window.formUtils.displayError(input, "CPF deve ter 11 números.");
                     else if (name === "telefone" && !window.formUtils.validatePhone(val))
@@ -276,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         },
 
-        /* Exibição do Modal de Sucesso */
+        /* Modal de Sucesso */
         mostrarModalSucesso(message, redirectUrl) {
             const modal = document.createElement('div');
             modal.className = 'modal-sucesso';
@@ -287,16 +173,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     <button class="btn-modal-sucesso" id="btn-modal-fechar">FECHAR</button>
                 </div>
             `;
-
             document.body.appendChild(modal);
 
-            // Adiciona evento para fechar o modal
             modal.querySelector('#btn-modal-fechar').addEventListener('click', () => {
                 modal.remove();
                 if (redirectUrl) window.location.href = redirectUrl;
             });
 
-            // Permite fechar clicando fora
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     modal.remove();
@@ -304,88 +187,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         },
-
-        /* Envio unificado de formulários */
-        setupFormSubmission(selector, options = {}) {
-            const form = document.querySelector(selector);
-            if (!form) return;
-
-            form.addEventListener("submit", (e) => {
-                e.preventDefault();
-                let valid = true;
-
-                const inputs = form.querySelectorAll("input");
-                inputs.forEach((input) => {
-                    const val = input.value.trim();
-                    window.formUtils.removeError(input);
-                    // Validações específicas
-                    if (input.required && !val) {
-                        window.formUtils.displayError(input, "Campo obrigatório.");
-                        valid = false;
-                    } else if (input.name === "nome_completo" && !window.formUtils.validateName(val)) {
-                        window.formUtils.displayError(input, "Nome deve conter apenas letras.");
-                        valid = false;
-                    } else if (input.name === "username") {
-						let response = window.formUtils.validateUsername(val, input);
-						valid = (response) ? valid : false;
-					} else if (input.name === "senha") {
-						let response = window.formUtils.validatePassword(val, input);
-						valid = (response) ? valid : false;
-                    } else if (input.name === "cpf" && !window.formUtils.validateCpf(val)) {
-                        window.formUtils.displayError(input, "CPF inválido.");
-                        valid = false;
-                    } else if (input.name === "telefone" && !window.formUtils.validatePhone(val)) {
-                        window.formUtils.displayError(input, "Telefone inválido.");
-                        valid = false;
-                    } else if (input.name === "data_nascimento" && !window.formUtils.validateDate(val)) {
-                        window.formUtils.displayError(input, "Data inválida.");
-                        valid = false;
-                    } else if (input.type === "email" && !window.formUtils.validateEmail(val)) {
-                        window.formUtils.displayError(input, "E-mail inválido.");
-                        valid = false;
-                    }
-                });
-
-                if (valid) {
-                    // Exibe alerta apenas se houver uma mensagem de sucesso definida (cadastro, edição, etc.)
-                    if (options.successMessage) {
-                        // Substitui o alert() pelo novo modal
-                        window.formUtils.mostrarModalSucesso(
-                            options.successMessage,
-                            options.redirect
-                        );
-                    } else if (options.redirect) {
-                        // No login não há successMessage → redireciona direto
-                        window.location.href = options.redirect;
-                    }
-                }
-
-            });
-        },
     };
 
-    // Aplica funcionalidades específicas dependente da página
+    // === Inicializa campos interativos ===
     const path = window.location.pathname;
+    if (path.includes("/cadastro")) {
+        const form = document.querySelector("#form-cadastro");
+        if (form) window.formUtils.setupInteractiveInputs(form);
+    }
+    if (path.includes("/login")) {
+        const form = document.querySelector("#form-login");
+        if (form) window.formUtils.setupInteractiveInputs(form);
+    }
 
-    const setupPageForm = (selector) => {
-        const form = document.querySelector(selector);
-        if (!form) return;
-        window.formUtils.setupInteractiveInputs(form);
-    };
-
-    // === LOGIN ===
-// Só o login é tratado aqui, porque cadastro e edição já têm seus próprios arquivos JS
-if (path.includes("login.html")) {
-    setupPageForm("#form-login");
-    window.formUtils.setupFormSubmission("#form-login", {
-    });
-}
-
-    
-    // Garante que as máscaras permaneçam aplicadas ao enviar qualquer formulário
-    document.querySelectorAll("form").forEach((form) => {
-        form.addEventListener("submit", () => {
-            // intencionalmente vazio - as máscaras sãi aplicadas em tempo real
-        });
-    });
+    // === NOVO: Ativa o modal automaticamente se sucesso=true na URL ===
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("sucesso") === "true" || params.get("sucesso") === "1") {
+        let msg = "Operação realizada com sucesso!";
+        if (path.includes("cadastro")) msg = "Cadastro realizado com sucesso!";
+        if (path.includes("edicao")) msg = "Perfil atualizado com sucesso!";
+        window.formUtils.mostrarModalSucesso(msg, "/login");
+    }
 });
