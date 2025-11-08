@@ -8,7 +8,7 @@ class UsuarioController {
        $model->username = $_POST['username'];
        $model->email = $_POST['email'];
        $model->senha = $_POST['senha'];
-       $model->cpf = $_POST['cpf'];
+       $model->cpf = preg_replace('/\D/', '', trim($_POST['cpf'] ?? ''));
        $data_nascimento = $_POST['data_nascimento'] ?? null;
         if ($data_nascimento) {
             $partes = explode('/', $data_nascimento);
@@ -25,7 +25,7 @@ class UsuarioController {
             header("Location: /login?sucesso=true");
             exit;
         } else {
-            
+
             $erro = urlencode($resultado);
             header("Location: /cadastro?erro=" . $erro);
             exit;
