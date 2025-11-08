@@ -39,6 +39,11 @@ switch ($uri) {
         include 'view/modules/historico/historico.html';
         break;
 
+    case '/historico/carregar-partidas':
+        include 'controller/HistoricoController.php';
+        HistoricoController::carregarPartidas();
+        break;
+
     case '/jogo':
         include 'view/modules/jogo/jogo.html';
         break;

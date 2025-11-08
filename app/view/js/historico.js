@@ -1,83 +1,102 @@
-let partidas = [
-                    {
-                        "dimensoes": "8 × 8",
-                        "modo": "Clássico",
-                        "tempo": "Não se aplica",
-                        "movimentos": 43,
-                        "resultado": "Vitória",
-                        "data": "22/08/2025",
-                        "hora": "14:03"
-                    },
-                    {
-                        "dimensoes": "4 × 4",
-                        "modo": "Contra o tempo",
-                        "tempo": "18min 15s",
-                        "movimentos": 12,
-                        "resultado": "Derrota",
-                        "data": "21/08/2025",
-                        "hora": "21:10"
-                    },
-                    {
-                        "dimensoes": "2 × 2",
-                        "modo": "Contra o tempo",
-                        "tempo": "2min",
-                        "movimentos": 3,
-                        "resultado": "Vitória",
-                        "data": "20/08/2025",
-                        "hora": "19:24"
-                    },
-                    {
-                        "dimensoes": "2 × 2",
-                        "modo": "Clássico",
-                        "tempo": "Não se aplica",
-                        "movimentos": 3,
-                        "resultado": "Vitória",
-                        "data": "20/08/2025",
-                        "hora": "19:20"
-                    },
-                    {
-                        "dimensoes": "2 × 2",
-                        "modo": "Contra o tempo",
-                        "tempo": "4min",
-                        "movimentos": 3,
-                        "resultado": "Vitória",
-                        "data": "20/08/2025",
-                        "hora": "19:13"
-                    },
-                    {
-                        "dimensoes": "8 × 8",
-                        "modo": "Clássico",
-                        "tempo": "Não se aplica",
-                        "movimentos": 45,
-                        "resultado": "Vitória",
-                        "data": "20/08/2025",
-                        "hora": "18:30"
-                    }
-                ];
+let xhttp;
+let limit = 10;
+let offset = 0;
 
-let tbody = document.querySelector('tbody');
+function carregarPartidas(){
+	console.log("Carregando mais partidas...");
+	xhttp = new XMLHttpRequest();
 
-let partida;
-for (let i = 0; i < partidas.length; i++) {
-    let partida = partidas[i];
-
-    let linha = document.createElement("tr");
-
-    let informacoes = ["dimensoes", "modo", "tempo", "movimentos", "resultado", "data", "hora"];
-
-    for (let propriedade of informacoes) {
-        let celula = document.createElement("td");
-
-        if ((propriedade === "tempo" || propriedade === "data" || propriedade === "hora") && partida["modo"] === "Contra o tempo") {
-            let tagTime = document.createElement("time");
-            tagTime.textContent = partida[propriedade];
-            celula.appendChild(tagTime);
-        }else{
-            celula.textContent = partida[propriedade];
-        }
-        
-        linha.appendChild(celula);
-    }
-
-    tbody.appendChild(linha);
+	xhttp.onreadystatechange = preencherTabelaHistoricoPartidas;
+	xhttp.open("GET", `/historico/carregar-partidas?offset=${offset}&limit=${limit}`);
+	xhttp.send();
 }
+
+function preencherTabelaHistoricoPartidas(){
+	try{
+		if (xhttp.readyState === XMLHttpRequest.DONE){
+			if (xhttp.status === 200){
+
+				console.log("Resposta recebida com sucesso.");
+
+				let resposta = JSON.parse(xhttp.responseText);
+
+				console.log(resposta);
+
+                let partidas = resposta.partidas;
+                let existemMaisPartidas = resposta.existemMaisPartidas;
+
+				for (let partida of partidas){
+					console.log(partida);
+				}
+
+				if(partidas.length <= 0){
+					const tbody = document.querySelector("tbody");
+
+                    const tr = document.createElement("tr");
+                    const td = document.createElement("td");
+                    td.textContent = "Você não jogou NADA ainda!";
+                    td.setAttribute("colspan", "7");
+                    td.style = "text-align: center";
+
+                    tr.appendChild(td);
+                    tbody.appendChild(tr);
+
+					exit();
+				}
+
+				let tbody = document.querySelector('tbody');
+				for (let i = 0; i < partidas.length; i++) {
+					let partida = partidas[i];
+
+					let linha = document.createElement("tr");
+
+					let informacoesPartida = ["tamanho_tabuleiro", "modalidade", "tempo_partida", "total_jogadas", "resultado", "data", "hora"];
+
+					for (let propriedade of informacoesPartida) {
+						let celula = document.createElement("td");
+
+						if ((propriedade === "tempo" || propriedade === "data" || propriedade === "hora") && partida["modo"] === "Contra o tempo") {
+							let tagTime = document.createElement("time");
+							tagTime.textContent = partida[propriedade];
+							celula.appendChild(tagTime);
+						}else{
+							celula.textContent = partida[propriedade];
+						}
+						
+						linha.appendChild(celula);
+					}
+
+					tbody.appendChild(linha);
+				}
+
+				if (!document.getElementById("carregar-mais") && existemMaisPartidas) {
+					let botao = document.createElement("button");
+
+					botao.textContent = "Carregar Mais";
+					botao.setAttribute("id", "carregar-mais");
+					botao.addEventListener("click", carregarPartidas);
+
+					let secaoHistorico = document.getElementById("historico");
+
+					secaoHistorico.appendChild(botao);
+				}
+
+
+				if (!existemMaisPartidas) {
+					let botaoCarregarMais = document.getElementById("carregar-mais");
+					if (botaoCarregarMais) {
+						botaoCarregarMais.remove();
+					}
+				}
+
+				offset += limit;
+			}else{
+				alert("Erro - Código de resposta HTTP: " + xhttp.status);
+			}
+		}
+	}catch(e){
+		alert("Ocorreu uma exceção: " +  e.name + e.message);
+	}
+}
+
+document.addEventListener("DOMContentLoaded", carregarPartidas);
