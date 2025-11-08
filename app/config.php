@@ -1,7 +1,8 @@
 <?php
-const DB_HOST = 'localhost';
-const DB_NAME = 'stellar_memory';
-const DB_USER = 'root';
-const DB_PASSWORD = '';
+
+$_ENV['db']['host'] = 'localhost:3306';
+$_ENV['db']['user'] = 'root';
+$_ENV['db']['password'] = 'root';
+$_ENV['db']['database'] = 'stellar_memory';
 
 ?>
