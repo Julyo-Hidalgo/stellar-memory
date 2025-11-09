@@ -41,7 +41,7 @@ function preencherTabelaHistoricoPartidas(){
                     tr.appendChild(td);
                     tbody.appendChild(tr);
 
-					exit();
+					return;
 				}
 
 				let tbody = document.querySelector('tbody');
