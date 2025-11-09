@@ -60,10 +60,4 @@ class PartidaController {
     }
 }
 
-//meio que uma rota simples para chamar o método salvarPartida e salvar dps por ajax
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'salvar_partida') {
-    $controller = new PartidaController();
-    $controller->salvarPartida();
-    exit;
-}
 ?>

@@ -6,7 +6,7 @@ class PartidaDAO extends DAO {
     
     public function salvar(PartidaModel $partida) {
         try {
-            $sql = "INSERT INTO partida (
+            $sql = "INSERT INTO partida ( 
                 usuario_id, 
                 tempo_partida, 
                 data_hora_partida, 
