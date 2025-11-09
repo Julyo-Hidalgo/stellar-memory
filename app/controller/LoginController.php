@@ -2,6 +2,16 @@
 session_start();
 
 class LoginController {
+	public static function index() {
+		session_start();
+
+		if (isset($_SESSION['usuario'])) {
+			header("Location: /jogo");
+			exit;
+		}
+
+		include 'view/modules/inicio/inicio.html';
+	}
 
     public static function validar() {
         include_once 'model/UsuarioModel.php';
