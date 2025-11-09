@@ -15,7 +15,7 @@ class PartidaController {
         try {
             //ver e verificar se usuario esta logado
             session_start();
-            if (!isset($_SESSION['usuario_id'])) {
+            if (!isset($_SESSION['usuario'])) {
                 http_response_code(401);
                 echo json_encode(['success' => false, 'message' => 'Usuário não autenticado']);
                 return;
@@ -30,7 +30,7 @@ class PartidaController {
             }
 
             $partida = new PartidaModel();
-            $partida->usuario_id = $_SESSION['usuario_id'];           
+            $partida->usuario_id = $_SESSION['usuario']['id'];           
             $partida->tempo_partida = (int)$dados['tempo_partida'];        
             $partida->modalidade = $dados['modalidade'];              
             $partida->tamanho_tabuleiro = (int)$dados['tamanho_tabuleiro'];
