@@ -5,6 +5,70 @@ let podeVirar = true;
 let modoTrapacaAtivo = false;//ver se a trapaça esta ativada ou n
 let contadorJogadas = 0;
 
+function tempoParaSegundos(tempoStr, modalidade) {
+  if (!tempoStr || !tempoStr.includes(':')) return 0;
+
+  const [min, seg] = tempoStr.split(':').map(Number);
+  let totalSegundos = (min * 60) + seg;
+
+  // No modo "contra o tempo", o cronômetro vai descendo — então precisamos calcular o tempo usado.
+  // se o tempo total era 10:00 (600s) e terminou em 08:30 (510s), o jogador usou 90s.
+  if (modalidade === 'contra_tempo') {
+    let tempoTotal = 0;
+    switch (document.getElementById("configuracao-tabuleiro").value) {
+      case '2x2': tempoTotal = 20; break;
+      case '4x4': tempoTotal = 120; break;
+      case '6x6': tempoTotal = 300; break;
+      case '8x8': tempoTotal = 600; break;
+      default: tempoTotal = 0;
+    }
+    totalSegundos = tempoTotal - totalSegundos;
+  }
+
+  return Math.max(0, totalSegundos); 
+}
+
+
+async function salvarPartidaApi(vitoria = false) {
+  const tempoStr = document.getElementById("tempo-partida").textContent;
+  const jogadas = parseInt(document.getElementById("numero-jogadas").textContent);
+  const modalidade = document.getElementById("modalidade").value;
+  const tamanho = document.getElementById("configuracao-tabuleiro").value;
+
+  // Converte modalidade para formato ('C' ou 'T')
+  const modalidadeCodigo = modalidade === "classico" ? "C" : "T";
+
+  // Extrai o número do formato "2x2" para  2
+  const tamanhoNumero = parseInt(tamanho);
+
+  // Converte tempo para segundos
+  const tempo = tempoParaSegundos(tempoStr, modalidade);
+
+  const formData = new FormData();
+  formData.append("tempo_partida", tempo);
+  formData.append("total_jogadas", jogadas);
+  formData.append("modalidade", modalidadeCodigo);
+  formData.append("tamanho_tabuleiro", tamanhoNumero);
+  formData.append("vitoria", vitoria ? 1 : 0);
+
+  try {
+    const response = await fetch("/partida/salvar", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      console.log("Partida salva com sucesso.", data.partida_id);
+    } else {
+      console.error("Erro ao salvar partida:", data.message);
+    }
+  } catch (error) {
+    console.error("Erro de comunicação com o servidor:", error);
+  }
+}
+
 // Sistema de notificações
 function mostrarNotificacao(mensagem, tipo = 'info') {
   // Remove notificações existentes para evitar duplicação
@@ -50,7 +114,7 @@ function fecharNotificacao(notificacao) {
 // vitoria
 function mostrarModalVitoria() {
   const modal = document.getElementById('modal-vitoria');
-  
+  salvarPartidaApi(true);
   // Preenche as estatísticas da vitória com os valores atuais
   document.getElementById('modal-tempo-partida').textContent = document.getElementById('tempo-partida').textContent;
   document.getElementById('modal-numero-jogadas').textContent = document.getElementById('numero-jogadas').textContent;
@@ -431,7 +495,10 @@ function inicializarEventos() {
     //event Listeners
     document.getElementById("botao_ativar_trapaca").addEventListener("click", ativarModoTrapaca);
     document.getElementById("botao_desativar_trapaca").addEventListener("click", desativarModoTrapaca);
-    document.getElementById("botao-desistir").addEventListener("click", desistirJogo);
+    document.getElementById("botao-desistir").addEventListener("click", () =>{
+      salvarPartidaApi(false);
+      desistirJogo();
+    });
     document.getElementById("botao-jogar").addEventListener("click", iniciarJogo);
 }
 
