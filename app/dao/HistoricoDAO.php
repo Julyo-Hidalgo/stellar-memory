@@ -10,7 +10,7 @@ class HistoricoDAO extends DAO{
 
     public function selecionarPartidas($usuario_id, $offset, $limit){
 		try {
-			$sql = "SELECT tamanho_tabuleiro, modalidade, tempo_partida, total_jogadas, CASE WHEN vitoria = 1 THEN 'Vitória' ELSE 'Derrota' END as resultado, DATE(data_hora_partida) as data, TIME(data_hora_partida) as hora FROM partida WHERE usuario_id = ? ORDER BY data_hora_partida DESC LIMIT ? OFFSET ?";
+			$sql = "SELECT tamanho_tabuleiro, CASE WHEN modalidade = 'C' THEN 'Clássico' ELSE 'Contra o tempo' END as modalidade, CONCAT(tempo_partida, 's') as tempo_partida, total_jogadas, CASE WHEN vitoria = 1 THEN 'Vitória' ELSE 'Derrota' END as resultado, DATE_FORMAT(DATE(data_hora_partida),  '%d/%m/%Y') as data, TIME(data_hora_partida) as hora FROM partida WHERE usuario_id = ? ORDER BY data_hora_partida DESC LIMIT ? OFFSET ?";
 
 			$stmt = $this->connection->prepare($sql);
 			$stmt->bindParam(1, $usuario_id, PDO::PARAM_INT);

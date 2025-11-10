@@ -60,6 +60,11 @@ function preencherTabelaHistoricoPartidas(){
 							tagTime.textContent = partida[propriedade];
 							celula.appendChild(tagTime);
 						}else{
+
+							if (propriedade === "tamanho_tabuleiro"){
+								partida["tamanho_tabuleiro"] = partida["tamanho_tabuleiro"] + "X" + partida["tamanho_tabuleiro"];
+							}
+
 							celula.textContent = partida[propriedade];
 						}
 						
