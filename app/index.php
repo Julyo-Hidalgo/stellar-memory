@@ -60,6 +60,10 @@ switch ($uri) {
     case '/ranking':
         include 'view/modules/ranking/ranking.html';
         break;
+	
+	case '/api/ranking':
+        include 'controller/RankingController.php';
+        break;
 
     default:
         echo "Página não encontrada: " . htmlspecialchars($uri);

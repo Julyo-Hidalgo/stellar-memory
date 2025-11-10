@@ -25,22 +25,39 @@ CREATE TABLE partida (
     tamanho_tabuleiro DECIMAL(1, 0) NOT NULL, -- 2 - 2x2 ou 4 - 4x4 ou 6 - 6x6 ou 8 - 8x8
     total_jogadas INT NOT NULL,
     vitoria BOOLEAN DEFAULT FALSE,
-    pontuacao INT,
     FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE
 );
 
--- A fazer para o Adriano:
--- Transformar a seguinte consulta em uma procedure que recebe como parâmetro modalidade e tamanho_tabuleiro da partida
-    /*
-    SELECT 
+-- STORED PROCEDURE: Obter o Ranking das 10 melhores partidas
+-- Filtra por modalidade e tamanho do tabuleiro, ordena por tempo (ASC) e jogadas (ASC)
+DELIMITER //
+CREATE PROCEDURE GetRanking(
+    IN p_modalidade CHAR(1),
+    IN p_tamanho_tabuleiro DECIMAL(1, 0)
+)
+BEGIN
+    SELECT
         u.username,
-        SUM(p.points) AS pontuacao_total
-    FROM usuários u
-    LEFT JOIN Partidas p
-    ON u.id = p.usuario_id
-    WHERE p.tipo_partida = '2x2'
-    GROUP BY username
-    ORDER BY pontuacao_total DESC
-    LIMIT 10*/
-
--- Criar um gatilho para calcular o valor da pontuacao (tempo_partida * total_jogadas) todas as vezes que inserir uma partida
+        p.tamanho_tabuleiro,
+        p.total_jogadas,
+        CASE p.modalidade
+            WHEN 'C' THEN 'Clássico'
+            WHEN 'T' THEN 'Contra o Tempo'
+            ELSE 'Desconhecido'
+        END AS modo_jogo,
+        p.tempo_partida,
+        DATE_FORMAT(p.data_hora_partida, '%d/%m/%Y') AS data_partida
+    FROM
+        partida p
+    JOIN
+        usuario u ON p.usuario_id = u.id
+    WHERE
+        p.modalidade = p_modalidade AND
+        p.tamanho_tabuleiro = p_tamanho_tabuleiro AND
+        p.vitoria = TRUE -- Apenas partidas vitoriosas
+    ORDER BY
+        p.tempo_partida ASC,
+        p.total_jogadas ASC
+    LIMIT 10;
+END //
+DELIMITER ;

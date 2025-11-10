@@ -8,8 +8,6 @@ class PartidaModel {
 	public $tamanho_tabuleiro;
 	public $total_jogadas;
 	public $vitoria;
-	public $pontuação;
-
 }
 ?>
 
