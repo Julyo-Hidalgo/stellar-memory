@@ -132,11 +132,6 @@ function mostrarModalVitoria() {
     modal.style.display = 'none';
     desistirJogo();
   };
-  
-  // Fechar se clicar fora
-  modal.onclick = (e) => {
-    if (e.target === modal) modal.style.display = 'none';
-  };
 }
 
 function criarParesParaTabuleiro(quantidadeCartas) {
