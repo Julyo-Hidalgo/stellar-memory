@@ -3,8 +3,6 @@ session_start();
 
 class LoginController {
 	public static function index() {
-		session_start();
-
 		if (isset($_SESSION['usuario'])) {
 			header("Location: /jogo");
 			exit;

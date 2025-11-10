@@ -15,7 +15,19 @@ class UsuarioModel {
         $dao = new UsuarioDAO();
         return $dao->insert($this);
     }
-    
+
+    public function getById(int $id) {
+        include_once 'dao/UsuarioDAO.php';
+        $dao = new UsuarioDAO();
+        return $dao->selectById($id);
+    }
+
+    public function update() {
+        include_once 'dao/UsuarioDAO.php';
+        $dao = new UsuarioDAO();
+        return $dao->update($this);
+    }
+
     public function autenticar($username, $senha) {
         include_once 'dao/UsuarioDAO.php';
         $dao = new UsuarioDAO();

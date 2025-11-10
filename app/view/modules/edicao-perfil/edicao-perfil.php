@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="view/css/global.css">
+    <link rel="stylesheet" href="/view/css/global.css">
     <link href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="view/css/forms.css">
-    <link rel="stylesheet" href="view/css/cadastro.css">
-    <link rel="stylesheet" href="view/css/edicao-perfil.css">
-    <link rel="stylesheet" href="view/css/nav.css">
+    <link rel="stylesheet" href="/view/css/forms.css">
+    <link rel="stylesheet" href="/view/css/cadastro.css">
+    <link rel="stylesheet" href="/view/css/edicao-perfil.css">
+    <link rel="stylesheet" href="/view/css/nav.css">
     <title>Edição de Dados</title>
 </head>
 
@@ -26,44 +26,44 @@
     <main class="container">
         <h2 class="subtitulo">EDIÇÃO DE DADOS</h2>
 
-        <form id="profile-form">
+        <form id="profile-form" action="/perfil/atualizar" method="POST">
             <!-- Coluna esquerda -->
             <div class="input-box">
-                <input name="nome_completo" placeholder="Nome Completo" type="text" required>
+                <input name="nome_completo" placeholder="Nome Completo" type="text" required value="<?php echo htmlspecialchars($usuario->nome_completo ?? ''); ?>">
                 <i class='bx bx-id-card'></i>
             </div>
 
             <div class="input-box">
                 <label for="nascimento" class="sr-only">Data de Nascimento</label>
-                <input id="nascimento" name="data_nascimento" type="text" placeholder="dd/mm/aaaa" required pattern="\d{2}/\d{2}/\d{4}" readonly>
+                <input id="nascimento" name="data_nascimento" type="text" placeholder="dd/mm/aaaa" required pattern="\d{2}/\d{2}/\d{4}" readonly value="<?php echo htmlspecialchars(date('d/m/Y', strtotime($usuario->data_nascimento ?? '')) ?? ''); ?>">
                 <i class='bx bx-calendar'></i>
             </div>
 
             <div class="input-box">
-                <input name="cpf" placeholder="CPF" type="text" maxlength="14" required readonly>
+                <input name="cpf" placeholder="CPF" type="text" maxlength="14" required readonly value="<?php echo htmlspecialchars($usuario->cpf ?? ''); ?>">
                 <i class='bx bx-id-card'></i>
             </div>
 
             <div class="input-box">
-                <input name="telefone" placeholder="Telefone" type="tel" required>
+                <input name="telefone" placeholder="Telefone" type="tel" required value="<?php echo htmlspecialchars($usuario->telefone ?? ''); ?>">
                 <i class='bx bx-phone'></i>
             </div>
 
             <!-- Coluna direita -->
             <div class="input-box">
-                <input name="email" placeholder="E-mail" type="email" required>
+                <input name="email" placeholder="E-mail" type="email" required value="<?php echo htmlspecialchars($usuario->email ?? ''); ?>">
                 <i class='bx bx-envelope'></i>
             </div>
 
             <div class="input-box">
-                <input name="username" placeholder="Username" type="text" required readonly>
+                <input name="username" placeholder="Username" type="text" required readonly value="<?php echo htmlspecialchars($usuario->username ?? ''); ?>">
                 <i class='bx bx-user'></i>
             </div>
 
             <div class="input-box">
-                <input id="password" name="senha" placeholder="Senha" type="password" required>
+                <input id="password" name="senha" placeholder="Nova Senha (Deixe em branco para não alterar)" type="password">
                 <button type="button" class="toggle-password">
-                    <img src="view/img/red-eyes.png" alt="Mostrar senha">
+                    <img src="/view/img/red-eyes.png" alt="Mostrar senha">
                 </button>
             </div>
 
@@ -72,8 +72,8 @@
         </form>
     </main>
     <!-- Script para o formulário de edição de perfil -->
-    <script src="view/js/forms.js" defer></script>
-    <script src="view/js/edicao-perfil.js" defer></script>
+    <script src="/view/js/forms.js" defer></script>
+    <script src="/view/js/edicao-perfil.js" defer></script>
 </body>
 
 </html>

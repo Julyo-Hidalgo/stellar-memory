@@ -7,10 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!input) return;
             if (input.type === "password") {
                 input.type = "text";
-                btn.querySelector("img").src = "view/img/cadeado.png";
+                btn.querySelector("img").src = "/view/img/cadeado.png";
             } else {
                 input.type = "password";
-                btn.querySelector("img").src = "view/img/red-eyes.png";
+                btn.querySelector("img").src = "/view/img/red-eyes.png";
             }
         });
     });
@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (params.get("sucesso") === "true" || params.get("sucesso") === "1") {
         let msg = "Operação realizada com sucesso!";
         if (path.includes("cadastro")) msg = "Cadastro realizado com sucesso!";
-        if (path.includes("edicao")) msg = "Perfil atualizado com sucesso!";
+        if (path.includes("editar")) msg = "Perfil atualizado com sucesso!";
         window.formUtils.mostrarModalSucesso(msg, "/login");
     }
 

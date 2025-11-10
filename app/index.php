@@ -32,8 +32,14 @@ switch ($uri) {
         UsuarioController::salvar();
         break;
 
-    case '/edicao-perfil':
-        include 'view/modules/edicao-perfil/edicao-perfil.html';
+    case '/perfil/editar':
+        include 'controller/PerfilController.php';
+        PerfilController::editar();
+        break;
+
+    case '/perfil/atualizar':
+        include 'controller/PerfilController.php';
+        PerfilController::atualizar();
         break;
 
     case '/historico':

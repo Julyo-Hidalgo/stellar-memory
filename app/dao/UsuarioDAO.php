@@ -26,7 +26,6 @@ class UsuarioDAO extends DAO  {
             return $stmt->execute(); 
 
         } catch (PDOException $e) {
-            // 🔥 Aqui vai o tratamento certo do erro de duplicidade
             if (str_contains($e->getMessage(), '1062')) {
                 if (str_contains($e->getMessage(), 'username')) {
                     return "O username informado já está em uso.";
@@ -61,32 +60,59 @@ class UsuarioDAO extends DAO  {
             return "Erro ao buscar usuário: " . $e->getMessage();
         }
     }
-}
 
+    public function selectById(int $id) {
+        try {
+            $sql = "SELECT * FROM usuario WHERE id = :id";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
 
-
-
-
-//código inicial feito em reunião com o julyo 06/11
-    /*public function insert (UsuarioModel $model) {
-        try
-        {   
-            $sql = "INSERT INTO usuario (username, cpf, email, senha, data_nascimento, telefone, nome_completo) VALUES ('" . 
-                                                        $model->username . "', '" .
-                                                        $model->cpf . "', '" . 
-                                                        $model->email . "', '" . 
-                                                        $model->senha . "', '" . 
-                                                        $model->data_nascimento . "', '" . 
-                                                        $model->telefone . "', '" . 
-                                                        $model->nome_completo . "' )";
-
-            $this->connection->exec($sql);
+            return $stmt->fetchObject('UsuarioModel');
+        } catch (PDOException $e) {
+            return "Erro ao buscar usuário por ID: " . $e->getMessage();
         }
-        catch(PDOException $e)
-        {
-            echo "Ocorreu um erro: " . $e->getMessage();
-        }
-
     }
-    
-}*/
+
+    public function update(UsuarioModel $model) {
+        try {
+            // Monta a query de forma dinâmica para atualizar apenas os campos que não são nulos
+            $sql = "UPDATE usuario SET 
+                        nome_completo = :nome_completo,
+                        telefone = :telefone,
+                        email = :email";
+            
+            // Adiciona a senha apenas se ela foi fornecida no modelo
+            if ($model->senha !== null) {
+                $sql .= ", senha = :senha";
+            }
+
+            $sql .= " WHERE id = :id";
+
+            $stmt = $this->connection->prepare($sql);
+
+            $stmt->bindValue(':nome_completo', $model->nome_completo);
+            $stmt->bindValue(':telefone', $model->telefone);
+            $stmt->bindValue(':email', $model->email);
+            $stmt->bindValue(':id', $model->id);
+
+            if ($model->senha !== null) {
+                $stmt->bindValue(':senha', $model->senha);
+            }
+
+            return $stmt->execute();
+
+        } catch (PDOException $e) {
+            // Tratamento de erro de duplicidade para email
+            if (str_contains($e->getMessage(), '1062')) {
+                if (str_contains($e->getMessage(), 'email')) {
+                    return "O e-mail informado já está em uso por outro usuário.";
+                }
+                return "Dados duplicados. Verifique suas informações.";
+            }
+
+            return "Erro ao atualizar usuário: " . $e->getMessage();
+        }
+    }
+
+}
