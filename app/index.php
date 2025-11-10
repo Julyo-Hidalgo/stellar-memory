@@ -46,12 +46,10 @@ switch ($uri) {
         include 'view/modules/historico/historico.html';
         break;
 
-
     case '/historico/carregar-partidas':
         include 'controller/HistoricoController.php';
         HistoricoController::carregarPartidas();
         break;
-
         
     case '/partida/salvar':
         include 'controller/PartidaController.php';
@@ -59,7 +57,6 @@ switch ($uri) {
         $controller->salvarPartida();
         break;
 
-        
     case '/jogo':
         include 'view/modules/jogo/jogo.html';
         break;
@@ -73,7 +70,8 @@ switch ($uri) {
         break;
 
     default:
-        echo "Página não encontrada: " . htmlspecialchars($uri);
+        http_response_code(404);
+        include 'view/modules/erro/404.html';
         break;
 }
 

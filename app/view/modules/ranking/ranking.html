@@ -2,7 +2,7 @@
 	session_start();
 
 	if (!isset($_SESSION['usuario'])) {
-		header('Location: /login');
+        header("Location: /login?erro=" . urlencode("Usuário não encontrado ou sessão expirada."));
 		exit();
 	}
 

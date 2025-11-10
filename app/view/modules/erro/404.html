@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erro 404</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="view/css/global.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        body{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        h2 > a{
+            text-align: center;
+            color: white;
+            text-align: center;
+            font-size: 80px;
+        }
+    </style>
+</head>
+<body>
+    <?php
+        include "view/components/ceu/ceu.html";
+    ?>
+    <h1>Página não encontrada!</h1>
+    <img src="view/img/astronauta.gif" alt="Astronauta">
+    <h2><a href="/">Voltar para a tela inicial</a></h2>
+</body>
+</html>
