@@ -54,6 +54,7 @@ switch ($uri) {
 
         
     case '/partida/salvar':
+        include 'controller/PartidaController.php';
         $controller = new PartidaController();
         $controller->salvarPartida();
         break;

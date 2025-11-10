@@ -21,7 +21,7 @@ class PartidaController {
                 return;
             }
 
-            $dados = json_decode(file_get_contents('php://input'), true);
+            $dados = $_POST;
             
             if (!$this->validarDadosPartida($dados)) {
                 http_response_code(400);
@@ -34,8 +34,10 @@ class PartidaController {
             $partida->tempo_partida = (int)$dados['tempo_partida'];        
             $partida->modalidade = $dados['modalidade'];              
             $partida->tamanho_tabuleiro = (int)$dados['tamanho_tabuleiro'];
-            $partida->total_jogadas = $dados['total_jogadas'];        
-            $partida->vitoria = (bool)$dados['vitoria'];                    
+            $partida->total_jogadas = (int)$dados['total_jogadas'];     
+            $partida->vitoria = (int)$dados['vitoria'] == 1;
+
+        
 
             $partidaId = $this->partidaDAO->salvar($partida);
 
@@ -51,13 +53,13 @@ class PartidaController {
         }
     }
 
-    private function validarDadosPartida($dados) {
-        return isset($dados['tempo_partida']) && is_numeric($dados['tempo_partida']) &&
-               isset($dados['modalidade']) && in_array($dados['modalidade'], ['C', 'T']) &&
-               isset($dados['tamanho_tabuleiro']) && in_array((int)$dados['tamanho_tabuleiro'], [2, 4, 6, 8]) &&
-               isset($dados['total_jogadas']) && is_numeric($dados['total_jogadas']) &&
-               isset($dados['vitoria']) && is_bool($dados['vitoria']);
-    }
+        private function validarDadosPartida($dados) {
+            return isset($dados['tempo_partida']) && is_numeric($dados['tempo_partida']) &&
+                isset($dados['modalidade']) && in_array($dados['modalidade'], ['C', 'T']) &&
+                isset($dados['tamanho_tabuleiro']) && in_array((int)$dados['tamanho_tabuleiro'], [2, 4, 6, 8]) &&
+                isset($dados['total_jogadas']) && is_numeric($dados['total_jogadas']) &&
+                isset($dados['vitoria']) && in_array($dados['vitoria'], ['0', '1', 0, 1, true, false], true);
+        }
 }
 
 ?>
