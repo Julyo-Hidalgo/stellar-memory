@@ -17,7 +17,26 @@ class DAO {
 			$this->connection = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
 		}
 		catch(PDOException $e){
-			echo "Ocorreu um erro: " . $e->getMessage();
+			$url = $_SERVER['REQUEST_URI'];
+
+			$rotas = ["/login", "/cadastro", "/jogo", "/historico", "/perfil"];
+
+			$found = false;
+			foreach ($rotas as $rota) {
+				if (str_contains($url, $rota)) {
+					$achou = true;
+					break;
+				}
+			}
+
+			if($achou){
+				$url = "/login" . "?erro=\"" . $e->getMessage() . "\"";
+
+				header("Location: $url");
+			}
+			else{
+				echo "Erro de conexão com o BD: " . $e->getMessage();
+			}
 		}
     }
 }
