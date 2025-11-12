@@ -74,23 +74,24 @@ function preencherTabelaHistoricoPartidas(){
 					tbody.appendChild(linha);
 				}
 
-				if (!document.getElementById("carregar-mais") && existemMaisPartidas) {
-					let botao = document.createElement("button");
+				if(!document.getElementById("carregar-mais")){
+					if (existemMaisPartidas) {
+						let botao = document.createElement("button");
 
-					botao.textContent = "Carregar Mais";
-					botao.setAttribute("id", "carregar-mais");
-					botao.addEventListener("click", carregarPartidas);
+						botao.textContent = "Carregar Mais";
+						botao.setAttribute("id", "carregar-mais");
+						botao.addEventListener("click", carregarPartidas);
 
-					let secaoHistorico = document.getElementById("historico");
+						let secaoHistorico = document.getElementById("historico");
 
-					secaoHistorico.appendChild(botao);
-				}
-
-
-				if (!existemMaisPartidas) {
-					let botaoCarregarMais = document.getElementById("carregar-mais");
-					if (botaoCarregarMais) {
-						botaoCarregarMais.remove();
+						secaoHistorico.appendChild(botao);
+					}
+				}else {
+					if (!existemMaisPartidas) {
+						let botaoCarregarMais = document.getElementById("carregar-mais");
+						if (botaoCarregarMais) {
+							botaoCarregarMais.remove();
+						}
 					}
 				}
 
