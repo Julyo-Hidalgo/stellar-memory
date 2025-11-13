@@ -15,6 +15,7 @@ class DAO {
 			$this->password = $_ENV['db']['password'];
 
 			$this->connection = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
+			$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}
 		catch(PDOException $e){
 			$url = $_SERVER['REQUEST_URI'];
