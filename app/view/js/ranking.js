@@ -31,6 +31,9 @@ function renderRanking(data) {
         const row = document.createElement('tr');
         // A procedure SQL já retorna os dados formatados (modo_jogo, data_partida, tempo_partida_formatado)
         // O tempo_partida_formatado é gerado no Controller
+
+        partida.modo_jogo = (partida.modo_jogo === 'C') ? "Clássico" : "Contra o tempo";
+
         row.innerHTML = `
             <td>${partida.username}</td>
             <td>${partida.tamanho_tabuleiro_formatado}</td>

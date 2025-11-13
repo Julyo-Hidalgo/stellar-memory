@@ -40,11 +40,7 @@ BEGIN
         u.username,
         p.tamanho_tabuleiro,
         p.total_jogadas,
-        CASE p.modalidade
-            WHEN 'C' THEN 'Clássico'
-            WHEN 'T' THEN 'Contra o Tempo'
-            ELSE 'Desconhecido'
-        END AS modo_jogo,
+        p.modalidade,
         p.tempo_partida,
         DATE_FORMAT(p.data_hora_partida, '%d/%m/%Y') AS data_partida
     FROM
