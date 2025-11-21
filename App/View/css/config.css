@@ -11,6 +11,14 @@
 	--white: white;
 }
 
+body{
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	min-width: 100vw;
+	justify-content: space-between;
+}
+
 .tooltip{
 	display: none;
 	position: absolute;
@@ -37,8 +45,9 @@
 }
 
 main{
-	width: 100%;
+	width: 80%;
 	text-align: center;
+	margin: 0 auto;
 }
 
 h1{

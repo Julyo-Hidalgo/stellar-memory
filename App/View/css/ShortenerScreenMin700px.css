@@ -1,5 +1,11 @@
-@import 'config.css';
+@import 'baseScreenMin700px.css';
 
 #cp_btn:hover #copy_tooltip_for_large_screen{
 	display: block;
+}
+
+@media screen and (max-width: 940px) {
+	.tooltip{
+		font-size: 12px;
+	}
 }
